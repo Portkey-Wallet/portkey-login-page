@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Login Portkey",
+  title: "Portkey openlogin",
   icons: {
     icon: "/_favicon.ico",
   },
