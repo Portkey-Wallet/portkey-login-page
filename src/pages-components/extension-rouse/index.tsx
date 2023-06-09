@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { ExtensionRouseParams } from "src/types";
 
 export default function ExtensionRouse({
@@ -7,10 +7,26 @@ export default function ExtensionRouse({
 }: {
   params?: ExtensionRouseParams;
 }) {
-  useEffect(() => {
+  const handler = useCallback(() => {
     if (!params?.method) return;
     window.portkey_did?.request(params);
   }, [params]);
+
+  useEffect(() => {
+    if (!window.portkey_did) {
+      const timer = setTimeout(() => {
+        clearTimeout(timer);
+        if (!window.portkey_did) {
+          console.log(
+            "Timeout, please download and install the Portkey extension"
+          );
+        }
+        handler();
+      }, 500);
+      return;
+    }
+    handler();
+  }, [handler]);
 
   return <div className="h-screen flex justify-center items-center"></div>;
 }
