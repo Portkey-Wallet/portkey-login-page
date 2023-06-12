@@ -8,11 +8,13 @@ export default function ExtensionRouse({
   params?: ExtensionRouseParams;
 }) {
   const handler = useCallback(() => {
+    console.log("ExtensionRouse handler, params:", params);
     if (!params?.method) return;
     window.portkey_did?.request(params);
   }, [params]);
 
   useEffect(() => {
+    console.log("ExtensionRouse useEffect");
     if (!window.portkey_did) {
       const timer = setTimeout(() => {
         clearTimeout(timer);
