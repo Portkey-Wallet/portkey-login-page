@@ -10,6 +10,7 @@ export default function ExtensionRouse() {
 
     if (!params?.method) return;
     window.portkey_did?.request(params);
+    window.close();
   }, []);
 
   useEffect(() => {
