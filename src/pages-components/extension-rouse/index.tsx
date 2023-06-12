@@ -1,17 +1,16 @@
 "use client";
 import React, { useCallback, useEffect } from "react";
+import qs from "query-string";
 import { ExtensionRouseParams } from "src/types";
 
-export default function ExtensionRouse({
-  params,
-}: {
-  params?: ExtensionRouseParams;
-}) {
+export default function ExtensionRouse() {
   const handler = useCallback(() => {
+    const params = qs.parse(window.location.search) as ExtensionRouseParams;
     console.log("ExtensionRouse handler, params:", params);
+
     if (!params?.method) return;
     window.portkey_did?.request(params);
-  }, [params]);
+  }, []);
 
   useEffect(() => {
     console.log("ExtensionRouse useEffect");
