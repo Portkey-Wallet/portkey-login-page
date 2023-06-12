@@ -4,13 +4,21 @@ import qs from "query-string";
 import { ExtensionRouseParams } from "src/types";
 
 export default function ExtensionRouse() {
-  const handler = useCallback(() => {
+  const handler = useCallback(async () => {
     const params = qs.parse(window.location.search) as ExtensionRouseParams;
     console.log("ExtensionRouse handler, params:", params);
 
     if (!params?.method) return;
-    window.portkey_did?.request(params);
-    window.close();
+    console.log("ExtensionRouse handler, params:", params.method);
+
+    try {
+      await window.portkey_did?.request(params);
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      window.close();
+      console.log("close window");
+    }
   }, []);
 
   useEffect(() => {
