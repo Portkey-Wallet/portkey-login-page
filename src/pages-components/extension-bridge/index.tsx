@@ -1,12 +1,12 @@
 "use client";
 import React, { useCallback, useEffect } from "react";
 import qs from "query-string";
-import { ExtensionRouseParams } from "src/types";
+import { ExtensionBridgeParams } from "src/types";
 
-export default function ExtensionRouse() {
+export default function ExtensionBridge() {
   const handler = useCallback(async () => {
-    const params = qs.parse(window.location.search) as ExtensionRouseParams;
-    console.log("ExtensionRouse origin, params:", params);
+    const params = qs.parse(window.location.search) as ExtensionBridgeParams;
+    console.log("ExtensionBridge origin, params:", params);
 
     if (!params?.method) return;
     if (params?.payload) {
@@ -17,7 +17,7 @@ export default function ExtensionRouse() {
       }
     }
 
-    console.log("ExtensionRouse handler, params:", params);
+    console.log("ExtensionBridge handler, params:", params);
     try {
       await window.portkey?.request(params);
     } catch (error) {
@@ -29,7 +29,7 @@ export default function ExtensionRouse() {
   }, []);
 
   useEffect(() => {
-    console.log("ExtensionRouse useEffect");
+    console.log("ExtensionBridge useEffect");
     if (!window.portkey) {
       const timer = setTimeout(() => {
         clearTimeout(timer);
