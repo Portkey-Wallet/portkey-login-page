@@ -1,5 +1,5 @@
 interface Window {
-  portkey_did?: {
+  portkey?: {
     request: (options: any) => void;
   };
 }

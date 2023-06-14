@@ -12,7 +12,7 @@ export default function ExtensionRouse() {
     console.log("ExtensionRouse handler, params:", params.method);
 
     try {
-      await window.portkey_did?.request(params);
+      await window.portkey?.request(params);
     } catch (error) {
       console.log("error", error);
     } finally {
@@ -23,10 +23,10 @@ export default function ExtensionRouse() {
 
   useEffect(() => {
     console.log("ExtensionRouse useEffect");
-    if (!window.portkey_did) {
+    if (!window.portkey) {
       const timer = setTimeout(() => {
         clearTimeout(timer);
-        if (!window.portkey_did) {
+        if (!window.portkey) {
           console.log(
             "Timeout, please download and install the Portkey extension"
           );
