@@ -6,11 +6,18 @@ import { ExtensionRouseParams } from "src/types";
 export default function ExtensionRouse() {
   const handler = useCallback(async () => {
     const params = qs.parse(window.location.search) as ExtensionRouseParams;
-    console.log("ExtensionRouse handler, params:", params);
+    console.log("ExtensionRouse origin, params:", params);
 
     if (!params?.method) return;
-    console.log("ExtensionRouse handler, params:", params.method);
+    if (params?.payload) {
+      try {
+        params.payload = JSON.parse(params.payload);
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
+    console.log("ExtensionRouse handler, params:", params);
     try {
       await window.portkey?.request(params);
     } catch (error) {
