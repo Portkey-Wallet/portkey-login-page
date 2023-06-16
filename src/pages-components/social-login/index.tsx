@@ -1,6 +1,5 @@
 "use client";
 import React, { useCallback, useEffect } from "react";
-import GoogleReCaptcha from "src/components/GoogleReCaptcha";
 import Loading from "src/components/Loading";
 import {
   APPLE_CLIENT_ID,
@@ -52,7 +51,6 @@ export default function SocialLogin({
     const { clientId, redirectURI } = checkSearchParams();
     const _clientId = clientId || GG_CLIENT_ID;
     const _redirectURI = redirectURI || `${location.origin}/auth-callback`;
-    setLoading(true);
     window.removeEventListener("beforeunload", onCloseWindow);
 
     getGoogleAccessToken({
@@ -65,7 +63,6 @@ export default function SocialLogin({
     const { clientId, redirectURI } = checkSearchParams();
     const _clientId = clientId || APPLE_CLIENT_ID;
     const _redirectURI = redirectURI || APPLE_REDIRECT_URI;
-    setLoading(true);
     window.removeEventListener("beforeunload", onCloseWindow);
 
     await appleAuthIdToken({
@@ -74,23 +71,31 @@ export default function SocialLogin({
     });
   }, [checkSearchParams, onCloseWindow]);
 
-  const onSuccess = useCallback(
-    (res: string) => {
+  const onSuccess = useCallback(async () => {
+    try {
       const { authType } = params;
       switch (authType) {
         case "Google":
-          getGoogleAuth();
+          await getGoogleAuth();
           break;
         case "Apple":
-          getAppleAuth();
+          await getAppleAuth();
           break;
         default:
           setError("Invalid authType");
           throw "Invalid authType";
       }
-    },
-    [getAppleAuth, getGoogleAuth, params]
-  );
+    } catch (error) {
+      setLoading(false);
+    }
+  }, [getAppleAuth, getGoogleAuth, params]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      clearTimeout(timer);
+      onSuccess();
+    }, 300);
+  }, [onSuccess]);
 
   return (
     <div className="h-screen flex justify-center items-center">
@@ -98,10 +103,10 @@ export default function SocialLogin({
         errorInfo
       ) : (
         <div className="">
-          <GoogleReCaptcha
+          {/* <GoogleReCaptcha
             siteKey={"6LdxCCsmAAAAACHL0Id7iOkUnOM0P_oQqsVc0Ogy"}
             onSuccess={onSuccess}
-          />
+          /> */}
         </div>
       )}
       <Loading loading={loading} />
