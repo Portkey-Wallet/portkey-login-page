@@ -42,8 +42,10 @@ export default function SocialLogin({
     if (!searchParams || !Object.keys(searchParams).length)
       return { clientId: undefined, redirectURI: undefined };
     const { clientId, redirectURI } = searchParams;
-    if (typeof clientId !== "string") throw setError("Invalid clientId");
-    if (typeof redirectURI !== "string") throw setError("Invalid redirectURI");
+    if (clientId && typeof clientId !== "string")
+      throw setError("Invalid clientId");
+    if (redirectURI && typeof redirectURI !== "string")
+      throw setError("Invalid redirectURI");
     return { clientId, redirectURI };
   }, [searchParams]);
 
