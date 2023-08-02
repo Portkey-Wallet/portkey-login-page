@@ -7,11 +7,27 @@ export default function ThirdPartBridge() {
   const handler = useCallback(async () => {
     const params = qs.parse(window.location.search) as ThirdPartBridgeParams;
 
-    // jump to ach-buy or ach-sell page
-    if (
-      params.portkeyMethod === "TO_ACH_BUY" ||
-      params.portkeyMethod === "TO_ACH_SELL"
-    ) {
+    // jump to the ach-buy page
+    if (params.portkeyMethod === "TO_ACH_BUY") {
+      let achUrl = `${params?.url}/?crypto=${params?.crypto}&network=${
+        params?.network
+      }&country=${params?.country}&fiat=${params?.fiat}&appId=${
+        params?.appId
+      }&callbackUrl=${encodeURIComponent(
+        params?.callbackUrl
+      )}&merchantOrderNo=${params?.merchantOrderNo}&type=buy&fiatAmount=${
+        params?.fiatAmount
+      }&address=${params?.address}&sign=${encodeURIComponent(params?.sign)}`;
+
+      if (params?.token !== undefined) {
+        achUrl += `&token=${encodeURIComponent(params.token)}`;
+      }
+
+      window.open(achUrl, "_self");
+    }
+
+    // jump to the ach-sell page
+    if (params.portkeyMethod === "TO_ACH_SELL") {
       let achUrl = `${params?.url}/?crypto=${params?.crypto}&network=${
         params?.network
       }&country=${params?.country}&fiat=${params?.fiat}&appId=${
