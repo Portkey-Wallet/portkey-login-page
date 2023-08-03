@@ -1,4 +1,4 @@
-export const APPLE_CLIENT_ID = "did.portkey";
+export const APPLE_CLIENT_ID = "com.portkey.did.extension.service";
 
 export const APPLE_REDIRECT_URI =
   process.env.NEXT_PUBLIC_APP_APPLE_REDIRECT_URI;
