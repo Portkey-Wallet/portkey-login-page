@@ -1,11 +1,10 @@
 "use client";
 import React, { useCallback, useEffect } from "react";
 import qs from "query-string";
-import { ThirdPartBridgeParams } from "src/types";
 
 export default function ThirdPartBridge() {
   const handler = useCallback(async () => {
-    const params = qs.parse(window.location.search) as ThirdPartBridgeParams;
+    const params = qs.parse(window.location.search) as any;
 
     // jump to the ach-buy page
     if (params.portkeyMethod === "TO_ACH_BUY") {
