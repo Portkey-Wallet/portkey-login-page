@@ -4,6 +4,7 @@ const useBeforeUnload = ({ errorType = "error" }: { errorType: string }) => {
   errorTypeRef.current = errorType;
 
   const onCloseWindow = useCallback(() => {
+    if (!window.opener) return;
     window.opener.postMessage(
       {
         type: errorTypeRef.current,
@@ -21,12 +22,14 @@ const useBeforeUnload = ({ errorType = "error" }: { errorType: string }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onSuccess = useCallback(
-    ({ type, data }: { type: string; data: any }) => {
+  const onFinish = useCallback(
+    ({ type, data, error }: { type: string; data?: any; error?: any }) => {
+      if (!window.opener) return;
       window.opener.postMessage(
         {
           type,
           data,
+          error,
         },
         "*"
       );
@@ -36,13 +39,27 @@ const useBeforeUnload = ({ errorType = "error" }: { errorType: string }) => {
     [onCloseWindow]
   );
 
+  const onPostMessage = useCallback(
+    ({ type, data }: { type: string; data: any }) => {
+      if (!window.opener) return;
+      window.opener.postMessage(
+        {
+          type,
+          data,
+        },
+        "*"
+      );
+    },
+    []
+  );
+
   const removeListener = useCallback(
     () => window.removeEventListener("beforeunload", onCloseWindow),
     [onCloseWindow]
   );
   return useMemo(
-    () => ({ onSuccess, removeListener }),
-    [onSuccess, removeListener]
+    () => ({ onFinish, removeListener, onPostMessage }),
+    [onFinish, removeListener, onPostMessage]
   );
 };
 
