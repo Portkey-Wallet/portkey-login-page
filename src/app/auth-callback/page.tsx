@@ -6,6 +6,8 @@ import Loading from "src/components/Loading";
 export default function AuthCallback() {
   const [error, setError] = useState<string>();
   const onCloseWindow = useCallback(() => {
+    if (!window.opener?.postMessage)
+      return setError("The current browser is abnormal or not supported");
     window.opener.postMessage(
       {
         type: "PortkeySocialLoginOnFailure",
@@ -38,6 +40,8 @@ export default function AuthCallback() {
     } else {
       return setError("Invalid token  in query string");
     }
+    if (!window.opener?.postMessage)
+      return setError("The current browser is abnormal or not supported");
     window.opener.postMessage(
       {
         type: "PortkeySocialLoginOnSuccess",
