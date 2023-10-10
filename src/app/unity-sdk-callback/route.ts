@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 import queryString from "query-string";
 
 export async function POST(request: Request) {
-  const body = await request.json();
+  const formData = await request.formData();
 
-  const token = body.id_token;
-  const port = body.state;
+  const token = formData.get("id_token");
+  const port = formData.get("state");
 
   return NextResponse.redirect(
     `http://localhost:${port}?${queryString.stringify({
