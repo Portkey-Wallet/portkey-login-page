@@ -5,24 +5,6 @@ import Loading from "src/components/Loading";
 
 export default function AuthCallback() {
   const [error, setError] = useState<string>();
-  const onCloseWindow = useCallback(() => {
-    if (!window.opener?.postMessage)
-      return setError("The current browser is abnormal or not supported");
-    window.opener.postMessage(
-      {
-        type: "PortkeySocialLoginOnFailure",
-        error: "user close the prompt",
-      },
-      "*"
-    );
-  }, []);
-  useEffect(() => {
-    window.addEventListener("beforeunload", onCloseWindow);
-    return () => {
-      window.removeEventListener("beforeunload", onCloseWindow);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const getToken = useCallback(() => {
     let token;
@@ -50,24 +32,34 @@ export default function AuthCallback() {
     } else {
       return setError("Invalid token  in query string");
     }
-    if (!window.opener?.postMessage)
-      return setError("The current browser is abnormal or not supported");
-    window.opener.postMessage(
-      {
-        type: "PortkeySocialLoginOnSuccess",
-        data: {
-          token,
+    if (!window.portkey)
+      return setError(
+        "Timeout, please download and install the Portkey extension"
+      );
+
+    window.portkey?.request({
+      method: "portkey_socialLogin",
+      payload: {
+        response: {
+          access_token: token,
           provider,
         },
       },
-      "*"
-    );
-    window.removeEventListener("beforeunload", onCloseWindow);
-    window.close();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    });
   }, []);
 
   useEffect(() => {
+    if (!window.portkey) {
+      const ids = setTimeout(() => {
+        clearTimeout(ids);
+        if (!window.portkey)
+          return setError(
+            "Timeout, please download and install the Portkey extension"
+          );
+        getToken();
+      }, 500);
+      return;
+    }
     getToken();
   }, [getToken]);
   return (
