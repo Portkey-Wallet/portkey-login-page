@@ -1,4 +1,5 @@
 "use client";
+import clsx from "clsx";
 import React, { useCallback, useEffect } from "react";
 import Loading from "src/components/Loading";
 import {
@@ -9,6 +10,8 @@ import {
 import { SearchParams } from "src/types";
 import { appleAuthIdToken } from "src/utils/AppleAuth";
 import { getGoogleAccessToken } from "src/utils/GoogleAuthReplace";
+import TelegramAuth from "../telegram-auth";
+import "./index.css";
 
 export default function SocialLogin({
   params,
@@ -83,6 +86,8 @@ export default function SocialLogin({
           break;
         case "Apple":
           await getAppleAuth();
+        case "Telegram":
+          // await getTelegramAuth();
           break;
         default:
           setError("Invalid authType");
@@ -101,18 +106,25 @@ export default function SocialLogin({
   }, [onSuccess]);
 
   return (
-    <div className="h-screen flex justify-center items-center">
-      {errorInfo ? (
-        errorInfo
-      ) : (
-        <div className="">
-          {/* <GoogleReCaptcha
-            siteKey={"6LdxCCsmAAAAACHL0Id7iOkUnOM0P_oQqsVc0Ogy"}
-            onSuccess={onSuccess}
-          /> */}
-        </div>
-      )}
-      <Loading loading={loading} />
+    <div
+      className={clsx(
+        "social-login-wrapper",
+        params.authType === "Telegram"
+          ? ""
+          : "h-screen flex justify-center items-center"
+      )}>
+      {params.authType === "Telegram" ? (
+        <TelegramAuth
+          searchParams={searchParams}
+          onCloseWindow={onCloseWindow}
+          onLoadingChange={setLoading}
+          onError={setError}
+        />
+      ) : null}
+
+      <div>{errorInfo ? errorInfo : <div className=""></div>}</div>
+
+      <Loading loading={!errorInfo && loading} />
     </div>
   );
 }
