@@ -5,7 +5,9 @@ import Loading from "src/components/Loading";
 import {
   APPLE_CLIENT_ID,
   APPLE_REDIRECT_URI,
+  APPLE_REDIRECT_URI_V2,
   GG_CLIENT_ID,
+  PORTKEY_VERSION,
 } from "src/constants";
 import { SearchParams } from "src/types";
 import { appleAuthIdToken } from "src/utils/AppleAuth";
@@ -44,12 +46,12 @@ export default function SocialLogin({
   const checkSearchParams = useCallback(() => {
     if (!searchParams || !Object.keys(searchParams).length)
       return { clientId: undefined, redirectURI: undefined, state: undefined };
-    const { clientId, redirectURI, state } = searchParams;
+    const { clientId, redirectURI, state, version } = searchParams;
     if (clientId && typeof clientId !== "string")
       throw setError("Invalid clientId");
     if (redirectURI && typeof redirectURI !== "string")
       throw setError("Invalid redirectURI");
-    return { clientId, redirectURI, state };
+    return { clientId, redirectURI, state, version };
   }, [searchParams]);
 
   const getGoogleAuth = useCallback(async () => {
@@ -65,9 +67,14 @@ export default function SocialLogin({
   }, [checkSearchParams, onCloseWindow]);
 
   const getAppleAuth = useCallback(async () => {
-    const { clientId, redirectURI, state } = checkSearchParams();
+    const { clientId, redirectURI, state, version } = checkSearchParams();
     const _clientId = clientId || APPLE_CLIENT_ID;
-    const _redirectURI = redirectURI || APPLE_REDIRECT_URI;
+
+    const defaultRedirectURI =
+      version === PORTKEY_VERSION ? APPLE_REDIRECT_URI_V2 : APPLE_REDIRECT_URI;
+
+    const _redirectURI = redirectURI || defaultRedirectURI;
+
     window.removeEventListener("beforeunload", onCloseWindow);
 
     await appleAuthIdToken({
