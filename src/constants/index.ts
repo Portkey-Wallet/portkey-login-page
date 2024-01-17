@@ -19,3 +19,5 @@ export const TELEGRAM_REDIRECT_URI = {
   openlogin: TELEGRAM_OPEN_LOGIN_REDIRECT_URI,
   default: TELEGRAM_OPEN_LOGIN_REDIRECT_URI,
 } as const;
+
+export const PORTKEY_VERSION = "v2";
