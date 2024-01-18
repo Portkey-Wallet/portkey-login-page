@@ -42,7 +42,7 @@ export default function TelegramAuth({
   }, [onError, searchParams]);
 
   const authCallbackUrl = useMemo(() => {
-    const { from, state } = searchParams;
+    const { from } = searchParams;
 
     if (from && typeof from !== "string") throw onError("Invalid from");
 
@@ -50,10 +50,6 @@ export default function TelegramAuth({
       TELEGRAM_REDIRECT_URI[
         (from ?? "default") as keyof typeof TELEGRAM_REDIRECT_URI
       ];
-
-    if (from === "unitysdk") {
-      return `http://localhost:${state}`;
-    }
 
     return `${serviceURL}${redirect}`;
   }, [onError, searchParams, serviceURL]);
@@ -63,6 +59,11 @@ export default function TelegramAuth({
       console.log("TELEGRAM", event);
       const detail = JSON.parse(event.detail);
       console.log("TELEGRAM detail:", detail);
+
+      const { from, state } = searchParams;
+      if (from === "unitysdk") {
+        detail.unity_sdk_port = state;
+      }
 
       switch (detail.event) {
         case TGStauts.unauthorized:

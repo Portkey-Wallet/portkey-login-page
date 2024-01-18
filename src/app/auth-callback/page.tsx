@@ -37,10 +37,15 @@ export default function AuthCallback() {
         id_token,
         type,
         token: tgToken,
+        unity_sdk_port,
       } = queryString.parse(location.search);
       if (type === "telegram") {
         token = tgToken;
         provider = "Telegram";
+
+        if (!!unity_sdk_port) {
+          location.href = `http://localhost:${unity_sdk_port}?token=${token}&provider=${provider}`;
+        }
       } else {
         if (!id_token)
           return setError("Invalid token id_token in query string");
