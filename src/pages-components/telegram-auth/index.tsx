@@ -42,7 +42,7 @@ export default function TelegramAuth({
   }, [onError, searchParams]);
 
   const authCallbackUrl = useMemo(() => {
-    const { from } = searchParams;
+    const { from, state } = searchParams;
 
     if (from && typeof from !== "string") throw onError("Invalid from");
 
@@ -50,6 +50,10 @@ export default function TelegramAuth({
       TELEGRAM_REDIRECT_URI[
         (from ?? "default") as keyof typeof TELEGRAM_REDIRECT_URI
       ];
+
+    if (from === "unitysdk") {
+      return `http://localhost:${state}`;
+    }
 
     return `${serviceURL}${redirect}`;
   }, [onError, searchParams, serviceURL]);
@@ -137,7 +141,8 @@ export default function TelegramAuth({
 
             const TWidgetLogin = (window as any).TWidgetLogin;
             TWidgetLogin.auth();
-          }}>
+          }}
+        >
           <i className="tgme_widget_login_button_icon"></i>log in with telegram
         </button>
       </div>
