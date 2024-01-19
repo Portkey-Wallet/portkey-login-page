@@ -13,3 +13,11 @@ export const TELEGRAM_OPEN_LOGIN_REDIRECT_URI =
   "/api/app/telegramAuth/receive/openlogin";
 export const MAINNET_SERVICE_URL = process.env.NEXT_PUBLIC_APP_MAINNET_SERVICE;
 export const TESTNET_SERVICE_URL = process.env.NEXT_PUBLIC_APP_TESTNET_SERVICE;
+
+export const TELEGRAM_REDIRECT_URI = {
+  portkey: TELEGRAM_PORTKEY_REDIRECT_URI,
+  openlogin: TELEGRAM_OPEN_LOGIN_REDIRECT_URI,
+  default: TELEGRAM_OPEN_LOGIN_REDIRECT_URI,
+} as const;
+
+export const PORTKEY_VERSION = "v2";

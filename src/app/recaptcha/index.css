@@ -1,7 +1,3 @@
-.recaptcha-body {
-  background-color: transparent !important;
-}
-
 .recaptcha-body div:nth-of-type(2) div:nth-of-type(1) {
   background-color: transparent !important;
 }
