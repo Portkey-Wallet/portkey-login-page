@@ -2,8 +2,7 @@ import Script from "next/script";
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import {
   MAINNET_SERVICE_URL,
-  TELEGRAM_OPEN_LOGIN_REDIRECT_URI,
-  TELEGRAM_PORTKEY_REDIRECT_URI,
+  TELEGRAM_REDIRECT_URI,
   TESTNET_SERVICE_URL,
 } from "src/constants";
 import { SearchParams } from "src/types";
@@ -47,12 +46,12 @@ export default function TelegramAuth({
 
     if (from && typeof from !== "string") throw onError("Invalid from");
 
-    const authCallbackUrl =
-      from === "portkey"
-        ? `${serviceURL}${TELEGRAM_PORTKEY_REDIRECT_URI}`
-        : `${serviceURL}${TELEGRAM_OPEN_LOGIN_REDIRECT_URI}`;
+    const redirect =
+      TELEGRAM_REDIRECT_URI[
+        (from ?? "default") as keyof typeof TELEGRAM_REDIRECT_URI
+      ];
 
-    return authCallbackUrl;
+    return `${serviceURL}${redirect}`;
   }, [onError, searchParams, serviceURL]);
 
   useEffect(() => {

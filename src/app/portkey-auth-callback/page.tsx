@@ -32,12 +32,12 @@ export default function AuthCallback() {
     } else {
       return setError("Invalid token  in query string");
     }
-    if (!window.portkey)
+    if (!window.Portkey)
       return setError(
         "Timeout, please download and install the Portkey extension"
       );
 
-    window.portkey?.request({
+    window.Portkey?.request({
       method: "portkey_socialLogin",
       payload: {
         response: {
@@ -49,10 +49,10 @@ export default function AuthCallback() {
   }, []);
 
   useEffect(() => {
-    if (!window.portkey) {
+    if (!window.Portkey) {
       const ids = setTimeout(() => {
         clearTimeout(ids);
-        if (!window.portkey)
+        if (!window.Portkey)
           return setError(
             "Timeout, please download and install the Portkey extension"
           );
