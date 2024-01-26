@@ -35,7 +35,7 @@ export default function TelegramAuth({
 
   const serviceURL = useMemo(() => {
     const { network, serviceURI } = searchParams;
-    if (serviceURI && typeof serviceURI !== "string") return serviceURI;
+    if (serviceURI && typeof serviceURI) return serviceURI;
     if (network && typeof network !== "string")
       throw onError("Invalid network");
     return network === "TESTNET" ? TESTNET_SERVICE_URL : MAINNET_SERVICE_URL;
