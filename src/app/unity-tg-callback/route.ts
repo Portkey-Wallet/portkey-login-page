@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   const token = formData.get("token");
 
   return NextResponse.redirect(
-    `http://localhost:53285?${queryString.stringify({
+    `http://127.0.0.1:53285?${queryString.stringify({
       token,
       provider: "Telegram",
     })}`
