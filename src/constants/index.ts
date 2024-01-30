@@ -24,3 +24,15 @@ export const TELEGRAM_REDIRECT_URI = {
 } as const;
 
 export const PORTKEY_VERSION = "v2";
+
+/** TWITTER  */
+export const TWITTER_CLIENT_ID = "VE5DRUl1bHdoeHN0cW9POEpEYlY6MTpjaQ";
+
+export const TWITTER_LOGIN_REDIRECT_URI =
+  "/api/app/telegramAuth/receive/openlogin";
+
+export const TWITTER_PORTKEY_REDIRECT_URI = "/api/app/twitterAuth/receive";
+export const TWITTER_OPEN_LOGIN_REDIRECT_URI =
+  "/api/app/twitterAuth/unifyReceive";
+
+export const FACEBOOK_REDIRECT_URI = "1061123428463627";

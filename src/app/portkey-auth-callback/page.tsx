@@ -18,11 +18,14 @@ export default function AuthCallback() {
       const {
         id_token,
         type,
-        token: tgToken,
+        token: authToken,
       } = queryString.parse(location.search);
       if (type === "telegram") {
-        token = tgToken;
+        token = authToken;
         provider = "Telegram";
+      } else if (authToken) {
+        token = authToken;
+        provider = type;
       } else {
         if (!id_token)
           return setError("Invalid token id_token in query string");
