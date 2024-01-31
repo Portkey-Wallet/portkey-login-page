@@ -3,7 +3,7 @@ const TWITTER_URL: string = "https://twitter.com";
 export const twitterAuth = ({
   clientId,
   redirectURI,
-  scope = "users.read",
+  scope = "users.read%20tweet.read",
   state = "state",
   responseType = "code",
   codeChallenge = "challenge",
