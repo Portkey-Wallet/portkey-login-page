@@ -9,22 +9,25 @@ export default function AuthCallback() {
   const getToken = useCallback(() => {
     let token;
     let provider;
-    if (location.hash) {
+    const hash = location.hash;
+    const search = location.search;
+    const {
+      id_token,
+      type,
+      token: authToken,
+      id,
+      name,
+      username,
+      userId,
+      expiresTime,
+    } = queryString.parse(location.search);
+    if (hash && type !== "Facebook") {
       const searchParams = queryString.parse(location.hash);
       token = searchParams.access_token;
       if (!token) return setError("Invalid token access_token in query string");
       provider = "Google";
-    } else if (location.search) {
-      const {
-        id_token,
-        type,
-        token: authToken,
-        id,
-        name,
-        username,
-        userId,
-        expiresTime,
-      } = queryString.parse(location.search);
+    } else if (search) {
+      console.log(authToken, "authToken==");
       if (type === "telegram") {
         token = authToken;
         provider = "Telegram";
@@ -57,7 +60,7 @@ export default function AuthCallback() {
       return setError(
         "Timeout, please download and install the Portkey extension"
       );
-
+    console.log(token, "token===");
     window.Portkey?.request({
       method: "portkey_socialLogin",
       payload: {
