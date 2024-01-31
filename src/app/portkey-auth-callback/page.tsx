@@ -28,9 +28,6 @@ export default function AuthCallback() {
       if (type === "telegram") {
         token = authToken;
         provider = "Telegram";
-      } else if (authToken) {
-        token = authToken;
-        provider = type;
       } else if (type === "Twitter") {
         token = JSON.stringify({
           token: authToken,
