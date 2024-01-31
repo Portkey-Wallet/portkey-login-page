@@ -110,7 +110,6 @@ export default function SocialLogin({
       clientId = FACEBOOK_REDIRECT_URI,
       redirectURI = "https://test4-applesign-v2.portkey.finance/api/app/facebookAuth/receive",
       state,
-      version,
     } = checkSearchParams();
 
     if (!redirectURI) throw setError("Invalid redirectURI");
@@ -120,7 +119,6 @@ export default function SocialLogin({
       clientId,
       redirectURI,
       state,
-      version,
     });
   }, [checkSearchParams, onCloseWindow]);
 
