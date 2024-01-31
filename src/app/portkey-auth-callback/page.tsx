@@ -19,12 +19,33 @@ export default function AuthCallback() {
         id_token,
         type,
         token: authToken,
+        id,
+        name,
+        username,
+        userId,
+        expiresTime,
       } = queryString.parse(location.search);
       if (type === "telegram") {
         token = authToken;
         provider = "Telegram";
       } else if (authToken) {
         token = authToken;
+        provider = type;
+      } else if (type === "Twitter") {
+        token = JSON.stringify({
+          token: authToken,
+          id,
+          type,
+          name,
+          username,
+        });
+        provider = "type";
+      } else if (type === "Facebook") {
+        token = JSON.stringify({
+          token: authToken,
+          userId,
+          expiresTime,
+        });
         provider = type;
       } else {
         if (!id_token)
