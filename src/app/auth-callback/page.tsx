@@ -27,20 +27,50 @@ export default function AuthCallback() {
   const getToken = useCallback(() => {
     let token;
     let provider;
-    if (location.hash) {
+    const hash = location.hash;
+    const search = location.search;
+    const {
+      id_token,
+      type,
+      token: authToken,
+      id,
+      name,
+      username,
+      userId,
+      expiresTime,
+    } = queryString.parse(location.search);
+    if (hash && type !== "Facebook") {
       const searchParams = queryString.parse(location.hash);
       token = searchParams.access_token;
       if (!token) return setError("Invalid token access_token in query string");
       provider = "Google";
-    } else if (location.search) {
-      const {
-        id_token,
-        type,
-        token: tgToken,
-      } = queryString.parse(location.search);
+    } else if (search) {
       if (type === "telegram") {
-        token = tgToken;
+        token = authToken;
         provider = "Telegram";
+      } else if (type === "Twitter") {
+        token = JSON.stringify({
+          token: authToken,
+          id,
+          type,
+          name,
+          username,
+        });
+        provider = "Twitter";
+      } else if (type === "Facebook") {
+        token = JSON.stringify({
+          token: authToken,
+          userId,
+          expiresTime,
+        });
+        provider = type;
+      } else if (authToken) {
+        token = JSON.stringify({
+          token: authToken,
+          userId,
+          expiresTime,
+        });
+        provider = type;
       } else {
         if (!id_token)
           return setError("Invalid token id_token in query string");

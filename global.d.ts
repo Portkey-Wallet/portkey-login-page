@@ -3,4 +3,5 @@ interface Window {
     request: (options: any) => void;
   };
   Portkey?: Window["portkey"];
+  FB?: any;
 }

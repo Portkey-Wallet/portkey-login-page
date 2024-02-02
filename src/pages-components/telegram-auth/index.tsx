@@ -56,9 +56,7 @@ export default function TelegramAuth({
 
   useEffect(() => {
     const handler = async (event: any) => {
-      console.log("TELEGRAM", event);
       const detail = JSON.parse(event.detail);
-      console.log("TELEGRAM detail:", detail);
 
       switch (detail.event) {
         case TGStauts.unauthorized:
@@ -79,7 +77,6 @@ export default function TelegramAuth({
 
   const tgAuth = useCallback(async (botId: string) => {
     const TWidgetLogin = (window as any)?.TWidgetLogin;
-    console.log(TWidgetLogin, "TWidgetLogin====");
     if (!TWidgetLogin) throw "";
     TWidgetLogin.init(
       "widget_login",
