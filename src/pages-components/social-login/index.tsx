@@ -95,7 +95,6 @@ export default function SocialLogin({
     const _redirectURI = redirectURI || defaultRedirectURI;
 
     window.removeEventListener("beforeunload", onCloseWindow);
-
     await appleAuthIdToken({
       clientId: _clientId,
       redirectURI: _redirectURI,
@@ -151,6 +150,7 @@ export default function SocialLogin({
           break;
         case "Apple":
           await getAppleAuth();
+          break;
         case "Facebook":
           await getFBAuth();
           break;
