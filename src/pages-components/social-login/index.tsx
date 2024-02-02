@@ -108,7 +108,7 @@ export default function SocialLogin({
 
     const {
       clientId = FACEBOOK_REDIRECT_URI,
-      redirectURI = "https://test4-applesign-v2.portkey.finance/api/app/facebookAuth/receive",
+      redirectURI = "https://aa-portkey.portkey.finance/api/app/facebookAuth/receive",
       state,
     } = checkSearchParams();
 
@@ -127,7 +127,7 @@ export default function SocialLogin({
 
     const {
       clientId = TWITTER_CLIENT_ID,
-      redirectURI = "https://test3-applesign-v2.portkey.finance/api/app/twitterAuth/receive",
+      redirectURI = "https://aa-portkey.portkey.finance/api/app/twitterAuth/receive",
       state,
     } = checkSearchParams();
 
@@ -196,46 +196,6 @@ export default function SocialLogin({
       <div>{errorInfo ? errorInfo : <div className=""></div>}</div>
 
       <Loading loading={!errorInfo && loading} />
-      {/* <button onClick={getFBAuth}>getFBAuth</button>
-      <div style={{ width: 200 }}></div>
-      <button
-        onClick={() => {
-          const FB = (window as any).FB;
-          FB.login(function (response: any) {
-            if (response.authResponse) {
-              console.log("Welcome!  Fetching your information.... ");
-              FB.api("/me", function (response: any) {
-                console.log("Good to see you, " + response.name + ".");
-              });
-            } else {
-              console.log("User cancelled login or did not fully authorize.");
-            }
-          });
-        }}>
-        getFBAuth1
-      </button>
-      <div style={{ width: 200 }}></div>
-
-      <button
-        onClick={() => {
-          getTwitterAuth();
-          // twitterAuth({
-          //   clientId: "VE5DRUl1bHdoeHN0cW9POEpEYlY6MTpjaQ",
-          //   redirectURI: "https://portkey.finance/",
-          // });
-        }}>
-        twitterAuth
-      </button>
-      <div style={{ width: 200 }}></div>
-      <button
-        onClick={async () => {
-          facebookAuthReplace({
-            clientId: "1061123428463627",
-            redirectURI: "https://portkey.finance/",
-          });
-        }}>
-        facebookAuthReplace
-      </button> */}
     </div>
   );
 }
