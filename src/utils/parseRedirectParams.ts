@@ -3,7 +3,6 @@ import queryString from "query-string";
 export const parseRedirectParams = () => {
   let token;
   let provider;
-  let resCode;
   let errorMessage;
   const hash = location.hash;
   const search = location.search;
@@ -26,7 +25,6 @@ export const parseRedirectParams = () => {
     provider = "Google";
   } else if (search) {
     if (code) {
-      resCode = code;
       errorMessage = message;
       return { code, message: errorMessage };
     }
