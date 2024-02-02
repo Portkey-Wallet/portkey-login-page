@@ -1,7 +1,7 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
-import queryString from "query-string";
 import Loading from "src/components/Loading";
+import { parseRedirectParams } from "src/utils/parseRedirectParams";
 
 export default function AuthCallback() {
   const [error, setError] = useState<string>();
@@ -25,77 +25,40 @@ export default function AuthCallback() {
   }, []);
 
   const getToken = useCallback(() => {
-    let token;
-    let provider;
-    const hash = location.hash;
-    const search = location.search;
-    const {
-      id_token,
-      type,
-      token: authToken,
-      id,
-      name,
-      username,
-      userId,
-      expiresTime,
-    } = queryString.parse(location.search);
-    if (hash && type !== "Facebook") {
-      const searchParams = queryString.parse(location.hash);
-      token = searchParams.access_token;
-      if (!token) return setError("Invalid token access_token in query string");
-      provider = "Google";
-    } else if (search) {
-      if (type === "telegram") {
-        token = authToken;
-        provider = "Telegram";
-      } else if (type === "Twitter") {
-        token = JSON.stringify({
-          token: authToken,
-          id,
-          type,
-          name,
-          username,
-        });
-        provider = "Twitter";
-      } else if (type === "Facebook") {
-        token = JSON.stringify({
-          token: authToken,
-          userId,
-          expiresTime,
-        });
-        provider = type;
-      } else if (authToken) {
-        token = JSON.stringify({
-          token: authToken,
-          userId,
-          expiresTime,
-        });
-        provider = type;
-      } else {
-        if (!id_token)
-          return setError("Invalid token id_token in query string");
-        token = id_token;
-        provider = "Apple";
+    try {
+      const { token, provider, code, message } = parseRedirectParams();
+
+      if (!window.opener?.postMessage)
+        throw "The current browser is abnormal or not supported";
+      if (code) {
+        window.opener.postMessage(
+          {
+            type: "PortkeySocialLoginOnFailure",
+            error: message || "auth error",
+          },
+          "*"
+        );
+
+        return;
       }
-    } else {
-      return setError("Invalid token  in query string");
-    }
-    if (!window.opener?.postMessage)
-      return setError("The current browser is abnormal or not supported");
-    window.opener.postMessage(
-      {
-        type: "PortkeySocialLoginOnSuccess",
-        data: {
-          token,
-          provider,
+      window.opener.postMessage(
+        {
+          type: "PortkeySocialLoginOnSuccess",
+          data: {
+            token,
+            provider,
+          },
         },
-      },
-      "*"
-    );
-    window.removeEventListener("beforeunload", onCloseWindow);
-    window.close();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+        "*"
+      );
+      window.removeEventListener("beforeunload", onCloseWindow);
+      window.close();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    } catch (error) {
+      if (typeof error === "string") return setError(error);
+      error && setError(JSON.stringify(error));
+    }
+  }, [onCloseWindow]);
 
   useEffect(() => {
     getToken();
