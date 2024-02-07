@@ -23,8 +23,10 @@
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.2",
     "vconsole": "3.15.1",
-    "@portkey/onboarding": "1.4.0-alpha.3",
-    "@portkey/utils": "1.4.0-alpha.3",
-    "typescript": "5.0.4"
+    "@portkey/onboarding": "2.0.0-alpha.26",
+    "@portkey/utils": "2.0.0-alpha.26",
+    "typescript": "5.0.4",
+    "aelf-sdk": "^3.2.45-beta.1",
+    "query-string": "^7.1.1"
   }
 }

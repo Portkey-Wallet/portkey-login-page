@@ -1,7 +1,6 @@
 "use client";
 import { evokePortkey } from "@portkey/onboarding";
 import { devices } from "@portkey/utils";
-import queryString from "query-string";
 import React, { useCallback, useEffect } from "react";
 import Portkey from "../../assets/svg/Portkey.svg";
 import Image from "next/image";
@@ -10,22 +9,21 @@ import BaseLoading from "src/components/BaseLoading";
 export default function PortkeyDownload({
   searchParams,
 }: {
-  searchParams?: {
-    evokeAppParams: any;
-  };
+  searchParams?: any;
 }) {
   const download = useCallback(() => {
     const isMobile = devices.isMobile().phone;
+    let option = searchParams;
+
     if (isMobile) {
-      let option = searchParams?.evokeAppParams;
       if (!option) {
         option = {
           action: "open",
+          version: option?.version,
           custom: {},
         };
-      } else {
-        option = queryString.parse(option);
       }
+
       evokePortkey.app({
         ...option,
         onStatusChange: (status) => {
@@ -40,12 +38,9 @@ export default function PortkeyDownload({
         },
       });
     } else {
-      evokePortkey.extension().then((isDownload) => {
-        if (isDownload) window.close();
-        else window.close();
-      });
+      evokePortkey.extension(option);
     }
-  }, [searchParams?.evokeAppParams]);
+  }, [searchParams]);
 
   useEffect(() => {
     download();
