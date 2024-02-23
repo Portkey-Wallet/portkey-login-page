@@ -38,11 +38,11 @@ export default function AuthCallback() {
         data: string;
       },
       times = 0
-    ) => {
+    ): Promise<any> => {
       const { serviceURI, loginId, data } = params;
 
       try {
-        await tabMessagePush({
+        return await tabMessagePush({
           url: `${serviceURI}/api/app/tab/complete`,
           params: {
             clientId: loginId,
