@@ -1,6 +1,8 @@
 import queryString from "query-string";
 
-export const parseRedirectParams = () => {
+export const parseRedirectParams = (parseParam?: {
+  from?: "openlogin" | "portkey";
+}) => {
   let token;
   let provider;
   let errorMessage;
@@ -32,15 +34,18 @@ export const parseRedirectParams = () => {
       token = authToken;
       provider = "Telegram";
     } else if (type === "Twitter") {
-      token = JSON.stringify({
-        token: authToken,
-        id,
-        type,
-        name,
-        username,
-      });
-
       provider = "Twitter";
+      if (parseParam?.from === "openlogin") {
+        token = authToken;
+      } else {
+        token = JSON.stringify({
+          token: authToken,
+          id,
+          type,
+          name,
+          username,
+        });
+      }
     } else if (type === "Facebook") {
       token = JSON.stringify({
         token: authToken,
