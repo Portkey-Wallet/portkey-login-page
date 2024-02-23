@@ -263,14 +263,14 @@
   dependencies:
     "@portkey/provider-types" "^2.0.0-alpha.5"
 
-"@portkey/onboarding@2.0.0-alpha.26":
-  version "2.0.0-alpha.26"
-  resolved "https://registry.npmjs.org/@portkey/onboarding/-/onboarding-2.0.0-alpha.26.tgz#f044eb76b93c40d33de627e21a3f13c198ae78d4"
-  integrity sha512-GoAhtrS3x01u/DNdFotKCnDlZGVlPPSuupReG/eUVilDKItOO3ylWlj/SjXdpJZT+Mwpf1sUuLls58uIgu+ibQ==
+"@portkey/onboarding@2.0.1-alpha.2":
+  version "2.0.1-alpha.2"
+  resolved "https://registry.npmjs.org/@portkey/onboarding/-/onboarding-2.0.1-alpha.2.tgz#820d0a7cb53e1f700d766435af9088b074b08243"
+  integrity sha512-KXhrnZ9Sq3193S6yskyixubUwI9CgZYmgNL2QEPnsDU871dzE8+jDIXpFtRRjGmyJefKw1OrQgAbqsOxqAKdnA==
   dependencies:
     "@portkey/detect-provider" "^2.0.0-alpha.2"
-    "@portkey/types" "^2.0.0-alpha.26"
-    "@portkey/utils" "^2.0.0-alpha.26"
+    "@portkey/types" "^2.0.1-alpha.2"
+    "@portkey/utils" "^2.0.1-alpha.2"
     bowser "^2.11.0"
     query-string "^7.1.1"
 
@@ -282,15 +282,20 @@
     "@portkey/types" "^2.0.0-alpha.0"
     "@types/readable-stream" "^2.3.15"
 
-"@portkey/types@^2.0.0-alpha.0", "@portkey/types@^2.0.0-alpha.26":
+"@portkey/types@^2.0.0-alpha.0":
   version "2.0.0-alpha.26"
   resolved "https://registry.npmjs.org/@portkey/types/-/types-2.0.0-alpha.26.tgz#7df15007b73cb21e7a678390c8f9cfae1c1dd9c2"
   integrity sha512-vDW6TrGKBYGLWQu+vUNlyWVy5fBRokrvDgMqzc23s4/77zgKWzuUrTG70aeXAhXH0ACRWMitegIKPc8UrxiylA==
 
-"@portkey/utils@2.0.0-alpha.26", "@portkey/utils@^2.0.0-alpha.26":
-  version "2.0.0-alpha.26"
-  resolved "https://registry.npmjs.org/@portkey/utils/-/utils-2.0.0-alpha.26.tgz#843eb15b72b151eea0a95d6101a0b99c8212f9ff"
-  integrity sha512-wSkXbmpN26RieYAZiAlWgo8H92ahgXcW5BAkLbgghNRSFZc3yd/uU+DhH5l3hp3dv+XPJT3xhx1ULNumHtC2kw==
+"@portkey/types@^2.0.1-alpha.2":
+  version "2.0.1-alpha.2"
+  resolved "https://registry.npmjs.org/@portkey/types/-/types-2.0.1-alpha.2.tgz#58276dd2475913962e23f36f4b7b65683a12e302"
+  integrity sha512-Z9TKwrIUn3T8qYe9UlpGxJtGk2u9vd1EM3EXlS53j3ItCwOH+POI8e0xuGqoS/vbTcxb+43ZGd8DpJGB08lbzQ==
+
+"@portkey/utils@2.0.1-alpha.2", "@portkey/utils@^2.0.1-alpha.2":
+  version "2.0.1-alpha.2"
+  resolved "https://registry.npmjs.org/@portkey/utils/-/utils-2.0.1-alpha.2.tgz#894603d72f7798a7537c5f15bd9ccbf9e4833f6c"
+  integrity sha512-OOxkJMgRzSOAov5Rx4EJfhNF6w6X+n+9sr76sh5Hb9mZrOFpquI1Hw/1+V9QdSEy6L271hTAVkDNmO9o82BQog==
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
