@@ -2,17 +2,36 @@ import queryString from "query-string";
 
 const tOauthSignatureKey = "oauth_signature=";
 const formatTwitterSignatureWithToken = (token: string) => {
-  const strArr = token.split(tOauthSignatureKey);
-  const signatureKV = strArr[1];
-  const signatureStr = signatureKV.replaceAll('"', "");
+  // const strArr = token.split(tOauthSignatureKey);
+  // const signatureKV = strArr[1];
+  // const signatureStr = signatureKV.replaceAll('"', "");
 
-  return (
-    strArr[0] +
-    tOauthSignatureKey +
-    '"' +
-    encodeURIComponent(signatureStr) +
-    '"'
-  );
+  // return (
+  //   strArr[0] +
+  //   tOauthSignatureKey +
+  //   '"' +
+  //   encodeURIComponent(signatureStr) +
+  //   '"'
+  // );
+
+  const strArr = token.split(",");
+  // console.log(strArr, "strArr==");
+  let _token = "";
+  strArr.forEach((item) => {
+    if (item.startsWith(tOauthSignatureKey)) {
+      const signatureStr = item.split('"');
+
+      _token =
+        _token +
+        tOauthSignatureKey +
+        `"${encodeURIComponent(signatureStr[1])}"` +
+        ",";
+    } else {
+      _token = _token + item + ",";
+    }
+  });
+  if (_token.slice(-1) === ",") _token = _token.slice(0, -1);
+  return _token;
 };
 
 export const parseRedirectParams = (parseParam?: {
