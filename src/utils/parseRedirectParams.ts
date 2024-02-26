@@ -35,20 +35,20 @@ export const parseRedirectParams = (parseParam?: {
       provider = "Telegram";
     } else if (type === "Twitter") {
       provider = "Twitter";
-      if (parseParam?.from === "openlogin") {
-        // token = `${(authToken)}&id=${id}&name=${name}&username=${username}`;
-        const href = location.href;
-        const allSearchStr = href.split("?token=")[1];
-        token = allSearchStr.replace("&type=Twitter", "");
-      } else {
-        token = JSON.stringify({
-          token: authToken,
-          id,
-          type,
-          name,
-          username,
-        });
-      }
+      // if (parseParam?.from === "openlogin") {
+      //   // token = `${(authToken)}&id=${id}&name=${name}&username=${username}`;
+      //   const href = location.href;
+      //   const allSearchStr = href.split("?token=")[1];
+      //   token = allSearchStr.replace("&type=Twitter", "");
+      // } else {
+      token = JSON.stringify({
+        token: authToken,
+        id,
+        type,
+        name,
+        username,
+      });
+      // }
     } else if (type === "Facebook") {
       token = JSON.stringify({
         token: authToken,
