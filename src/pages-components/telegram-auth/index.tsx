@@ -1,4 +1,4 @@
-import Script from "next/script";
+// import Script from "next/script";
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import {
   MAINNET_SERVICE_URL,
@@ -6,14 +6,14 @@ import {
   TESTNET_SERVICE_URL,
 } from "src/constants";
 import { SearchParams } from "src/types";
-import { stringify } from "query-string";
+// import { stringify } from "query-string";
 import "./index.css";
 import { telegramAuthAccessToken } from "src/utils/telegram";
 
-enum TGStauts {
-  unauthorized = "unauthorized",
-  auth_user = "auth_user",
-}
+// enum TGStauts {
+//   unauthorized = "unauthorized",
+//   auth_user = "auth_user",
+// }
 
 interface TelegramAuthProps {
   searchParams: SearchParams;
