@@ -36,7 +36,10 @@ export const parseRedirectParams = (parseParam?: {
     } else if (type === "Twitter") {
       provider = "Twitter";
       if (parseParam?.from === "openlogin") {
-        token = `${authToken}&id=${id}&name=${name}&username=${username}`;
+        // token = `${(authToken)}&id=${id}&name=${name}&username=${username}`;
+        const href = location.href;
+        const allSearchStr = href.split("?token=")[1];
+        token = allSearchStr.replace("&type=Twitter", "");
       } else {
         token = JSON.stringify({
           token: authToken,
