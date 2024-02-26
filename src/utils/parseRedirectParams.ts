@@ -1,5 +1,20 @@
 import queryString from "query-string";
 
+const tOauthSignatureKey = "oauth_signature=";
+const formatTwitterSignatureWithToken = (token: string) => {
+  const strArr = token.split(tOauthSignatureKey);
+  const signatureKV = strArr[1];
+  const signatureStr = signatureKV.replaceAll('"', "");
+
+  return (
+    strArr[0] +
+    tOauthSignatureKey +
+    '"' +
+    encodeURIComponent(signatureStr) +
+    '"'
+  );
+};
+
 export const parseRedirectParams = (parseParam?: {
   from?: "openlogin" | "portkey";
 }) => {
@@ -35,20 +50,31 @@ export const parseRedirectParams = (parseParam?: {
       provider = "Telegram";
     } else if (type === "Twitter") {
       provider = "Twitter";
-      // if (parseParam?.from === "openlogin") {
-      //   // token = `${(authToken)}&id=${id}&name=${name}&username=${username}`;
-      //   const href = location.href;
-      //   const allSearchStr = href.split("?token=")[1];
-      //   token = allSearchStr.replace("&type=Twitter", "");
-      // } else {
-      token = JSON.stringify({
-        token: authToken,
-        id,
-        type,
-        name,
-        username,
-      });
-      // }
+      if (parseParam?.from === "openlogin") {
+        // token = `${(authToken)}&id=${id}&name=${name}&username=${username}`;
+        console.log(authToken, "authToken===");
+
+        const formatToken = formatTwitterSignatureWithToken(
+          authToken as string
+        );
+
+        token = JSON.stringify({
+          token: formatToken,
+          id,
+          type,
+          name,
+          username,
+        });
+        console.log(token, "token===");
+      } else {
+        token = JSON.stringify({
+          token: authToken,
+          id,
+          type,
+          name,
+          username,
+        });
+      }
     } else if (type === "Facebook") {
       token = JSON.stringify({
         token: authToken,
