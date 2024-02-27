@@ -18,6 +18,7 @@ import TelegramAuth from "../telegram-auth";
 import "./index.css";
 import { twitterAuth } from "src/utils/twitter/TwitterAuth";
 import { facebookAuthReplace } from "src/utils/Facebook/facebookAuthReplace";
+import TelegramAuthSDK from "../telegram-auth-sdk";
 
 export default function SocialLogin({
   params,
@@ -184,8 +185,17 @@ export default function SocialLogin({
           ? ""
           : "h-screen flex justify-center items-center"
       )}>
-      {params.authType === "Telegram" ? (
+      {params.authType === "Telegram" && searchParams.from === "portkey" ? (
         <TelegramAuth
+          searchParams={searchParams}
+          onCloseWindow={onCloseWindow}
+          onLoadingChange={setLoading}
+          onError={setError}
+        />
+      ) : null}
+
+      {params.authType === "Telegram" && searchParams.from !== "portkey" ? (
+        <TelegramAuthSDK
           searchParams={searchParams}
           onCloseWindow={onCloseWindow}
           onLoadingChange={setLoading}
