@@ -1,0 +1,9 @@
+.telegram-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[id^="telegram-login-"] {
+  margin: 200px auto 0;
+}
