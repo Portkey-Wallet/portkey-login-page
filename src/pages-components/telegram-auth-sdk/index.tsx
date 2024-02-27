@@ -58,6 +58,7 @@ export default function TelegramAuthSDK({
       const result = await fetch(
         `${serviceURL}/api/app/telegramAuth/getTelegramBot`
       ).then((res) => res.json());
+      document.body.classList.add("telegram-sdk-auth-body");
 
       const botName = result.botName;
       sessionStorage.setItem("TGURL", authCallbackUrl);
@@ -79,5 +80,5 @@ export default function TelegramAuthSDK({
     getTelegramAuth();
   }, [getTelegramAuth]);
 
-  return <div className="telegram-wrapper"></div>;
+  return <div className="telegram-auth-sdk-wrapper"></div>;
 }
