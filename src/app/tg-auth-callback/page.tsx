@@ -6,7 +6,7 @@ export default function TGAuth() {
   useEffect(() => {
     if (location.search) {
       const url = sessionStorage.getItem("TGURL");
-      if (url) location.href = `${url}?${location.search}`;
+      if (url) location.href = `${url}${location.search}`;
     }
   }, []);
   return (
