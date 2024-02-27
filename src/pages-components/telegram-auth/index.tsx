@@ -1,4 +1,4 @@
-import Script from "next/script";
+// import Script from "next/script";
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import {
   MAINNET_SERVICE_URL,
@@ -6,13 +6,14 @@ import {
   TESTNET_SERVICE_URL,
 } from "src/constants";
 import { SearchParams } from "src/types";
-import { stringify } from "query-string";
+// import { stringify } from "query-string";
 import "./index.css";
+import { telegramAuthAccessToken } from "src/utils/telegram";
 
-enum TGStauts {
-  unauthorized = "unauthorized",
-  auth_user = "auth_user",
-}
+// enum TGStauts {
+//   unauthorized = "unauthorized",
+//   auth_user = "auth_user",
+// }
 
 interface TelegramAuthProps {
   searchParams: SearchParams;
@@ -54,40 +55,40 @@ export default function TelegramAuth({
     return `${serviceURL}${redirect}`;
   }, [onError, searchParams, serviceURL]);
 
-  useEffect(() => {
-    const handler = async (event: any) => {
-      const detail = JSON.parse(event.detail);
+  // useEffect(() => {
+  //   const handler = async (event: any) => {
+  //     const detail = JSON.parse(event.detail);
 
-      switch (detail.event) {
-        case TGStauts.unauthorized:
-          changeLoading.current(false);
+  //     switch (detail.event) {
+  //       case TGStauts.unauthorized:
+  //         changeLoading.current(false);
 
-          break;
-        case TGStauts.auth_user:
-          location.href = `${authCallbackUrl}?${stringify(detail.auth_data)}`;
-          break;
-      }
-    };
+  //         break;
+  //       case TGStauts.auth_user:
+  //         location.href = `${authCallbackUrl}?${stringify(detail.auth_data)}`;
+  //         break;
+  //     }
+  //   };
 
-    window.addEventListener("TG-SEND", handler);
-    return () => {
-      window.removeEventListener("TG-SEND", handler);
-    };
-  }, [authCallbackUrl]);
+  //   window.addEventListener("TG-SEND", handler);
+  //   return () => {
+  //     window.removeEventListener("TG-SEND", handler);
+  //   };
+  // }, [authCallbackUrl]);
 
-  const tgAuth = useCallback(async (botId: string) => {
-    const TWidgetLogin = (window as any)?.TWidgetLogin;
-    if (!TWidgetLogin) throw "";
-    TWidgetLogin.init(
-      "widget_login",
-      botId,
-      { origin: "https://core.telegram.org" },
-      false,
-      "en"
-    );
+  // const tgAuth = useCallback(async (botId: string) => {
+  //   const TWidgetLogin = (window as any)?.TWidgetLogin;
+  //   if (!TWidgetLogin) throw "";
+  //   TWidgetLogin.init(
+  //     "widget_login",
+  //     botId,
+  //     { origin: "https://core.telegram.org" },
+  //     false,
+  //     "en"
+  //   );
 
-    TWidgetLogin.auth();
-  }, []);
+  //   TWidgetLogin.auth();
+  // }, []);
 
   const getTelegramAuth = useCallback(async () => {
     try {
@@ -100,17 +101,27 @@ export default function TelegramAuth({
         `${serviceURL}/api/app/telegramAuth/getTelegramBot`
       ).then((res) => res.json());
 
-      const botId = result.botId;
-      if (!botId) throw onError("Invalid botName");
+      // const botId = result.botId;
+      const botName = result.botName;
+      sessionStorage.setItem("TGURL", authCallbackUrl);
       changeLoading.current(false);
+
+      // TODO
+      telegramAuthAccessToken({
+        botUsername: botName,
+        authCallbackUrl:
+          "https://openlogin-test.portkey.finance/tg-auth-callback",
+      });
+      // if (!botId) throw onError("Invalid botName");
+      // changeLoading.current(false);
 
       window.removeEventListener("beforeunload", onCloseWindow);
 
-      await tgAuth(botId);
+      // await tgAuth(botId);
     } catch (error) {
       changeLoading.current(false);
     }
-  }, [onCloseWindow, onError, searchParams, serviceURL, tgAuth]);
+  }, [authCallbackUrl, onCloseWindow, onError, searchParams, serviceURL]);
 
   useEffect(() => {
     getTelegramAuth();
@@ -118,7 +129,7 @@ export default function TelegramAuth({
 
   return (
     <div className="telegram-wrapper">
-      <link
+      {/* <link
         rel="stylesheet"
         href="https://telegram.org/css/widget-frame.css?66"
         data-precedence="next"
@@ -139,7 +150,7 @@ export default function TelegramAuth({
         </button>
       </div>
 
-      <Script src="/widget-frame.js" onLoad={async () => {}}></Script>
+      <Script src="/widget-frame.js" onLoad={async () => {}}></Script> */}
     </div>
   );
 }
