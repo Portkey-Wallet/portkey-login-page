@@ -263,14 +263,14 @@
   dependencies:
     "@portkey/provider-types" "^2.0.0-alpha.5"
 
-"@portkey/onboarding@2.0.1-alpha.2":
-  version "2.0.1-alpha.2"
-  resolved "https://registry.npmjs.org/@portkey/onboarding/-/onboarding-2.0.1-alpha.2.tgz#820d0a7cb53e1f700d766435af9088b074b08243"
-  integrity sha512-KXhrnZ9Sq3193S6yskyixubUwI9CgZYmgNL2QEPnsDU871dzE8+jDIXpFtRRjGmyJefKw1OrQgAbqsOxqAKdnA==
+"@portkey/onboarding@2.1.0-alpha.0":
+  version "2.1.0-alpha.0"
+  resolved "https://registry.npmjs.org/@portkey/onboarding/-/onboarding-2.1.0-alpha.0.tgz#917e42787b6a08bbdf72129fcf9b54de2ce7a381"
+  integrity sha512-aGL8DfOPyvtI6G5GayJ7UizLHb2HfI5Q6B1L7bMY7jNdl8ArtdG51LTnAawhAWG6xXeiMZbKcI+hOkvMlEYBDQ==
   dependencies:
     "@portkey/detect-provider" "^2.0.0-alpha.2"
-    "@portkey/types" "^2.0.1-alpha.2"
-    "@portkey/utils" "^2.0.1-alpha.2"
+    "@portkey/types" "^2.1.0-alpha.0"
+    "@portkey/utils" "^2.1.0-alpha.0"
     bowser "^2.11.0"
     query-string "^7.1.1"
 
@@ -287,15 +287,17 @@
   resolved "https://registry.npmjs.org/@portkey/types/-/types-2.0.0-alpha.26.tgz#7df15007b73cb21e7a678390c8f9cfae1c1dd9c2"
   integrity sha512-vDW6TrGKBYGLWQu+vUNlyWVy5fBRokrvDgMqzc23s4/77zgKWzuUrTG70aeXAhXH0ACRWMitegIKPc8UrxiylA==
 
-"@portkey/types@^2.0.1-alpha.2":
-  version "2.0.1-alpha.2"
-  resolved "https://registry.npmjs.org/@portkey/types/-/types-2.0.1-alpha.2.tgz#58276dd2475913962e23f36f4b7b65683a12e302"
-  integrity sha512-Z9TKwrIUn3T8qYe9UlpGxJtGk2u9vd1EM3EXlS53j3ItCwOH+POI8e0xuGqoS/vbTcxb+43ZGd8DpJGB08lbzQ==
+"@portkey/types@^2.1.0-alpha.0":
+  version "2.1.0-alpha.0"
+  resolved "https://registry.npmjs.org/@portkey/types/-/types-2.1.0-alpha.0.tgz#3f8cc8ef8c9eada97c2c59b0c774b2ec343c6ebc"
+  integrity sha512-Og7aVTB1ANNf9BiPcrEXtS3A8ZhzYRbWphYt0EZg3ExNHQI3w5OPDtSrbcHSw2i1VQpmAOVMnE8wgl0i5OzveA==
 
-"@portkey/utils@2.0.1-alpha.2", "@portkey/utils@^2.0.1-alpha.2":
-  version "2.0.1-alpha.2"
-  resolved "https://registry.npmjs.org/@portkey/utils/-/utils-2.0.1-alpha.2.tgz#894603d72f7798a7537c5f15bd9ccbf9e4833f6c"
-  integrity sha512-OOxkJMgRzSOAov5Rx4EJfhNF6w6X+n+9sr76sh5Hb9mZrOFpquI1Hw/1+V9QdSEy6L271hTAVkDNmO9o82BQog==
+"@portkey/utils@2.1.0-alpha.0", "@portkey/utils@^2.1.0-alpha.0":
+  version "2.1.0-alpha.0"
+  resolved "https://registry.npmjs.org/@portkey/utils/-/utils-2.1.0-alpha.0.tgz#7b5b80ff7df8b4c9c3a6f2802031f8e4ba929ee1"
+  integrity sha512-bGT2NrdFuMd0hhtGRAJYM+WIAldXBsk5SktAFYaZ6beZp5QUrm/7wvCFgyXH76Q33T+p+UPZaVw7DbJUxYpVOQ==
+  dependencies:
+    node-forge "^1.3.1"
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
@@ -2404,6 +2406,11 @@ next@13.4.3:
     "@next/swc-win32-arm64-msvc" "13.4.3"
     "@next/swc-win32-ia32-msvc" "13.4.3"
     "@next/swc-win32-x64-msvc" "13.4.3"
+
+node-forge@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.npmjs.org/node-forge/-/node-forge-1.3.1.tgz#be8da2af243b2417d5f646a770663a92b7e9ded3"
+  integrity sha512-dPEtOeMvF9VMcYV/1Wb8CPoVAXtp6MKMlcbAt4ddqmGqUJ6fQZFXkNZNkNlfevtNkGtaSoXf/vNNNSvgrdXwtA==
 
 node-releases@^2.0.8:
   version "2.0.11"
