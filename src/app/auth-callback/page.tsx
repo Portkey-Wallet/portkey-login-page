@@ -7,7 +7,7 @@ import { SOCIAL_AUTH_SESSION_KEY } from "src/constants/social";
 import { TOpenloginSessionInfo } from "src/types/auth";
 import { parseRedirectParams } from "src/utils/parseRedirectParams";
 import { tabMessagePush } from "src/utils/request";
-import { cryptoWeb } from "@portkey/utils";
+import { forgeWeb } from "@portkey/utils";
 
 export default function AuthCallback() {
   const [error, setError] = useState<string>();
@@ -73,7 +73,7 @@ export default function AuthCallback() {
       console.log(serviceURI, publicKey, loginId, params);
       let encrypted;
       try {
-        const cryptoManager = new cryptoWeb.WebCryptoManager(crypto.subtle);
+        const cryptoManager = new forgeWeb.ForgeCryptoManager();
         encrypted = await cryptoManager.encryptLong(publicKey, params);
       } catch (error) {
         throw "Failed to encrypt user token";

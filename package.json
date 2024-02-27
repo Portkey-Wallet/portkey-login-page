@@ -9,8 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@portkey/onboarding": "2.0.1-alpha.2",
-    "@portkey/utils": "2.0.1-alpha.2",
+    "@portkey/onboarding": "2.1.0-alpha.0",
+    "@portkey/utils": "2.1.0-alpha.0",
     "aelf-sdk": "^3.2.45-beta.1",
     "autoprefixer": "10.4.14",
     "clsx": "^1.2.1",
