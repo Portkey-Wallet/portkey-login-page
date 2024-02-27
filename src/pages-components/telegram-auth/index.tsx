@@ -55,41 +55,6 @@ export default function TelegramAuth({
     return `${serviceURL}${redirect}`;
   }, [onError, searchParams, serviceURL]);
 
-  // useEffect(() => {
-  //   const handler = async (event: any) => {
-  //     const detail = JSON.parse(event.detail);
-
-  //     switch (detail.event) {
-  //       case TGStauts.unauthorized:
-  //         changeLoading.current(false);
-
-  //         break;
-  //       case TGStauts.auth_user:
-  //         location.href = `${authCallbackUrl}?${stringify(detail.auth_data)}`;
-  //         break;
-  //     }
-  //   };
-
-  //   window.addEventListener("TG-SEND", handler);
-  //   return () => {
-  //     window.removeEventListener("TG-SEND", handler);
-  //   };
-  // }, [authCallbackUrl]);
-
-  // const tgAuth = useCallback(async (botId: string) => {
-  //   const TWidgetLogin = (window as any)?.TWidgetLogin;
-  //   if (!TWidgetLogin) throw "";
-  //   TWidgetLogin.init(
-  //     "widget_login",
-  //     botId,
-  //     { origin: "https://core.telegram.org" },
-  //     false,
-  //     "en"
-  //   );
-
-  //   TWidgetLogin.auth();
-  // }, []);
-
   const getTelegramAuth = useCallback(async () => {
     try {
       const { lang } = searchParams;
@@ -101,23 +66,18 @@ export default function TelegramAuth({
         `${serviceURL}/api/app/telegramAuth/getTelegramBot`
       ).then((res) => res.json());
 
-      // const botId = result.botId;
       const botName = result.botName;
       sessionStorage.setItem("TGURL", authCallbackUrl);
       changeLoading.current(false);
-
+      if (!botName) throw onError("Invalid botName");
       // TODO
       telegramAuthAccessToken({
         botUsername: botName,
-        authCallbackUrl:
-          "https://openlogin-test.portkey.finance/tg-auth-callback",
+        authCallbackUrl: `${origin}/tg-auth-callback`,
       });
-      // if (!botId) throw onError("Invalid botName");
-      // changeLoading.current(false);
+      changeLoading.current(false);
 
       window.removeEventListener("beforeunload", onCloseWindow);
-
-      // await tgAuth(botId);
     } catch (error) {
       changeLoading.current(false);
     }
@@ -127,30 +87,5 @@ export default function TelegramAuth({
     getTelegramAuth();
   }, [getTelegramAuth]);
 
-  return (
-    <div className="telegram-wrapper">
-      {/* <link
-        rel="stylesheet"
-        href="https://telegram.org/css/widget-frame.css?66"
-        data-precedence="next"
-      />
-
-      <div className="tgme_widget_login nouserpic large" id="widget_login">
-        <button
-          id="login-btn"
-          className="btn tgme_widget_login_button"
-          onClick={() => {
-            if (typeof window === "undefined") return;
-            changeLoading.current(true);
-
-            const TWidgetLogin = (window as any).TWidgetLogin;
-            TWidgetLogin.auth();
-          }}>
-          <i className="tgme_widget_login_button_icon"></i>log in with telegram
-        </button>
-      </div>
-
-      <Script src="/widget-frame.js" onLoad={async () => {}}></Script> */}
-    </div>
-  );
+  return <div className="telegram-wrapper"></div>;
 }

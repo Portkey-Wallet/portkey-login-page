@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
+import Loading from "src/components/Loading";
 
 export default function TGAuth() {
   useEffect(() => {
@@ -9,12 +10,5 @@ export default function TGAuth() {
       if (url) location.href = `${url}${location.search}`;
     }
   }, []);
-  return (
-    <div
-      onClick={() => {
-        window.open("/telegram-test");
-      }}>
-      page
-    </div>
-  );
+  return <Loading loading={true} />;
 }
