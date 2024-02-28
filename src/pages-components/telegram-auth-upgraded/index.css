@@ -1,6 +1,9 @@
-.telegram-wrapper {
+.telegram-auth-sdk-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+}
+
+.telegram-sdk-auth-body [id^="telegram-login-"] {
+  margin: 200px auto 0;
 }
