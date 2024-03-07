@@ -18,4 +18,9 @@
 
 body {
   color: rgb(var(--foreground-rgb));
+  background: #fff;
+}
+
+.bg-white {
+  background-color: #fff;
 }
