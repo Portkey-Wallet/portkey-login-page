@@ -20,6 +20,30 @@ export const TELEGRAM_UNITY_SDK_REDIRECT_URI =
   "/api/app/telegramAuth/receive/unitysdk";
 export const MAINNET_SERVICE_URL = process.env.NEXT_PUBLIC_APP_MAINNET_SERVICE;
 export const TESTNET_SERVICE_URL = process.env.NEXT_PUBLIC_APP_TESTNET_SERVICE;
+export const MAINNET_GRAPHQL_URL = process.env.NEXT_PUBLIC_APP_MAINNET_GRAPHQL;
+export const TESTNET_GRAPHQL_URL = process.env.NEXT_PUBLIC_APP_TESTNET_GRAPHQL;
+export const MAINNET_CONNECT_URL = process.env.NEXT_PUBLIC_APP_MAINNET_CONNECT;
+export const TESTNET_CONNECT_URL = process.env.NEXT_PUBLIC_APP_TESTNET_CONNECT;
+
+export enum UrlType {
+  SERVICE = "SERVICE",
+  CONNECT = "CONNECT",
+  GRAPHQL = "GRAPHQL",
+}
+
+export const PortkeyServiceUrl = {
+  MAINNET: {
+    [UrlType.SERVICE]: MAINNET_SERVICE_URL,
+    [UrlType.CONNECT]: MAINNET_CONNECT_URL,
+    [UrlType.GRAPHQL]: TESTNET_GRAPHQL_URL,
+  },
+  TESTNET: {
+    [UrlType.SERVICE]: TESTNET_SERVICE_URL,
+    [UrlType.CONNECT]: TESTNET_CONNECT_URL,
+    [UrlType.GRAPHQL]: MAINNET_GRAPHQL_URL,
+  },
+};
+
 
 export const TELEGRAM_REDIRECT_URI = {
   portkey: TELEGRAM_PORTKEY_REDIRECT_URI,
