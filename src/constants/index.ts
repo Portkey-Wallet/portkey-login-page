@@ -29,7 +29,10 @@ export const TELEGRAM_REDIRECT_URI = {
 export const PORTKEY_VERSION = "v2";
 
 /** TWITTER  */
-export const TWITTER_CLIENT_ID = "VE5DRUl1bHdoeHN0cW9POEpEYlY6MTpjaQ";
+
+export const TWITTER_CLIENT_ID =
+  process.env.NEXT_PUBLIC_APP_TWITTER_CLIENT_ID ||
+  "VE5DRUl1bHdoeHN0cW9POEpEYlY6MTpjaQ";
 
 export const TWITTER_LOGIN_REDIRECT_URI =
   "/api/app/telegramAuth/receive/openlogin";

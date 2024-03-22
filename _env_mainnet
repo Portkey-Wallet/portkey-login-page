@@ -1,4 +1,9 @@
 NEXT_PUBLIC_APP_APPLE_REDIRECT_URI=https://did-portkey.portkey.finance/api/app/AppleAuth/unifyReceive
 
-NEXT_PUBLIC_APP_MAINNET_SERVICE=https://did-portkey.portkey.finance
-NEXT_PUBLIC_APP_TESTNET_SERVICE=https://did-portkey-test.portkey.finance
+NEXT_PUBLIC_APP_MAINNET_SERVICE=https://aa-portkey.portkey.finance
+NEXT_PUBLIC_APP_TESTNET_SERVICE=https://aa-portkey-test.portkey.finance
+
+NEXT_PUBLIC_APP_TWITTER_CLIENT_ID=N3BDSzBMalRSd1NaTzhETjZKNzY6MTpjaQ
+
+NEXT_PUBLIC_APP_APPLE_REDIRECT_URI_V2 = https://aa-portkey.portkey.finance/api/app/appleAuth/unifyReceive
+
