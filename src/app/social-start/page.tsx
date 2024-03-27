@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { base64toJSON } from "src/utils";
 import { OPENLOGIN_ACTIONS } from "src/constants/social";
 import SocialAuth from "src/pages-components/social-auth";
-import { OpenloginParamConfig } from "src/types/auth";
+import { OpenLoginParamConfig } from "src/types/auth";
 
 export default function SocialStart() {
   const searchParams = useSearchParams();
@@ -22,7 +22,7 @@ export default function SocialStart() {
   return (
     <div>
       {params?.actionType === OPENLOGIN_ACTIONS.LOGIN ? (
-        <SocialAuth authInfo={params as OpenloginParamConfig} />
+        <SocialAuth authInfo={params as OpenLoginParamConfig} />
       ) : (
         <>`actionType` No Support</>
       )}

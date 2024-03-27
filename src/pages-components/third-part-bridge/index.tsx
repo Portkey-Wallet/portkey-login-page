@@ -1,9 +1,12 @@
 "use client";
 import React, { useCallback, useEffect } from "react";
 import qs from "query-string";
-import { sendTabMessage } from "src/utils/request";
 import { getPortkeyServiceUrl } from "src/utils/common";
 import { NetworkType } from "@portkey/did-ui-react";
+import {
+  CrossTabPushMessageType,
+  pushMessageByApi,
+} from "src/utils/crossTabMessagePush";
 
 export default function ThirdPartBridge() {
   const handler = useCallback(async () => {
@@ -53,14 +56,16 @@ export default function ThirdPartBridge() {
 
     // redirect back from ach-sell page
     if (params.portkeyMethod === "ACH_SELL_BACK") {
-      await sendTabMessage({
-        serviceURI:
-          getPortkeyServiceUrl({
-            networkType: params.networkType as NetworkType,
-          }) || "",
-        clientId: params.clientId,
-        methodName: "onCheckSellResult",
-        data: JSON.stringify(params),
+      await pushMessageByApi({
+        methodName: CrossTabPushMessageType.onCheckSellResult,
+        params: {
+          serviceURI:
+            getPortkeyServiceUrl({
+              networkType: params.networkType as NetworkType,
+            }) || "",
+          loginId: params.clientId,
+          data: JSON.stringify(params),
+        },
       });
       window.close();
     }
@@ -70,5 +75,5 @@ export default function ThirdPartBridge() {
     handler();
   }, [handler]);
 
-  return <div className='h-screen flex justify-center items-center'></div>;
+  return <div className="h-screen flex justify-center items-center"></div>;
 }

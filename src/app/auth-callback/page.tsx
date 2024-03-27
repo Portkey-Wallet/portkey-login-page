@@ -2,10 +2,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Loading from "src/components/Loading";
 import { SOCIAL_AUTH_SESSION_KEY } from "src/constants/social";
-import { TOpenloginSessionInfo } from "src/types/auth";
 import { parseRedirectParams } from "src/utils/parseRedirectParams";
-import { sendTabMessage } from "src/utils/request";
-import { forgeWeb } from "@portkey/utils";
+import {
+  CrossTabPushMessageType,
+  pushEncodeMessage,
+} from "src/utils/crossTabMessagePush";
 
 export default function AuthCallback() {
   const [error, setError] = useState<string>();
@@ -28,26 +29,13 @@ export default function AuthCallback() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   const postMessageByApi = useCallback(
     async (storage: string, params: string) => {
-      const sessionInfo = (JSON.parse(storage) || {}) as TOpenloginSessionInfo;
-      const { serviceURI, publicKey, loginId } = sessionInfo;
-      console.log(serviceURI, publicKey, loginId, params);
-      let encrypted;
-      try {
-        const cryptoManager = new forgeWeb.ForgeCryptoManager();
-        encrypted = await cryptoManager.encryptLong(publicKey, params);
-      } catch (error) {
-        throw "Failed to encrypt user token";
-      }
-
-      await sendTabMessage({
-        serviceURI: sessionInfo.serviceURI,
-        clientId: sessionInfo.loginId,
-        methodName: "onAuthStatusChanged",
-        data: encrypted,
-      });
+      return pushEncodeMessage(
+        storage,
+        CrossTabPushMessageType.onAuthStatusChanged,
+        params
+      );
     },
     []
   );

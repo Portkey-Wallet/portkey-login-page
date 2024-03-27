@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { TELEGRAM_REDIRECT_URI } from "src/constants";
-import { OpenloginParamConfig } from "src/types/auth";
+import { OpenLoginParamConfig } from "src/types/auth";
 import { telegramAuthAccessToken } from "src/utils/telegram";
 import "./index.css";
 
 interface TelegramAuthProps {
-  authInfo: OpenloginParamConfig;
+  authInfo: OpenLoginParamConfig;
   onLoadingChange: (v: boolean) => void;
   onError: (v: string) => void;
 }

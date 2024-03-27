@@ -1,7 +1,4 @@
-import { sleep } from "@portkey/utils";
-import { Toast } from "src/components/Toast/ToastShow";
-
-export const tabMessagePush = async ({
+export const tabMessagePushApi = async ({
   url,
   params,
 }: {
@@ -24,38 +21,5 @@ export const tabMessagePush = async ({
     return JSON.parse(resText);
   } catch (error) {
     return resText;
-  }
-};
-
-export const sendTabMessage = async (
-  params: {
-    serviceURI: string;
-    clientId: string;
-    methodName: string;
-    data: string;
-  },
-  times = 0
-): Promise<any> => {
-  const { serviceURI, clientId, methodName, data } = params;
-
-  try {
-    return await tabMessagePush({
-      url: `${serviceURI}/api/app/tab/complete`,
-      params: {
-        clientId,
-        methodName,
-        data,
-      },
-    });
-  } catch (error: any) {
-    const currentTimes = ++times;
-    await sleep(500);
-    if (currentTimes > 5) {
-      const err = error?.message || "Network error";
-      Toast.show(err);
-      throw err;
-    }
-
-    return sendTabMessage(params, currentTimes);
   }
 };

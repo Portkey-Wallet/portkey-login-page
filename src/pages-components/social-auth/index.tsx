@@ -7,7 +7,7 @@ import {
   FACEBOOK_REDIRECT_URI,
   GG_CLIENT_ID,
 } from "src/constants";
-import { OpenloginParamConfig } from "src/types/auth";
+import { OpenLoginParamConfig } from "src/types/auth";
 import { appleAuthIdToken } from "src/utils/AppleAuth";
 import { facebookAuthReplace } from "src/utils/Facebook/facebookAuthReplace";
 import { getGoogleAccessToken } from "src/utils/GoogleAuthReplace";
@@ -20,7 +20,7 @@ import { TwitterAuthV1 } from "src/utils/twitter/TwitterAuthV1";
 export default function SocialAuth({
   authInfo,
 }: {
-  authInfo: OpenloginParamConfig;
+  authInfo: OpenLoginParamConfig;
 }) {
   const [errorInfo, setError] = useState<string>();
   const [loading, setLoading] = useState(false);

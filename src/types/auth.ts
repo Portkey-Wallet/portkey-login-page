@@ -16,7 +16,7 @@ export interface GoogleAuthProps {
   fetchBasicProfile?: boolean;
 }
 
-export interface BaseOpenloginParam {
+export interface BaseOpenLoginParam {
   actionType: string;
   from: string;
   loginId: string;
@@ -26,9 +26,9 @@ export interface BaseOpenloginParam {
   serviceURI: string;
 }
 
-export type OpenloginParamConfig = BaseOpenloginParam & Record<string, string>;
+export type OpenLoginParamConfig = BaseOpenLoginParam & Record<string, string>;
 
-export type TOpenloginSessionInfo = {
+export type TOpenLoginSessionInfo = {
   loginId: string;
   publicKey: string;
   serviceURI: string;
