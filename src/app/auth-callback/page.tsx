@@ -1,12 +1,10 @@
 "use client";
-import { sleep } from "@portkey/utils";
 import React, { useCallback, useEffect, useState } from "react";
 import Loading from "src/components/Loading";
-import { Toast } from "src/components/Toast/ToastShow";
 import { SOCIAL_AUTH_SESSION_KEY } from "src/constants/social";
 import { TOpenloginSessionInfo } from "src/types/auth";
 import { parseRedirectParams } from "src/utils/parseRedirectParams";
-import { tabMessagePush } from "src/utils/request";
+import { sendTabMessage } from "src/utils/request";
 import { forgeWeb } from "@portkey/utils";
 
 export default function AuthCallback() {
@@ -30,41 +28,6 @@ export default function AuthCallback() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const sendMessage = useCallback(
-    async (
-      params: {
-        serviceURI: string;
-        loginId: string;
-        data: string;
-      },
-      times = 0
-    ): Promise<any> => {
-      const { serviceURI, loginId, data } = params;
-
-      try {
-        return await tabMessagePush({
-          url: `${serviceURI}/api/app/tab/complete`,
-          params: {
-            clientId: loginId,
-            methodName: "onAuthStatusChanged",
-            data: data,
-          },
-        });
-      } catch (error: any) {
-        console.log(error?.message);
-        const currentTimes = ++times;
-        await sleep(500);
-        if (currentTimes > 5) {
-          const err = error?.message || "Network error";
-          Toast.show(err);
-          throw err;
-        }
-
-        return sendMessage(params, currentTimes);
-      }
-    },
-    []
-  );
 
   const postMessageByApi = useCallback(
     async (storage: string, params: string) => {
@@ -79,13 +42,14 @@ export default function AuthCallback() {
         throw "Failed to encrypt user token";
       }
 
-      await sendMessage({
+      await sendTabMessage({
         serviceURI: sessionInfo.serviceURI,
-        loginId: sessionInfo.loginId,
+        clientId: sessionInfo.loginId,
+        methodName: "onAuthStatusChanged",
         data: encrypted,
       });
     },
-    [sendMessage]
+    []
   );
 
   const getToken = useCallback(async () => {
@@ -145,7 +109,7 @@ export default function AuthCallback() {
         <div>{error}</div>
       ) : (
         <div>
-          <Loading loading loadingText="Please do not reload the page." />
+          <Loading loading loadingText='Please do not reload the page.' />
         </div>
       )}
     </div>
