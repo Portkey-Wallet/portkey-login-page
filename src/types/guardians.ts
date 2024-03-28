@@ -1,4 +1,4 @@
-import { AccountTypeEnum } from "@portkey/services";
+import { AccountTypeEnum, OperationTypeEnum } from "@portkey/services";
 import { GuardianStep } from "src/constants/guardians";
 import { TOpenLoginSessionInfo } from "./auth";
 import type { NetworkType, UserGuardianStatus } from "@portkey/did-ui-react";
@@ -24,4 +24,14 @@ export type GuardianLocationState = TOpenLoginSessionInfo & {
   guardianStep: GuardianStep;
   isErrorTip?: boolean;
   currentGuardian?: UserGuardianStatus;
+};
+
+export type GuardianApprovalLocationState = TOpenLoginSessionInfo & {
+  networkType: NetworkType;
+  originChainId: ChainId;
+  targetChainId: ChainId;
+  caHash?: string;
+  identifier?: string;
+  operationType: OperationTypeEnum;
+  isErrorTip?: boolean;
 };

@@ -11,6 +11,11 @@ export type TPushMessageByApiParams = {
 
 export enum CrossTabPushMessageType {
   onAuthStatusChanged = "onAuthStatusChanged",
+  onSetLoginGuardianResult = "onSetLoginGuardianResult",
+  onAddGuardianResult = "onAddGuardianResult",
+  onRemoveGuardianResult = "onRemoveGuardianResult",
+  onEditGuardianResult = "onEditGuardianResult",
+  onGuardianApprovalResult = "onGuardianApprovalResult",
   onCheckSellResult = "onCheckSellResult",
 }
 

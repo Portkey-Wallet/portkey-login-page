@@ -5,10 +5,9 @@ import {
   handleErrorMessage,
   PortkeyStyleProvider,
 } from "@portkey/did-ui-react";
-import type { NetworkType, UserGuardianStatus } from "@portkey/did-ui-react";
-import { ChainId } from "@portkey/types";
-import { OperationTypeEnum } from "@portkey/services";
-import { useCallback, useEffect, useRef, useState } from "react";
+import type { UserGuardianStatus } from "@portkey/did-ui-react";
+import { OperationTypeEnum, GuardiansApproved } from "@portkey/services";
+import { useCallback, useEffect, useMemo, useState } from "react";
 // import BackHeaderForPage from "src/components/BackHeaderForPage";
 import Loading from "src/components/Loading";
 import { formatGuardianValue, getGuardianList } from "src/utils/guardians";
@@ -17,33 +16,42 @@ import { getOperationDetails } from "src/utils/manager";
 import { useSearchParams } from "next/navigation";
 import "@portkey/did-ui-react/dist/assets/index.css";
 import "./index.css";
+import { GuardianApprovalLocationState } from "src/types/guardians";
+import { base64toJSON } from "src/utils";
+import { DefaultGuardianApprovalLocationState, GUARDIAN_APPROVAL_SESSION_KEY } from "src/constants/guardians";
+import { CrossTabPushMessageType, pushEncodeMessage } from "src/utils/crossTabMessagePush";
 
 export default function GuardianApproval() {
   const searchParams = useSearchParams();
 
   // search params
-  const networkType = useRef(searchParams.get("networkType") as NetworkType);
-  const originChainId = useRef(searchParams.get("originChainId") as ChainId);
-  const targetChainId = useRef(searchParams.get("targetChainId") as ChainId);
-  const caHash = useRef(searchParams.get("caHash") as string);
-  const identifier = useRef(searchParams.get("identifier") as string);
-  const operationType = useRef(
-    Number(searchParams.get("operationType")) as OperationTypeEnum
+  const b64Params = searchParams.get("b64Params") || "";
+  const pageInfo: GuardianApprovalLocationState = useMemo(() => {
+    try {
+      const data = base64toJSON(b64Params);
+      console.log(data, "b64Params===");
+      return data as GuardianApprovalLocationState;
+    } catch (error) {
+      return DefaultGuardianApprovalLocationState;
+    }
+  }, [b64Params]);
+  const operationType = useMemo(
+    () => Number(pageInfo.operationType) as OperationTypeEnum,
+    [pageInfo]
   );
-  const isErrorTip = useRef(searchParams.get("isErrorTip") === "true");
 
   // page state
   const [loading, setLoading] = useState(false);
-  const operationDetails = getOperationDetails(operationType.current);
+  const operationDetails = getOperationDetails(operationType);
   const [guardianList, setGuardianList] = useState<UserGuardianStatus[]>();
 
   const getData = useCallback(async () => {
     setLoading(true);
     try {
       const _guardianList = await getGuardianList({
-        identifier: identifier.current,
-        caHash: caHash.current,
-        originChainId: originChainId.current,
+        identifier: pageInfo.identifier,
+        caHash: pageInfo.caHash,
+        originChainId: pageInfo.originChainId,
       });
       _guardianList.reverse();
       setGuardianList(_guardianList);
@@ -54,13 +62,38 @@ export default function GuardianApproval() {
           errorFields: "GetGuardianList",
           error: handleErrorMessage(error),
         },
-        isErrorTip.current
+        pageInfo.isErrorTip
         // onApprovalError
       );
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [
+    pageInfo.caHash,
+    pageInfo.identifier,
+    pageInfo.isErrorTip,
+    pageInfo.originChainId,
+  ]);
+
+  const onApprovalSuccess = useCallback(
+    async (approvalInfo: GuardiansApproved[]) => {
+      const guardiansApproved = formatGuardianValue(approvalInfo);
+      console.log(">>>>>>>>>>> guardiansApproved", guardiansApproved);
+
+      // save data
+      // back dapp webapp to execute the next step of the process
+      const session = sessionStorage.getItem(GUARDIAN_APPROVAL_SESSION_KEY);
+      if (session) {
+        await pushEncodeMessage(
+          session,
+          CrossTabPushMessageType.onGuardianApprovalResult,
+          JSON.stringify({ guardiansApproved })
+        );
+        return;
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     getData();
@@ -72,18 +105,13 @@ export default function GuardianApproval() {
         <GuardianApprovalComponent
           // header={<BackHeaderForPage title={""} leftElement={""} />}
           operationDetails={operationDetails}
-          originChainId={originChainId.current}
-          targetChainId={targetChainId.current}
+          originChainId={pageInfo.originChainId}
+          targetChainId={pageInfo.targetChainId}
           guardianList={guardianList}
-          onConfirm={async (approvalInfo) => {
-            const guardiansApproved = formatGuardianValue(approvalInfo);
-            // TODO TG back
-            console.log(">>>>>>>>>>> guardiansApproved", guardiansApproved);
-            // await onApprovalSuccess(guardiansApproved);
-          }}
+          onConfirm={onApprovalSuccess}
           // onError={onApprovalError}
-          networkType={networkType.current}
-          operationType={operationType.current}
+          networkType={pageInfo.networkType}
+          operationType={operationType}
         />
         <Loading loading={loading} />
       </div>

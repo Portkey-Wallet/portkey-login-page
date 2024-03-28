@@ -15,7 +15,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { base64toJSON } from "src/utils";
 import {
-    DefaultPageLocationState,
+  DefaultGuardianLocationState,
   GUARDIAN_ADD_SESSION_KEY,
   GUARDIAN_REMOVE_SESSION_KEY,
   GUARDIAN_VIEW_SESSION_KEY,
@@ -41,7 +41,7 @@ export default function Guardian() {
       console.log(data, "b64Params===");
       return data as GuardianLocationState;
     } catch (error) {
-      return DefaultPageLocationState;
+      return DefaultGuardianLocationState;
     }
   }, [b64Params]);
 
@@ -128,7 +128,7 @@ export default function Guardian() {
       if (session) {
         await pushEncodeMessage(
           session,
-          CrossTabPushMessageType.onAuthStatusChanged,
+          CrossTabPushMessageType.onSetLoginGuardianResult,
           JSON.stringify({ currentGuardian: operateGuardian, approvalInfo })
         );
         return;
@@ -148,7 +148,7 @@ export default function Guardian() {
       if (session) {
         await pushEncodeMessage(
           session,
-          CrossTabPushMessageType.onAuthStatusChanged,
+          CrossTabPushMessageType.onAddGuardianResult,
           JSON.stringify({ currentGuardian: operateGuardian, approvalInfo })
         );
         return;
@@ -165,7 +165,7 @@ export default function Guardian() {
       if (session) {
         await pushEncodeMessage(
           session,
-          CrossTabPushMessageType.onAuthStatusChanged,
+          CrossTabPushMessageType.onRemoveGuardianResult,
           JSON.stringify({
             currentGuardian: pageInfo.currentGuardian,
             approvalInfo,
@@ -188,7 +188,7 @@ export default function Guardian() {
       if (session) {
         await pushEncodeMessage(
           session,
-          CrossTabPushMessageType.onAuthStatusChanged,
+          CrossTabPushMessageType.onEditGuardianResult,
           JSON.stringify({ currentGuardian: operateGuardian, approvalInfo })
         );
         return;

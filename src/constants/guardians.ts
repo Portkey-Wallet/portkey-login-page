@@ -1,5 +1,7 @@
-import { GuardianLocationState } from "src/types/guardians";
-
+import {
+  GuardianApprovalLocationState,
+  GuardianLocationState,
+} from "src/types/guardians";
 
 export const GUARDIAN_VIEW_SESSION_KEY = "guardian-view-session-key";
 
@@ -19,7 +21,7 @@ export enum GuardianStep {
   guardianView = "guardianView",
 }
 
-export const DefaultPageLocationState: GuardianLocationState = {
+export const DefaultGuardianLocationState: GuardianLocationState = {
   networkType: "MAINNET",
   originChainId: "AELF",
   chainType: "aelf",
@@ -34,3 +36,16 @@ export const DefaultPageLocationState: GuardianLocationState = {
     key: "",
   },
 };
+
+export const DefaultGuardianApprovalLocationState: GuardianApprovalLocationState =
+  {
+    networkType: "MAINNET",
+    originChainId: "AELF",
+    targetChainId: "AELF",
+    caHash: "",
+    identifier: "",
+    operationType: 0,
+    loginId: "",
+    publicKey: "",
+    serviceURI: "",
+  };
