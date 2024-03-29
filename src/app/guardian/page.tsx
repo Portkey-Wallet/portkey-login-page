@@ -29,6 +29,7 @@ import { getGuardianList } from "src/utils/guardians";
 import { getVerifierListHandler } from "src/utils/guardians/verifier";
 import Loading from "src/components/Loading";
 import { GuardianLocationState } from "src/types/guardians";
+import PoweredFooter from "src/components/PoweredFooter";
 
 export default function Guardian() {
   const searchParams = useSearchParams();
@@ -221,42 +222,45 @@ export default function Guardian() {
 
   return (
     <div className="guardian-container">
-      {step === GuardianStep.guardianView && (
-        <GuardianViewComponent
-          originChainId={pageInfo.originChainId}
-          networkType={pageInfo.networkType}
-          currentGuardian={pageInfo.currentGuardian!}
-          onEditGuardian={editable ? onEditGuardian : undefined}
-          handleSetLoginGuardian={handleSetLoginGuardian}
-          guardianList={guardianList}
-        />
-      )}
-      {step === GuardianStep.guardianAdd && (
-        <GuardianAddComponent
-          caHash={pageInfo.caHash}
-          originChainId={pageInfo.originChainId}
-          networkType={pageInfo.networkType}
-          chainType={pageInfo.chainType}
-          verifierList={verifierList}
-          guardianList={guardianList}
-          handleAddGuardian={handleAddGuardian}
-        />
-      )}
-      {step === GuardianStep.guardianEdit && (
-        <GuardianEditComponent
-          originChainId={pageInfo.originChainId}
-          caHash={pageInfo.caHash}
-          networkType={pageInfo.networkType}
-          verifierList={verifierList}
-          currentGuardian={pageInfo.currentGuardian}
-          guardianList={guardianList}
-          preGuardian={preGuardian}
-          chainType={pageInfo.chainType}
-          handleEditGuardian={handleEditGuardian}
-          handleRemoveGuardian={handleRemoveGuardian}
-          handleSetLoginGuardian={handleSetLoginGuardian}
-        />
-      )}
+      <div className="guardian-body">
+        {step === GuardianStep.guardianView && (
+          <GuardianViewComponent
+            originChainId={pageInfo.originChainId}
+            networkType={pageInfo.networkType}
+            currentGuardian={pageInfo.currentGuardian!}
+            onEditGuardian={editable ? onEditGuardian : undefined}
+            handleSetLoginGuardian={handleSetLoginGuardian}
+            guardianList={guardianList}
+          />
+        )}
+        {step === GuardianStep.guardianAdd && (
+          <GuardianAddComponent
+            caHash={pageInfo.caHash}
+            originChainId={pageInfo.originChainId}
+            networkType={pageInfo.networkType}
+            chainType={pageInfo.chainType}
+            verifierList={verifierList}
+            guardianList={guardianList}
+            handleAddGuardian={handleAddGuardian}
+          />
+        )}
+        {step === GuardianStep.guardianEdit && (
+          <GuardianEditComponent
+            originChainId={pageInfo.originChainId}
+            caHash={pageInfo.caHash}
+            networkType={pageInfo.networkType}
+            verifierList={verifierList}
+            currentGuardian={pageInfo.currentGuardian}
+            guardianList={guardianList}
+            preGuardian={preGuardian}
+            chainType={pageInfo.chainType}
+            handleEditGuardian={handleEditGuardian}
+            handleRemoveGuardian={handleRemoveGuardian}
+            handleSetLoginGuardian={handleSetLoginGuardian}
+          />
+        )}
+      </div>
+      <PoweredFooter />
       <Loading loading={loading} />
     </div>
   );

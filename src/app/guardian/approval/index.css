@@ -1,9 +1,15 @@
 .guardian-approval-container {
   position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.ui-guardian-approval-wrapper .guardian-list-wrapper {
-  padding: 96px 24px 24px;
+.ui-guardian-approval-wrapper {
+  flex: 1;
+  .guardian-list-wrapper {
+    padding: 96px 24px 24px;
+  }
 }
 
 .loading-wrapper {

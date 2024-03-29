@@ -20,6 +20,7 @@ import { GuardianApprovalLocationState } from "src/types/guardians";
 import { base64toJSON } from "src/utils";
 import { DefaultGuardianApprovalLocationState, GUARDIAN_APPROVAL_SESSION_KEY } from "src/constants/guardians";
 import { CrossTabPushMessageType, pushEncodeMessage } from "src/utils/crossTabMessagePush";
+import PoweredFooter from "src/components/PoweredFooter";
 
 export default function GuardianApproval() {
   const searchParams = useSearchParams();
@@ -113,6 +114,7 @@ export default function GuardianApproval() {
           networkType={pageInfo.networkType}
           operationType={operationType}
         />
+        <PoweredFooter />
         <Loading loading={loading} />
       </div>
     </PortkeyStyleProvider>

@@ -1,6 +1,12 @@
 .guardian-container {
   position: relative;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.guardian-body {
+  flex: 1;
 }
 
 .portkey-ant-btn {
