@@ -13,9 +13,9 @@ export default function PortkeyDownload({
 }) {
   const download = useCallback(() => {
     const isMobile = devices.isMobile().phone;
-    let option = searchParams;
+    let { isEvokeApp, ...option } = searchParams;
 
-    if (isMobile) {
+    if (isMobile || isEvokeApp === 'true') {
       if (!option) {
         option = {
           action: "open",
