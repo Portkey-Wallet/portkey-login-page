@@ -16,9 +16,6 @@ import { useSearchParams } from "next/navigation";
 import { base64toJSON } from "src/utils";
 import {
   DefaultGuardianLocationState,
-  GUARDIAN_ADD_SESSION_KEY,
-  GUARDIAN_REMOVE_SESSION_KEY,
-  GUARDIAN_VIEW_SESSION_KEY,
   GuardianStep,
 } from "src/constants/guardians";
 import {
@@ -44,6 +41,15 @@ export default function Guardian() {
       return DefaultGuardianLocationState;
     }
   }, [b64Params]);
+  const sessionAuth = useMemo(
+    () =>
+      JSON.stringify({
+        loginId: pageInfo.loginId,
+        publicKey: pageInfo.publicKey,
+        serviceURI: pageInfo.serviceURI || "http://localhost:3002",
+      }),
+    [pageInfo.loginId, pageInfo.publicKey, pageInfo.serviceURI]
+  );
 
   // page state
   const [loading, setLoading] = useState(false);
@@ -124,17 +130,16 @@ export default function Guardian() {
     ) => {
       // save data
       // back dapp webapp to execute the next step of the process
-      const session = sessionStorage.getItem(GUARDIAN_VIEW_SESSION_KEY);
-      if (session) {
+      if (sessionAuth) {
         await pushEncodeMessage(
-          session,
+          sessionAuth,
           CrossTabPushMessageType.onSetLoginGuardianResult,
           JSON.stringify({ currentGuardian: operateGuardian, approvalInfo })
         );
         return;
       }
     },
-    []
+    [sessionAuth]
   );
 
   const handleAddGuardian = useCallback(
@@ -144,27 +149,25 @@ export default function Guardian() {
     ) => {
       // save data
       // back dapp webapp to execute the next step of the process
-      const session = sessionStorage.getItem(GUARDIAN_ADD_SESSION_KEY);
-      if (session) {
+      if (sessionAuth) {
         await pushEncodeMessage(
-          session,
+          sessionAuth,
           CrossTabPushMessageType.onAddGuardianResult,
           JSON.stringify({ currentGuardian: operateGuardian, approvalInfo })
         );
         return;
       }
     },
-    []
+    [sessionAuth]
   );
 
   const handleRemoveGuardian = useCallback(
     async (approvalInfo: GuardiansApproved[]) => {
       // save data
       // back dapp webapp to execute the next step of the process
-      const session = sessionStorage.getItem(GUARDIAN_REMOVE_SESSION_KEY);
-      if (session) {
+      if (sessionAuth) {
         await pushEncodeMessage(
-          session,
+          sessionAuth,
           CrossTabPushMessageType.onRemoveGuardianResult,
           JSON.stringify({
             currentGuardian: pageInfo.currentGuardian,
@@ -174,7 +177,7 @@ export default function Guardian() {
         return;
       }
     },
-    [pageInfo.currentGuardian]
+    [pageInfo.currentGuardian, sessionAuth]
   );
 
   const handleEditGuardian = useCallback(
@@ -184,35 +187,22 @@ export default function Guardian() {
     ) => {
       // save data
       // back dapp webapp to execute the next step of the process
-      const session = sessionStorage.getItem(GUARDIAN_ADD_SESSION_KEY);
-      if (session) {
+      if (sessionAuth) {
         await pushEncodeMessage(
-          session,
+          sessionAuth,
           CrossTabPushMessageType.onEditGuardianResult,
           JSON.stringify({ currentGuardian: operateGuardian, approvalInfo })
         );
         return;
       }
     },
-    []
+    [sessionAuth]
   );
 
   const onEditGuardian = useCallback(() => {
     setPreGuardian(pageInfo.currentGuardian);
     setStep(GuardianStep.guardianEdit);
   }, [pageInfo.currentGuardian]);
-
-  useEffect(() => {
-    // save session
-    sessionStorage.setItem(
-      GUARDIAN_VIEW_SESSION_KEY,
-      JSON.stringify({
-        loginId: pageInfo.loginId,
-        publicKey: pageInfo.publicKey,
-        serviceURI: pageInfo.serviceURI,
-      })
-    );
-  }, [pageInfo.loginId, pageInfo.publicKey, pageInfo.serviceURI]);
 
   useEffect(() => {
     getData();

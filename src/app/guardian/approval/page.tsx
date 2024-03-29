@@ -18,7 +18,7 @@ import "@portkey/did-ui-react/dist/assets/index.css";
 import "./index.css";
 import { GuardianApprovalLocationState } from "src/types/guardians";
 import { base64toJSON } from "src/utils";
-import { DefaultGuardianApprovalLocationState, GUARDIAN_APPROVAL_SESSION_KEY } from "src/constants/guardians";
+import { DefaultGuardianApprovalLocationState } from "src/constants/guardians";
 import { CrossTabPushMessageType, pushEncodeMessage } from "src/utils/crossTabMessagePush";
 
 export default function GuardianApproval() {
@@ -38,6 +38,15 @@ export default function GuardianApproval() {
   const operationType = useMemo(
     () => Number(pageInfo.operationType) as OperationTypeEnum,
     [pageInfo]
+  );
+  const sessionAuth = useMemo(
+    () =>
+      JSON.stringify({
+        loginId: pageInfo.loginId,
+        publicKey: pageInfo.publicKey,
+        serviceURI: pageInfo.serviceURI || "http://localhost:3002",
+      }),
+    [pageInfo.loginId, pageInfo.publicKey, pageInfo.serviceURI]
   );
 
   // page state
@@ -82,17 +91,16 @@ export default function GuardianApproval() {
 
       // save data
       // back dapp webapp to execute the next step of the process
-      const session = sessionStorage.getItem(GUARDIAN_APPROVAL_SESSION_KEY);
-      if (session) {
+      if (sessionAuth) {
         await pushEncodeMessage(
-          session,
+          sessionAuth,
           CrossTabPushMessageType.onGuardianApprovalResult,
           JSON.stringify({ guardiansApproved })
         );
         return;
       }
     },
-    []
+    [sessionAuth]
   );
 
   useEffect(() => {
