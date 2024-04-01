@@ -192,12 +192,12 @@ export default function Guardian() {
         await pushEncodeMessage(
           sessionAuth,
           CrossTabPushMessageType.onEditGuardianResult,
-          JSON.stringify({ currentGuardian: operateGuardian, approvalInfo })
+          JSON.stringify({ preGuardian, currentGuardian: operateGuardian, approvalInfo })
         );
         return;
       }
     },
-    [sessionAuth]
+    [preGuardian, sessionAuth]
   );
 
   const onEditGuardian = useCallback(() => {
