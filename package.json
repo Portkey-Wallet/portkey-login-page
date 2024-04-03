@@ -9,9 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@portkey/did-ui-react": "^2.5.0-alpha.0",
-    "@portkey/onboarding": "2.5.0-alpha.0",
-    "@portkey/utils": "2.5.0-alpha.0",
+    "@portkey/did-ui-react": "^2.5.0-alpha.1",
+    "@portkey/onboarding": "2.5.0-alpha.1",
+    "@portkey/utils": "2.5.0-alpha.1",
     "aelf-sdk": "^3.2.45-beta.1",
     "autoprefixer": "10.4.14",
     "clsx": "^1.2.1",
