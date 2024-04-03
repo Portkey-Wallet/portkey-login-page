@@ -1,3 +1,5 @@
+import { NetworkType } from "@portkey/did-ui-react";
+
 export const APPLE_CLIENT_ID = "com.portkey.did.extension.service";
 
 export const APPLE_REDIRECT_URI =
@@ -25,6 +27,9 @@ export const TESTNET_GRAPHQL_URL = process.env.NEXT_PUBLIC_APP_TESTNET_GRAPHQL;
 export const MAINNET_CONNECT_URL = process.env.NEXT_PUBLIC_APP_MAINNET_CONNECT;
 export const TESTNET_CONNECT_URL = process.env.NEXT_PUBLIC_APP_TESTNET_CONNECT;
 
+export const NETWORK_TYPE = process.env
+  .NEXT_PUBLIC_APP_NETWORK_TYPE as NetworkType;
+
 export enum UrlType {
   SERVICE = "SERVICE",
   CONNECT = "CONNECT",
@@ -43,7 +48,6 @@ export const PortkeyServiceUrl = {
     [UrlType.GRAPHQL]: MAINNET_GRAPHQL_URL,
   },
 };
-
 
 export const TELEGRAM_REDIRECT_URI = {
   portkey: TELEGRAM_PORTKEY_REDIRECT_URI,
