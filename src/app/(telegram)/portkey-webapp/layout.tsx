@@ -1,26 +1,34 @@
 "use client";
-import { PortkeyProvider, ConfigProvider } from "@portkey/did-ui-react";
-import { ReactNode } from "react";
+import {
+  PortkeyProvider,
+  ConfigProvider,
+  NetworkType,
+} from "@portkey/did-ui-react";
+import { ReactNode, useRef } from "react";
 import "@portkey/did-ui-react/dist/assets/index.css";
-import { NETWORK_TYPE, PortkeyServiceUrl, UrlType } from "src/constants";
-
-ConfigProvider.setGlobalConfig({
-  graphQLUrl: PortkeyServiceUrl[NETWORK_TYPE][UrlType.GRAPHQL],
-  requestDefaults: {
-    timeout: 30000,
-    baseURL: PortkeyServiceUrl[NETWORK_TYPE][UrlType.SERVICE],
-  },
-  serviceUrl: PortkeyServiceUrl[NETWORK_TYPE][UrlType.SERVICE],
-  customNetworkType: "offline",
-});
+import { PortkeyServiceUrl, UrlType } from "src/constants";
+import { useSearchParams } from "next/navigation";
 
 export default function PortkeyCustomProvider({
   children,
 }: {
   children?: ReactNode;
 }) {
+  const searchParams = useSearchParams();
+  const networkType = useRef(searchParams.get("networkType") as NetworkType);
+
+  ConfigProvider.setGlobalConfig({
+    graphQLUrl: PortkeyServiceUrl[networkType.current][UrlType.GRAPHQL],
+    requestDefaults: {
+      timeout: 30000,
+      baseURL: PortkeyServiceUrl[networkType.current][UrlType.SERVICE],
+    },
+    serviceUrl: PortkeyServiceUrl[networkType.current][UrlType.SERVICE],
+    customNetworkType: "offline",
+  });
+
   return (
-    <PortkeyProvider networkType={NETWORK_TYPE} theme={"light"}>
+    <PortkeyProvider networkType={networkType.current} theme={"light"}>
       {children}
     </PortkeyProvider>
   );

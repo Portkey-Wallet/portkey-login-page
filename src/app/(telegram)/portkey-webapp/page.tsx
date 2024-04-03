@@ -5,10 +5,14 @@ import { sleep } from "@portkey/utils";
 import { useCallback, useRef, useState } from "react";
 import { useEffectOnce } from "react-use";
 import "@portkey/did-ui-react/dist/assets/index.css";
-import { TelegramLoginButton } from "@portkey/did-ui-react";
+import { NetworkType, TelegramLoginButton } from "@portkey/did-ui-react";
 import "./index.css";
+import { useSearchParams } from "next/navigation";
 
 export default function PortkeyWebapp() {
+  const searchParams = useSearchParams();
+  const networkType = useRef(searchParams.get("networkType") as NetworkType);
+
   const TelegramRef = useRef<any>();
   const [showTelegramLoginButton, setShowTelegramLoginButton] =
     useState<boolean>(true);
@@ -32,7 +36,12 @@ export default function PortkeyWebapp() {
 
   return (
     <div className="portkey-telegram-webapp">
-      <Image src={Portkey} alt="Portkey logo" />
+      <div className="portkey-telegram-webapp-logo">
+        <Image src={Portkey} alt="Portkey logo" />
+        {networkType.current !== "MAINNET" && (
+          <span className="portkey-network-type">TEST</span>
+        )}
+      </div>
       {showTelegramLoginButton && <TelegramLoginButton />}
     </div>
   );
