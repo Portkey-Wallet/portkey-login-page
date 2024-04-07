@@ -52,6 +52,7 @@ export default function AuthCallback() {
 
       if (session) {
         await postMessageByApi(session, infoStr);
+        window.close();
         return;
       }
 
