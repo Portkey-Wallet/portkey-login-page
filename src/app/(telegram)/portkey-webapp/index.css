@@ -1,0 +1,33 @@
+.portkey-telegram-webapp {
+  width: 100%;
+  height: 100%;
+  padding-top: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.portkey-telegram-webapp-logo{
+  position: relative;
+}
+
+.portkey-ui-telegram-login-button {
+  margin-top: 64px;
+}
+
+.portkey-network-type {
+  position: absolute;
+  top: 0;
+  right: -42px;
+  width: 42px;
+  height: 18px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #5b8ef4;
+  background-color: #eef3fd;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

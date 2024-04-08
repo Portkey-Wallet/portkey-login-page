@@ -1,6 +1,42 @@
 import queryString from "query-string";
 
-export const parseRedirectParams = () => {
+const tOauthSignatureKey = "oauth_signature=";
+const formatTwitterSignatureWithToken = (token: string) => {
+  // const strArr = token.split(tOauthSignatureKey);
+  // const signatureKV = strArr[1];
+  // const signatureStr = signatureKV.replaceAll('"', "");
+
+  // return (
+  //   strArr[0] +
+  //   tOauthSignatureKey +
+  //   '"' +
+  //   encodeURIComponent(signatureStr) +
+  //   '"'
+  // );
+
+  const strArr = token.split(",");
+  // console.log(strArr, "strArr==");
+  let _token = "";
+  strArr.forEach((item) => {
+    if (item.startsWith(tOauthSignatureKey)) {
+      const signatureStr = item.split('"');
+
+      _token =
+        _token +
+        tOauthSignatureKey +
+        `"${encodeURIComponent(signatureStr[1])}"` +
+        ",";
+    } else {
+      _token = _token + item + ",";
+    }
+  });
+  if (_token.slice(-1) === ",") _token = _token.slice(0, -1);
+  return _token;
+};
+
+export const parseRedirectParams = (parseParam?: {
+  from?: "openlogin" | "portkey";
+}) => {
   let token;
   let provider;
   let errorMessage;
@@ -32,15 +68,32 @@ export const parseRedirectParams = () => {
       token = authToken;
       provider = "Telegram";
     } else if (type === "Twitter") {
-      token = JSON.stringify({
-        token: authToken,
-        id,
-        type,
-        name,
-        username,
-      });
-
       provider = "Twitter";
+      if (parseParam?.from === "openlogin") {
+        // token = `${(authToken)}&id=${id}&name=${name}&username=${username}`;
+        console.log(authToken, "authToken===");
+
+        const formatToken = formatTwitterSignatureWithToken(
+          authToken as string
+        );
+
+        token = JSON.stringify({
+          token: formatToken,
+          id,
+          type,
+          name,
+          username,
+        });
+        console.log(token, "token===");
+      } else {
+        token = JSON.stringify({
+          token: authToken,
+          id,
+          type,
+          name,
+          username,
+        });
+      }
     } else if (type === "Facebook") {
       token = JSON.stringify({
         token: authToken,

@@ -1,0 +1,15 @@
+.powered-wrapper {
+  @apply w-full flex-shrink-0 mb-2;
+  .powered {
+    @apply flex justify-center items-center text-[#B6BABF] text-xs;
+    .portkey-icon {
+      @apply ml-2 mr-1;
+      svg path {
+        @apply fill-[#B6BABF];
+      }
+    }
+    .brand-name {
+      @apply leading-5 font-medium;
+    }
+  }
+}

@@ -2,6 +2,10 @@ NEXT_PUBLIC_APP_APPLE_REDIRECT_URI=https://did-portkey.portkey.finance/api/app/A
 
 NEXT_PUBLIC_APP_MAINNET_SERVICE=https://aa-portkey.portkey.finance
 NEXT_PUBLIC_APP_TESTNET_SERVICE=https://aa-portkey-test.portkey.finance
+NEXT_PUBLIC_APP_MAINNET_CONNECT=https://auth-aa-portkey.portkey.finance
+NEXT_PUBLIC_APP_TESTNET_CONNECT=https://auth-aa-portkey-test.portkey.finance
+NEXT_PUBLIC_APP_MAINNET_GRAPHQL=https://dapp-aa-portkey.portkey.finance/Portkey_V2_DID/PortKeyIndexerCASchema/graphql
+NEXT_PUBLIC_APP_TESTNET_GRAPHQL=https://dapp-aa-portkey-test.portkey.finance/Portkey_V2_DID/PortKeyIndexerCASchema/graphql
 
 NEXT_PUBLIC_APP_TWITTER_CLIENT_ID=N3BDSzBMalRSd1NaTzhETjZKNzY6MTpjaQ
 
