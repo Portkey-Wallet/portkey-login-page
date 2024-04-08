@@ -14,7 +14,14 @@ const insertScript = async (
       appleScriptTag.src = jsSrc;
       appleScriptTag.async = true;
       appleScriptTag.defer = true;
+      console.log("insertScript appleScriptTag", appleScriptTag);
       const scriptNode = document.getElementsByTagName("script")?.[0];
+      console.log("insertScript document", document);
+      console.log(
+        'insertScript document.getElementsByTagName("script")',
+        document.getElementsByTagName("script")
+      );
+      console.log("insertScript scriptNode", scriptNode);
       if (!scriptNode) {
         document.getElementsByTagName("body")[0].appendChild(appleScriptTag);
       } else {
@@ -38,8 +45,13 @@ interface AppleAuthProps {
 }
 
 const loadAppleSdk = async (props: AppleAuthProps) => {
+  console.log("loadAppleSdk window", window);
   if (!(window as any)?.AppleID?.auth) {
     await insertScript(document, "script", SCRIPT_ID, JS_SRC);
+    console.log(
+      "loadAppleSdk (window as any).AppleID",
+      (window as any).AppleID
+    );
   }
 
   const options = {
@@ -56,8 +68,13 @@ const loadAppleSdk = async (props: AppleAuthProps) => {
 export const appleAuthIdToken = async (props: AppleAuthProps): Promise<any> => {
   return new Promise(async (resolve, reject) => {
     try {
+      console.log("appleAuthIdToken window", window);
       if (typeof window === "undefined") throw new Error("window is undefined");
       await loadAppleSdk(props);
+      console.log(
+        "appleAuthIdToken window.AppleID",
+        (window as any).AppleID
+      );
       await (window as any).AppleID.auth.signIn();
       resolve(undefined);
     } catch (err) {

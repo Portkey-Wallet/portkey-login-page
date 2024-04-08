@@ -131,7 +131,8 @@ export default function SocialAuth({
         authInfo.loginProvider === "Telegram" && !errorInfo
           ? ""
           : "h-screen flex justify-center items-center"
-      )}>
+      )}
+    >
       {authInfo.loginProvider === "Telegram" && !errorInfo ? (
         <TelegramAuthUpgraded
           authInfo={authInfo}
