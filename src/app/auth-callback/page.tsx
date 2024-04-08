@@ -53,7 +53,6 @@ export default function AuthCallback() {
 
       if (session) {
         await postMessageByApi(session, infoStr);
-        window.close();
         // TODO tg - change text
         Toast.show('Authorization successful, please back to Telegram')
         return;
@@ -83,7 +82,7 @@ export default function AuthCallback() {
         "*"
       );
       window.removeEventListener("beforeunload", onCloseWindow);
-      window.close();
+      // window.close();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     } catch (error: any) {
       if (typeof error === "string") return setError(error);
