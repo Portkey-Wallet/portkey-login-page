@@ -15,9 +15,13 @@ const insertScript = async (
       appleScriptTag.async = true;
       appleScriptTag.defer = true;
       const scriptNode = document.getElementsByTagName("script")?.[0];
-      scriptNode &&
-        scriptNode.parentNode &&
-        scriptNode.parentNode.insertBefore(appleScriptTag, scriptNode);
+      if (!scriptNode) {
+        document.getElementsByTagName("body")[0].appendChild(appleScriptTag);
+      } else {
+        scriptNode &&
+          scriptNode.parentNode &&
+          scriptNode.parentNode.insertBefore(appleScriptTag, scriptNode);
+      }
       appleScriptTag.onload = resolve;
     } catch (error) {
       reject(error);
