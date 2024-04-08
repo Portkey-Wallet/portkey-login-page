@@ -1,7 +1,6 @@
 "use client";
 import Portkey from "../../../assets/svg/Portkey.svg";
 import Image from "next/image";
-import { sleep } from "@portkey/utils";
 import { useCallback, useRef, useState } from "react";
 import { useEffectOnce } from "react-use";
 import "@portkey/did-ui-react/dist/assets/index.css";
@@ -12,6 +11,7 @@ import { useSearchParams } from "next/navigation";
 export default function PortkeyWebapp() {
   const searchParams = useSearchParams();
   const networkType = useRef(searchParams.get("networkType") as NetworkType);
+  const timerRef = useRef<NodeJS.Timer>();
 
   const TelegramRef = useRef<any>();
   const [showTelegramLoginButton, setShowTelegramLoginButton] =
@@ -19,10 +19,11 @@ export default function PortkeyWebapp() {
 
   const getTelegram = useCallback(async () => {
     if (typeof window !== "undefined") {
-      await sleep(1000);
-
       TelegramRef.current = (window as any)?.Telegram;
       if (!TelegramRef.current) return;
+
+      clearInterval(timerRef.current);
+      timerRef.current = undefined;
 
       TelegramRef.current.WebApp.ready();
       console.log("TelegramRef.current", TelegramRef.current);
@@ -31,7 +32,14 @@ export default function PortkeyWebapp() {
   }, []);
 
   useEffectOnce(() => {
-    getTelegram();
+    timerRef.current = setInterval(() => {
+      getTelegram();
+    }, 1000);
+
+    return () => {
+      clearInterval(timerRef.current);
+      timerRef.current = undefined;
+    };
   });
 
   return (
