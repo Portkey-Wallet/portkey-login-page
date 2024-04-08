@@ -4,7 +4,9 @@ import queryString from "query-string";
 import Loading from "src/components/Loading";
 
 function isiOS() {
-  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  return (
+    /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream
+  );
 }
 
 export default function AuthCallback() {
@@ -19,13 +21,15 @@ export default function AuthCallback() {
       if (!token) return setError("Missing token in query string");
       provider = "Telegram";
 
-      const localhostDomain = isiOS() ? 'bs-local.com' : '127.0.0.1';
+      const localhostDomain = isiOS() ? "bs-local.com" : "127.0.0.1";
 
       if (!!window) {
-        window.location.href = `http://${localhostDomain}:53285?${queryString.stringify({
-          token,
-          provider,
-        })}`;
+        window.location.href = `http://${localhostDomain}:53285?${queryString.stringify(
+          {
+            token,
+            provider,
+          }
+        )}`;
       }
     } else {
       return setError("Missing token in query string");
