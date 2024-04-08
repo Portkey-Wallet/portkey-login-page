@@ -7,6 +7,7 @@ import {
   CrossTabPushMessageType,
   pushEncodeMessage,
 } from "src/utils/crossTabMessagePush";
+import { Toast } from "src/components/Toast/ToastShow";
 
 export default function AuthCallback() {
   const [error, setError] = useState<string>();
@@ -53,6 +54,8 @@ export default function AuthCallback() {
       if (session) {
         await postMessageByApi(session, infoStr);
         window.close();
+        // TODO tg - change text
+        Toast.show('Authorization successful, please back to Telegram')
         return;
       }
 
@@ -98,7 +101,7 @@ export default function AuthCallback() {
         <div>{error}</div>
       ) : (
         <div>
-          <Loading loading loadingText='Please do not reload the page.' />
+          <Loading loading loadingText="Please do not reload the page." />
         </div>
       )}
     </div>
