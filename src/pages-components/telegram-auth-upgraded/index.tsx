@@ -50,6 +50,8 @@ export default function TelegramAuthUpgraded({
       if (!botName) throw onError("Invalid telegram bot");
       changeLoading.current(false);
 
+      history.pushState({ path: location.pathname }, "", location.pathname);
+
       telegramAuthAccessToken({
         botUsername: botName,
         authCallbackUrl: `${origin}/tg-auth-callback`,

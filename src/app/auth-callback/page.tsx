@@ -8,7 +8,6 @@ import {
   pushEncodeMessage,
 } from "src/utils/crossTabMessagePush";
 import { Toast } from "src/components/Toast/ToastShow";
-import { sleep } from "@portkey/utils";
 
 export default function AuthCallback() {
   const [error, setError] = useState<string>();
@@ -52,10 +51,6 @@ export default function AuthCallback() {
 
       const infoStr = JSON.stringify(params);
 
-      console.log("======== getToken params", params);
-      console.log("======== getToken session", session);
-
-      await sleep(1000 * 20); // TODO tg delete
       if (session) {
         await postMessageByApi(session, infoStr);
         // TODO tg - change text
@@ -87,7 +82,7 @@ export default function AuthCallback() {
         "*"
       );
       window.removeEventListener("beforeunload", onCloseWindow);
-      // window.close();
+      window.close();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     } catch (error: any) {
       if (typeof error === "string") return setError(error);
