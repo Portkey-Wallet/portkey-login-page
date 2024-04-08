@@ -53,7 +53,6 @@ export default function AuthCallback() {
 
       if (session) {
         await postMessageByApi(session, infoStr);
-        window.close();
         // TODO tg - change text
         Toast.show('Authorization successful, please back to Telegram')
         return;
