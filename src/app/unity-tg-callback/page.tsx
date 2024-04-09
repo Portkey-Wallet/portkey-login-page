@@ -5,7 +5,7 @@ import Loading from "src/components/Loading";
 
 function isiOS() {
   return (
-    /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream
+    /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
   );
 }
 
