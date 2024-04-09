@@ -4,33 +4,51 @@ import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
 import { useEffectOnce } from "react-use";
 import "@portkey/did-ui-react/dist/assets/index.css";
-import { NetworkType, TelegramLoginButton } from "@portkey/did-ui-react";
+import {
+  NetworkType,
+  TelegramLoginButton,
+  handleErrorMessage,
+  singleMessage,
+} from "@portkey/did-ui-react";
 import "./index.css";
 import { useSearchParams } from "next/navigation";
 import { loadTelegramSdk } from "src/utils/telegram";
+import Loading from "src/components/Loading";
 
 export default function PortkeyWebapp() {
   const searchParams = useSearchParams();
   const networkType = useRef(searchParams.get("networkType") as NetworkType);
   const timerRef = useRef<NodeJS.Timer>();
+  const [loading, setLoading] = useState(false);
 
   const TelegramRef = useRef<any>();
   const [showTelegramLoginButton, setShowTelegramLoginButton] =
     useState<boolean>(true);
 
   const getTelegram = useCallback(async () => {
-    if (typeof window !== "undefined") {
-      TelegramRef.current = (window as any)?.Telegram;
-      if (!TelegramRef.current) {
-        await loadTelegramSdk();
+    try {
+      if (typeof window !== "undefined") {
+        setLoading(true);
+
+        TelegramRef.current = (window as any)?.Telegram;
+        if (!TelegramRef.current) {
+          await loadTelegramSdk();
+        }
+
+        clearInterval(timerRef.current);
+        timerRef.current = undefined;
+
+        TelegramRef.current.WebApp.ready();
+        console.log("TelegramRef.current", TelegramRef.current);
+        setShowTelegramLoginButton(true);
       }
-
-      clearInterval(timerRef.current);
-      timerRef.current = undefined;
-
-      TelegramRef.current.WebApp.ready();
-      console.log("TelegramRef.current", TelegramRef.current);
-      setShowTelegramLoginButton(true);
+    } catch (error) {
+      singleMessage.error(
+        "Failed to load telegram sdk, please refresh the page."
+      );
+      throw new Error(handleErrorMessage(error));
+    } finally {
+      setLoading(false);
     }
   }, []);
 
@@ -54,6 +72,7 @@ export default function PortkeyWebapp() {
         )}
       </div>
       {showTelegramLoginButton && <TelegramLoginButton />}
+      <Loading loading={loading} />
     </div>
   );
 }
