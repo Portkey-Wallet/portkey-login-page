@@ -3,7 +3,7 @@ export const tabMessagePushApi = async ({
   params,
 }: {
   url: string;
-  params: Record<string, string>;
+  params: Record<string, string | boolean>;
 }) => {
   const fetchResult = await fetch(url, {
     method: "POST",

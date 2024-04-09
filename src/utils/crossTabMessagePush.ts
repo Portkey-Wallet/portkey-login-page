@@ -39,6 +39,7 @@ export const pushMessageByApi = async ({
         clientId: loginId,
         methodName: methodName,
         data: data,
+        needPersist: true,
       },
     });
   } catch (error: any) {
