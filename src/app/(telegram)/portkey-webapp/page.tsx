@@ -7,6 +7,7 @@ import "@portkey/did-ui-react/dist/assets/index.css";
 import { NetworkType, TelegramLoginButton } from "@portkey/did-ui-react";
 import "./index.css";
 import { useSearchParams } from "next/navigation";
+import { loadTelegramSdk } from "src/utils/telegram";
 
 export default function PortkeyWebapp() {
   const searchParams = useSearchParams();
@@ -20,7 +21,9 @@ export default function PortkeyWebapp() {
   const getTelegram = useCallback(async () => {
     if (typeof window !== "undefined") {
       TelegramRef.current = (window as any)?.Telegram;
-      if (!TelegramRef.current) return;
+      if (!TelegramRef.current) {
+        await loadTelegramSdk();
+      }
 
       clearInterval(timerRef.current);
       timerRef.current = undefined;
