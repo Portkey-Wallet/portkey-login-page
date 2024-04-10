@@ -1,7 +1,7 @@
 import { AccountTypeEnum, OperationTypeEnum } from "@portkey/services";
 import { GuardianStep } from "src/constants/guardians";
 import { TOpenLoginSessionInfo } from "./auth";
-import type { NetworkType, UserGuardianStatus } from "@portkey/did-ui-react";
+import type { NetworkType, UserGuardianStatus, ITelegramInfo } from "@portkey/did-ui-react";
 import { ChainId, ChainType } from "@portkey/types";
 
 export interface verificationInfo {
@@ -24,6 +24,7 @@ export type GuardianLocationState = TOpenLoginSessionInfo & {
   guardianStep: GuardianStep;
   isErrorTip?: boolean;
   currentGuardian?: UserGuardianStatus;
+  telegramInfo: ITelegramInfo;
 };
 
 export type GuardianApprovalLocationState = TOpenLoginSessionInfo & {
