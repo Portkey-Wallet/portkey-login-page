@@ -10,7 +10,7 @@ import { OperationTypeEnum, GuardiansApproved } from "@portkey/services";
 import { useCallback, useEffect, useMemo, useState } from "react";
 // import BackHeaderForPage from "src/components/BackHeaderForPage";
 import Loading from "src/components/Loading";
-import { formatGuardianValue, getGuardianList } from "src/utils/guardians";
+import { getGuardianList } from "src/utils/guardians";
 import { getOperationDetails } from "src/utils/manager";
 // import { GuardianApprovedItem } from "src/types/guardians";
 import { useSearchParams } from "next/navigation";
@@ -19,7 +19,10 @@ import "./index.css";
 import { GuardianApprovalLocationState } from "src/types/guardians";
 import { base64toJSON } from "src/utils";
 import { DefaultGuardianApprovalLocationState } from "src/constants/guardians";
-import { CrossTabPushMessageType, pushEncodeMessage } from "src/utils/crossTabMessagePush";
+import {
+  CrossTabPushMessageType,
+  pushEncodeMessage,
+} from "src/utils/crossTabMessagePush";
 import PoweredFooter from "src/components/PoweredFooter";
 
 export default function GuardianApproval() {
@@ -87,8 +90,8 @@ export default function GuardianApproval() {
 
   const onApprovalSuccess = useCallback(
     async (approvalInfo: GuardiansApproved[]) => {
-      const guardiansApproved = formatGuardianValue(approvalInfo);
-      console.log(">>>>>>>>>>> guardiansApproved", guardiansApproved);
+      // const guardiansApproved = formatGuardianValue(approvalInfo);
+      // console.log(">>>>>>>>>>> guardiansApproved", guardiansApproved);
 
       // save data
       // back dapp webapp to execute the next step of the process
@@ -96,7 +99,7 @@ export default function GuardianApproval() {
         await pushEncodeMessage(
           sessionAuth,
           CrossTabPushMessageType.onGuardianApprovalResult,
-          JSON.stringify({ guardiansApproved })
+          JSON.stringify({ approvalInfo }) //guardiansApproved
         );
         return;
       }
