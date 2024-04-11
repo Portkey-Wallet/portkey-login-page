@@ -1,15 +1,24 @@
-.powered-wrapper {
-  @apply w-full flex-shrink-0 mb-2;
+.open-login-powered-wrapper {
+  width: 100%;
+  flex-shrink: 0;
+  margin-bottom: 8px;
   .powered {
-    @apply flex justify-center items-center text-[#B6BABF] text-xs;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #b6babf;
+    font-size: 12px;
+    line-height: 16px;
     .portkey-icon {
-      @apply ml-2 mr-1;
+      margin-left: 8px;
+      margin-right: 4px;
       svg path {
-        @apply fill-[#B6BABF];
+        fill: #b6babf;
       }
     }
     .brand-name {
-      @apply leading-5 font-medium;
+      line-height: 20px;
+      font-weight: 500;
     }
   }
 }
