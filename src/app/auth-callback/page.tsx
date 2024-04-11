@@ -7,7 +7,9 @@ import {
   CrossTabPushMessageType,
   pushEncodeMessage,
 } from "src/utils/crossTabMessagePush";
-import { Toast } from "src/components/Toast/ToastShow";
+import { modalMethod } from "@portkey/did-ui-react";
+import "@portkey/did-ui-react/dist/assets/index.css";
+import "./index.css";
 
 export default function AuthCallback() {
   const [error, setError] = useState<string>();
@@ -53,8 +55,18 @@ export default function AuthCallback() {
 
       if (session) {
         await postMessageByApi(session, infoStr);
-        // TODO tg - change text
-        Toast.show('Authorization successful, please back to Telegram')
+        modalMethod({
+          wrapClassName: "auth-callback-prompt-modal",
+          content: (
+            <div className="auth-callback-prompt-modal-body">
+              <div className="auth-callback-prompt-modal-title">Account Verified</div>
+              <div className="auth-callback-prompt-modal-content">
+                Your account has been successfully verified. Please go back to
+                Telegram to continue.
+              </div>
+            </div>
+          ),
+        });
         return;
       }
 
