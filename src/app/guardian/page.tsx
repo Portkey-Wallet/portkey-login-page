@@ -47,7 +47,8 @@ export default function Guardian() {
       JSON.stringify({
         loginId: pageInfo.loginId,
         publicKey: pageInfo.publicKey,
-        serviceURI: pageInfo.serviceURI || "http://localhost:3002",
+        serviceURI:
+          pageInfo.serviceURI || "https://aa-portkey-test.portkey.finance",
       }),
     [pageInfo.loginId, pageInfo.publicKey, pageInfo.serviceURI]
   );
@@ -192,7 +193,11 @@ export default function Guardian() {
         await pushEncodeMessage(
           sessionAuth,
           CrossTabPushMessageType.onEditGuardianResult,
-          JSON.stringify({ preGuardian, currentGuardian: operateGuardian, approvalInfo })
+          JSON.stringify({
+            preGuardian,
+            currentGuardian: operateGuardian,
+            approvalInfo,
+          })
         );
         return;
       }
@@ -215,6 +220,7 @@ export default function Guardian() {
       <div className="guardian-body">
         {step === GuardianStep.guardianView && (
           <GuardianViewComponent
+            telegramInfo={pageInfo.telegramInfo}
             originChainId={pageInfo.originChainId}
             networkType={pageInfo.networkType}
             currentGuardian={pageInfo.currentGuardian!}
@@ -225,6 +231,7 @@ export default function Guardian() {
         )}
         {step === GuardianStep.guardianAdd && (
           <GuardianAddComponent
+            telegramInfo={pageInfo.telegramInfo}
             caHash={pageInfo.caHash}
             originChainId={pageInfo.originChainId}
             networkType={pageInfo.networkType}
@@ -236,6 +243,7 @@ export default function Guardian() {
         )}
         {step === GuardianStep.guardianEdit && (
           <GuardianEditComponent
+            telegramInfo={pageInfo.telegramInfo}
             originChainId={pageInfo.originChainId}
             caHash={pageInfo.caHash}
             networkType={pageInfo.networkType}

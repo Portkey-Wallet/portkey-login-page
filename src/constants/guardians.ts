@@ -35,6 +35,10 @@ export const DefaultGuardianLocationState: GuardianLocationState = {
     guardianType: "Google",
     key: "",
   },
+  telegramInfo: {
+    accessToken: "",
+    userId: "",
+  }
 };
 
 export const DefaultGuardianApprovalLocationState: GuardianApprovalLocationState =

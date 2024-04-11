@@ -48,7 +48,7 @@ export default function GuardianApproval() {
       JSON.stringify({
         loginId: pageInfo.loginId,
         publicKey: pageInfo.publicKey,
-        serviceURI: pageInfo.serviceURI || "http://localhost:3002",
+        serviceURI: pageInfo.serviceURI || "https://aa-portkey-test.portkey.finance",
       }),
     [pageInfo.loginId, pageInfo.publicKey, pageInfo.serviceURI]
   );
