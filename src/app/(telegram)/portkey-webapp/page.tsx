@@ -44,7 +44,7 @@ export default function PortkeyWebapp() {
       }
     } catch (error) {
       singleMessage.error(
-        "Failed to load telegram sdk, please refresh the page."
+        "Failed to retrieve user information. Please refresh and try again."
       );
       throw new Error(handleErrorMessage(error));
     } finally {

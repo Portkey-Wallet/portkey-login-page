@@ -1,13 +1,16 @@
 "use client";
 import { ConfigProvider, PortkeyStyleProvider } from "@portkey/did-ui-react";
-import type { NetworkType } from "@portkey/did-ui-react";
+import type { NetworkType, TCustomNetworkType } from "@portkey/did-ui-react";
 import { useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { getPortkeyServiceUrl } from "src/utils/common";
 import { UrlType } from "src/constants";
 import { base64toJSON } from "src/utils";
 
-type TGuardianLayoutLocationState = { networkType: NetworkType };
+type TGuardianLayoutLocationState = {
+  networkType: NetworkType;
+  network: TCustomNetworkType;
+};
 
 export default function GuardianLayout({
   children,
@@ -23,7 +26,7 @@ export default function GuardianLayout({
       const data = base64toJSON(b64Params);
       return data as TGuardianLayoutLocationState;
     } catch (error) {
-      return { networkType: "MAINNET" };
+      return { networkType: "MAINNET", network: "onLine" };
     }
   }, [b64Params]);
 
@@ -47,6 +50,7 @@ export default function GuardianLayout({
       networkType: pageInfo.networkType,
       urlType: UrlType.GRAPHQL,
     }),
+    customNetworkType: pageInfo.network,
   });
 
   return <PortkeyStyleProvider>{children}</PortkeyStyleProvider>;
