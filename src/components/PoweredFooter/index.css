@@ -12,9 +12,10 @@
     .portkey-icon {
       margin-left: 8px;
       margin-right: 4px;
-      svg path {
-        fill: #b6babf;
-      }
+    }
+    /* svg path cannot be nested, otherwise the styles will be invalidated in Safari */
+    .portkey-icon svg path {
+      fill: #b6babf;
     }
     .brand-name {
       line-height: 20px;
