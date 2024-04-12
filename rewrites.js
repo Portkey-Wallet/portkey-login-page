@@ -21,7 +21,6 @@ module.exports = [
     source: '/graphql/:path*',
     destination: 'http://192.168.67.214:8083/AElfIndexer_DApp/PortKeyIndexerCASchema/graphql/:path*',
   },
-  { source: '/:path*', destination: 'http://192.168.66.117:5577/:path*' },
 
   // mainnet
   // { source: '/api/:path*', destination: 'https://aa-portkey.portkey.finance/api/:path*' },
