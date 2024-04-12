@@ -24,3 +24,31 @@ body {
 .bg-white {
   background-color: #fff;
 }
+
+/* The purpose of using multiple class names is to increase style weight */
+.common-prompt-modal.portkey-ant-modal-wrap.portkey-ui-wrapper {
+  .portkey-ant-modal-body {
+    padding: 24px 20px;
+  }
+  .portkey-ant-modal-confirm-btns {
+    display: none;
+  }
+  .common-prompt-modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    .common-prompt-modal-title {
+      color: var(--portkey-ui-font-5);
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 22px;
+    }
+    .common-prompt-modal-content {
+      color: var(--portkey-ui-font-8);
+      font-size: 16px;
+      line-height: 22px;
+      text-align: center;
+    }
+  }
+}

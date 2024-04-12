@@ -136,7 +136,8 @@ export default function Guardian() {
         await pushEncodeMessage(
           sessionAuth,
           CrossTabPushMessageType.onSetLoginGuardianResult,
-          JSON.stringify({ currentGuardian: operateGuardian, approvalInfo })
+          JSON.stringify({ currentGuardian: operateGuardian, approvalInfo }),
+          true
         );
         return;
       }
@@ -155,7 +156,8 @@ export default function Guardian() {
         await pushEncodeMessage(
           sessionAuth,
           CrossTabPushMessageType.onAddGuardianResult,
-          JSON.stringify({ currentGuardian: operateGuardian, approvalInfo })
+          JSON.stringify({ currentGuardian: operateGuardian, approvalInfo }),
+          true
         );
         return;
       }
@@ -174,7 +176,8 @@ export default function Guardian() {
           JSON.stringify({
             currentGuardian: pageInfo.currentGuardian,
             approvalInfo,
-          })
+          }),
+          true
         );
         return;
       }
@@ -197,7 +200,8 @@ export default function Guardian() {
             preGuardian,
             currentGuardian: operateGuardian,
             approvalInfo,
-          })
+          }),
+          true
         );
         return;
       }

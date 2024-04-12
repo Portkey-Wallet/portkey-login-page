@@ -1,3 +1,4 @@
+import { modalMethod } from "@portkey/did-ui-react";
 import { forgeWeb, sleep } from "@portkey/utils";
 import { Toast } from "src/components/Toast/ToastShow";
 import { TOpenLoginSessionInfo } from "src/types/auth";
@@ -59,7 +60,8 @@ export const pushMessageByApi = async ({
 export const pushEncodeMessage = async (
   storage: string,
   methodName: CrossTabPushMessageType,
-  params: string
+  params: string,
+  needPrompt = false
 ) => {
   const sessionInfo = (JSON.parse(storage) || {}) as TOpenLoginSessionInfo;
   const { serviceURI, publicKey, loginId } = sessionInfo;
@@ -80,4 +82,19 @@ export const pushEncodeMessage = async (
       data: encrypted,
     },
   });
+  if (needPrompt) {
+    modalMethod({
+      wrapClassName: "common-prompt-modal",
+      content: (
+        <div className='common-prompt-modal-body'>
+          {/* TODO: adjust text */}
+          <div className='common-prompt-modal-title'>Account Verified</div>
+          <div className='common-prompt-modal-content'>
+            Your account has been successfully verified. Please go back to
+            Telegram to continue.
+          </div>
+        </div>
+      ),
+    });
+  }
 };
