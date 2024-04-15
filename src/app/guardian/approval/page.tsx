@@ -5,7 +5,7 @@ import {
   handleErrorMessage,
   PortkeyStyleProvider,
 } from "@portkey/did-ui-react";
-import type { UserGuardianStatus } from "@portkey/did-ui-react";
+import type { ITelegramInfo, UserGuardianStatus } from "@portkey/did-ui-react";
 import { OperationTypeEnum, GuardiansApproved } from "@portkey/services";
 import { useCallback, useEffect, useMemo, useState } from "react";
 // import BackHeaderForPage from "src/components/BackHeaderForPage";
@@ -48,7 +48,8 @@ export default function GuardianApproval() {
       JSON.stringify({
         loginId: pageInfo.loginId,
         publicKey: pageInfo.publicKey,
-        serviceURI: pageInfo.serviceURI || "https://aa-portkey-test.portkey.finance",
+        serviceURI:
+          pageInfo.serviceURI || "https://aa-portkey-test.portkey.finance",
       }),
     [pageInfo.loginId, pageInfo.publicKey, pageInfo.serviceURI]
   );
@@ -57,6 +58,12 @@ export default function GuardianApproval() {
   const [loading, setLoading] = useState(false);
   const operationDetails = getOperationDetails(operationType);
   const [guardianList, setGuardianList] = useState<UserGuardianStatus[]>();
+  const telegramInfo: ITelegramInfo = useMemo(() => {
+    return {
+      accessToken: pageInfo.telegramAuth,
+      userId: pageInfo.telegramUserId,
+    };
+  }, [pageInfo.telegramAuth, pageInfo.telegramUserId]);
 
   const getData = useCallback(async () => {
     setLoading(true);
@@ -124,6 +131,7 @@ export default function GuardianApproval() {
           // onError={onApprovalError}
           networkType={pageInfo.networkType}
           operationType={operationType}
+          telegramInfo={telegramInfo}
         />
         <PoweredFooter />
         <Loading loading={loading} />
