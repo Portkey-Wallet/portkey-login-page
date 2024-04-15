@@ -12,12 +12,14 @@ export type TPushMessageByApiParams = {
 
 export enum CrossTabPushMessageType {
   onAuthStatusChanged = "onAuthStatusChanged",
+  onSavePublicKey = "onSavePublicKey",
   onSetLoginGuardianResult = "onSetLoginGuardianResult",
   onAddGuardianResult = "onAddGuardianResult",
   onRemoveGuardianResult = "onRemoveGuardianResult",
   onEditGuardianResult = "onEditGuardianResult",
   onGuardianApprovalResult = "onGuardianApprovalResult",
   onCheckSellResult = "onCheckSellResult",
+  onTransferSettingApproval = "onTransferSettingApproval",
 }
 
 export type TPushMessageByApi = {
@@ -86,10 +88,10 @@ export const pushEncodeMessage = async (
     modalMethod({
       wrapClassName: "common-prompt-modal",
       content: (
-        <div className='common-prompt-modal-body'>
+        <div className="common-prompt-modal-body">
           {/* TODO: adjust text */}
-          <div className='common-prompt-modal-title'>Account Verified</div>
-          <div className='common-prompt-modal-content'>
+          <div className="common-prompt-modal-title">Account Verified</div>
+          <div className="common-prompt-modal-content">
             Your account has been successfully verified. Please go back to
             Telegram to continue.
           </div>
