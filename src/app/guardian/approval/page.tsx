@@ -105,13 +105,14 @@ export default function GuardianApproval() {
       if (sessionAuth) {
         await pushEncodeMessage(
           sessionAuth,
-          CrossTabPushMessageType.onGuardianApprovalResult,
+          pageInfo.socketMethod ||
+            CrossTabPushMessageType.onGuardianApprovalResult,
           JSON.stringify({ approvalInfo }) //guardiansApproved
         );
         return;
       }
     },
-    [sessionAuth]
+    [pageInfo.socketMethod, sessionAuth]
   );
 
   useEffect(() => {

@@ -7,6 +7,7 @@ import type {
   ITelegramInfo,
 } from "@portkey/did-ui-react";
 import { ChainId, ChainType } from "@portkey/types";
+import { CrossTabPushMessageType } from "src/utils/crossTabMessagePush";
 
 export interface verificationInfo {
   id: string;
@@ -39,6 +40,7 @@ export type GuardianApprovalLocationState = TOpenLoginSessionInfo & {
   identifier?: string;
   operationType: OperationTypeEnum;
   isErrorTip?: boolean;
+  socketMethod?: CrossTabPushMessageType;
   telegramAuth?: string;
   telegramUserId: string; // TODO tg - not request
 };
