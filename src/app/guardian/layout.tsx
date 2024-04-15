@@ -26,7 +26,7 @@ export default function GuardianLayout({
       const data = base64toJSON(b64Params);
       return data as TGuardianLayoutLocationState;
     } catch (error) {
-      return { networkType: "MAINNET", network: "onLine" };
+      return { networkType: "MAINNET", network: "online" };
     }
   }, [b64Params]);
 
