@@ -40,8 +40,20 @@ export default function SocialLogin({
       "*"
     );
   }, []);
+  const nextSearchParams = useSearchParams();
 
   useEffect(() => {
+    const { hostname, pathname, search } = location;
+    const network = nextSearchParams.get("network");
+    if (
+      params.authType === "Telegram" &&
+      hostname === "openlogin.portkey.finance" &&
+      network === "TESTNET"
+    ) {
+      location.href = `https://openlogin-testnet.portkey.finance${pathname}${search}`;
+      return;
+    }
+
     window.addEventListener("beforeunload", onCloseWindow);
     return () => {
       window.removeEventListener("beforeunload", onCloseWindow);
@@ -171,23 +183,12 @@ export default function SocialLogin({
     }
   }, [getAppleAuth, getFBAuth, getGoogleAuth, getTwitterAuth, params]);
 
-  const nextSearchParams = useSearchParams();
   useEffect(() => {
-    const { hostname, pathname, search } = location;
-    const network = nextSearchParams.get("network");
-    if (
-      params.authType === "Telegram" &&
-      hostname === "openlogin.portkey.finance" &&
-      network === "TESTNET"
-    ) {
-      location.href = `https://openlogin-testnet.portkey.finance${pathname}${search}`;
-    }
-
     const timer = setTimeout(() => {
       clearTimeout(timer);
       onSuccess();
     }, 300);
-  }, [nextSearchParams, onSuccess, params.authType]);
+  }, [onSuccess]);
 
   return (
     <div
