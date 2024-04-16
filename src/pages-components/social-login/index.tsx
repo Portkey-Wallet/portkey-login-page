@@ -175,7 +175,11 @@ export default function SocialLogin({
   useEffect(() => {
     const { hostname, pathname, search } = location;
     const network = nextSearchParams.get("network");
-    if (hostname === "openlogin.portkey.finance" && network === "TESTNET") {
+    if (
+      params.authType === "Telegram" &&
+      hostname === "openlogin.portkey.finance" &&
+      network === "TESTNET"
+    ) {
       location.href = `https://openlogin-testnet.portkey.finance${pathname}${search}`;
     }
 
@@ -183,7 +187,7 @@ export default function SocialLogin({
       clearTimeout(timer);
       onSuccess();
     }, 300);
-  }, [nextSearchParams, onSuccess]);
+  }, [nextSearchParams, onSuccess, params.authType]);
 
   return (
     <div
