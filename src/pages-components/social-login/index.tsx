@@ -19,6 +19,7 @@ import "./index.css";
 import { twitterAuth } from "src/utils/twitter/TwitterAuth";
 import { facebookAuthReplace } from "src/utils/Facebook/facebookAuthReplace";
 import TelegramAuthSDK from "../telegram-auth-sdk";
+import { useSearchParams } from "next/navigation";
 
 export default function SocialLogin({
   params,
@@ -170,12 +171,24 @@ export default function SocialLogin({
     }
   }, [getAppleAuth, getFBAuth, getGoogleAuth, getTwitterAuth, params]);
 
+  const nextSearchParams = useSearchParams();
   useEffect(() => {
+    const { hostname, pathname, search } = location;
+    const from = nextSearchParams.get("from");
+    const network = nextSearchParams.get("network");
+    if (
+      hostname === "openlogin.portkey.finance" &&
+      from === "openlogin" &&
+      network === "TESTNET"
+    ) {
+      location.href = `https://openlogin-testnet.portkey.finance${pathname}${search}`;
+    }
+
     const timer = setTimeout(() => {
       clearTimeout(timer);
       onSuccess();
     }, 300);
-  }, [onSuccess]);
+  }, [nextSearchParams, onSuccess]);
 
   return (
     <div
