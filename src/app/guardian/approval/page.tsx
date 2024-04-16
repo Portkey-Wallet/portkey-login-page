@@ -107,7 +107,8 @@ export default function GuardianApproval() {
           sessionAuth,
           pageInfo.socketMethod ||
             CrossTabPushMessageType.onGuardianApprovalResult,
-          JSON.stringify({ approvalInfo }) //guardiansApproved
+          JSON.stringify({ approvalInfo }),
+          true
         );
         return;
       }
