@@ -45,10 +45,12 @@ export default function SocialLogin({
   useEffect(() => {
     const { hostname, pathname, search } = location;
     const network = nextSearchParams.get("network");
+    const serviceURI = nextSearchParams.get("serviceURI");
+
     if (
       params.authType === "Telegram" &&
       hostname === "openlogin.portkey.finance" &&
-      network === "TESTNET"
+      (network === "TESTNET" || serviceURI?.includes("-test.portkey.finance"))
     ) {
       location.href = `https://openlogin-testnet.portkey.finance${pathname}${search}`;
       return;
@@ -197,8 +199,7 @@ export default function SocialLogin({
         params.authType === "Telegram"
           ? ""
           : "h-screen flex justify-center items-center"
-      )}
-    >
+      )}>
       {params.authType === "Telegram" && searchParams.from === "portkey" ? (
         <TelegramAuth
           searchParams={searchParams}
