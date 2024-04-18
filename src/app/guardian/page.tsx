@@ -1,5 +1,6 @@
 "use client";
 import {
+  CustomSvg,
   errorTip,
   GuardianAdd as GuardianAddComponent,
   GuardianEdit as GuardianEditComponent,
@@ -27,6 +28,7 @@ import { getVerifierListHandler } from "src/utils/guardians/verifier";
 import Loading from "src/components/Loading";
 import { GuardianLocationState } from "src/types/guardians";
 import PoweredFooter from "src/components/PoweredFooter";
+import BackHeaderForPage from "src/components/BackHeaderForPage";
 
 export default function Guardian() {
   const searchParams = useSearchParams();
@@ -219,11 +221,45 @@ export default function Guardian() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const onGoView = useCallback(() => {
+    setStep(GuardianStep.guardianView);
+  }, []);
+
+  const renderBackHeaderLeftEle = useCallback(
+    ({
+      goBack,
+      hideBackSvg,
+    }: {
+      goBack?: () => void;
+      hideBackSvg?: boolean;
+    }) => (
+      <div className="guardian-header-left">
+        {!hideBackSvg && <CustomSvg type="LeftArrow" onClick={goBack} />}
+        Guardians
+      </div>
+    ),
+    []
+  );
+
+  const renderBackHeaderForPage = useCallback(
+    () => (
+      <BackHeaderForPage
+        className="guardian-back-header-for-page"
+        leftElement={renderBackHeaderLeftEle({
+          goBack: onGoView,
+          hideBackSvg: step !== GuardianStep.guardianEdit,
+        })}
+      />
+    ),
+    [onGoView, renderBackHeaderLeftEle, step]
+  );
+
   return (
     <div className="guardian-container">
       <div className="guardian-body">
         {step === GuardianStep.guardianView && (
           <GuardianViewComponent
+            header={renderBackHeaderForPage()}
             telegramInfo={pageInfo.telegramInfo}
             originChainId={pageInfo.originChainId}
             networkType={pageInfo.networkType}
@@ -247,6 +283,7 @@ export default function Guardian() {
         )}
         {step === GuardianStep.guardianEdit && (
           <GuardianEditComponent
+            header={renderBackHeaderForPage()}
             telegramInfo={pageInfo.telegramInfo}
             originChainId={pageInfo.originChainId}
             caHash={pageInfo.caHash}

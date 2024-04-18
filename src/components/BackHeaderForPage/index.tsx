@@ -2,6 +2,7 @@ import TitleWrapper, { TitleWrapperProps } from "../TitleWrapper";
 import "./index.css";
 
 export default function BackHeaderForPage({
+  className,
   title,
   leftCallBack,
   rightElement,
@@ -9,7 +10,7 @@ export default function BackHeaderForPage({
 }: TitleWrapperProps) {
   return (
     <TitleWrapper
-      className="back-header-page-wrapper"
+      className={"common-back-header-page-wrapper " + (className || "")}
       title={title}
       leftCallBack={leftCallBack}
       rightElement={rightElement}
