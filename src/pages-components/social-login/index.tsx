@@ -19,6 +19,7 @@ import "./index.css";
 import { twitterAuth } from "src/utils/twitter/TwitterAuth";
 import { facebookAuthReplace } from "src/utils/Facebook/facebookAuthReplace";
 import TelegramAuthSDK from "../telegram-auth-sdk";
+import { useSearchParams } from "next/navigation";
 
 export default function SocialLogin({
   params,
@@ -39,8 +40,22 @@ export default function SocialLogin({
       "*"
     );
   }, []);
+  const nextSearchParams = useSearchParams();
 
   useEffect(() => {
+    const { hostname, pathname, search } = location;
+    const network = nextSearchParams.get("network");
+    const serviceURI = nextSearchParams.get("serviceURI");
+
+    if (
+      params.authType === "Telegram" &&
+      hostname === "openlogin.portkey.finance" &&
+      (network === "TESTNET" || serviceURI?.includes("-test.portkey.finance"))
+    ) {
+      location.href = `https://openlogin-testnet.portkey.finance${pathname}${search}`;
+      return;
+    }
+
     window.addEventListener("beforeunload", onCloseWindow);
     return () => {
       window.removeEventListener("beforeunload", onCloseWindow);

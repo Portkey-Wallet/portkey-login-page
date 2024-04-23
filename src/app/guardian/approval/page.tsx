@@ -8,11 +8,9 @@ import {
 import type { ITelegramInfo, UserGuardianStatus } from "@portkey/did-ui-react";
 import { OperationTypeEnum, GuardiansApproved } from "@portkey/services";
 import { useCallback, useEffect, useMemo, useState } from "react";
-// import BackHeaderForPage from "src/components/BackHeaderForPage";
 import Loading from "src/components/Loading";
-import { getGuardianList } from "src/utils/guardians";
+import { formatGuardianValue, getGuardianList } from "src/utils/guardians";
 import { getOperationDetails } from "src/utils/manager";
-// import { GuardianApprovedItem } from "src/types/guardians";
 import { useSearchParams } from "next/navigation";
 import "@portkey/did-ui-react/dist/assets/index.css";
 import "./index.css";
@@ -97,8 +95,7 @@ export default function GuardianApproval() {
 
   const onApprovalSuccess = useCallback(
     async (approvalInfo: GuardiansApproved[]) => {
-      // const guardiansApproved = formatGuardianValue(approvalInfo);
-      // console.log(">>>>>>>>>>> guardiansApproved", guardiansApproved);
+      const formatGuardiansApproved = formatGuardianValue(approvalInfo);
 
       // save data
       // back dapp webapp to execute the next step of the process
@@ -107,7 +104,7 @@ export default function GuardianApproval() {
           sessionAuth,
           pageInfo.socketMethod ||
             CrossTabPushMessageType.onGuardianApprovalResult,
-          JSON.stringify({ approvalInfo }),
+          JSON.stringify({ approvalInfo, formatGuardiansApproved }),
           true
         );
         return;
