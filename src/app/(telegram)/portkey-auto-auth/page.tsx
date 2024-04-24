@@ -84,7 +84,7 @@ export default function PortkeyWebapp() {
 
   return (
     <>
-      <Loading loading loadingText="Logging..." />
+      <Loading loading loadingText="Log in..." />
     </>
   );
 }
