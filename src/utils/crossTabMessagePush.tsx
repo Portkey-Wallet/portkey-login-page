@@ -12,7 +12,6 @@ export type TPushMessageByApiParams = {
 
 export enum CrossTabPushMessageType {
   onAuthStatusChanged = "onAuthStatusChanged",
-  onSavePublicKey = "onSavePublicKey",
   onSetLoginGuardianResult = "onSetLoginGuardianResult",
   onAddGuardianResult = "onAddGuardianResult",
   onRemoveGuardianResult = "onRemoveGuardianResult",
