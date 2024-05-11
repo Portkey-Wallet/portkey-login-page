@@ -4,4 +4,5 @@ interface Window {
   };
   Portkey?: Window["portkey"];
   FB?: any;
+  MSStream?: any;
 }
