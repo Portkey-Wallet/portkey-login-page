@@ -1,7 +1,13 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
 import Loading from "src/components/Loading";
+import { SOCIAL_AUTH_SESSION_KEY } from "src/constants/social";
 import { parseRedirectParams } from "src/utils/parseRedirectParams";
+import {
+  CrossTabPushMessageType,
+  pushEncodeMessage,
+} from "src/utils/crossTabMessagePush";
+import "@portkey/did-ui-react/dist/assets/index.css";
 
 export default function AuthCallback() {
   const [error, setError] = useState<string>();
@@ -24,9 +30,32 @@ export default function AuthCallback() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getToken = useCallback(() => {
+  const postMessageByApi = useCallback(
+    async (storage: string, params: string) => {
+      return pushEncodeMessage(
+        storage,
+        CrossTabPushMessageType.onAuthStatusChanged,
+        params,
+        true
+      );
+    },
+    []
+  );
+
+  const getToken = useCallback(async () => {
     try {
-      const { token, provider, code, message } = parseRedirectParams();
+      const params = parseRedirectParams({ from: "openlogin" });
+
+      const { token, provider, code, message } = params;
+
+      const session = sessionStorage.getItem(SOCIAL_AUTH_SESSION_KEY);
+
+      const infoStr = JSON.stringify(params);
+
+      if (session) {
+        await postMessageByApi(session, infoStr);
+        return;
+      }
 
       if (!window.opener?.postMessage)
         throw "The current browser is abnormal or not supported";
@@ -54,11 +83,12 @@ export default function AuthCallback() {
       window.removeEventListener("beforeunload", onCloseWindow);
       window.close();
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    } catch (error) {
+    } catch (error: any) {
       if (typeof error === "string") return setError(error);
+      if (typeof error.message === "string") return setError(error.message);
       error && setError(JSON.stringify(error));
     }
-  }, [onCloseWindow]);
+  }, [onCloseWindow, postMessageByApi]);
 
   useEffect(() => {
     getToken();

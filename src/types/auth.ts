@@ -15,3 +15,21 @@ export interface GoogleAuthProps {
   typeResponse?: "idToken" | "accessToken";
   fetchBasicProfile?: boolean;
 }
+
+export interface BaseOpenLoginParam {
+  actionType: string;
+  from: string;
+  loginId: string;
+  loginProvider: string;
+  network: string;
+  publicKey: string;
+  serviceURI: string;
+}
+
+export type OpenLoginParamConfig = BaseOpenLoginParam & Record<string, string>;
+
+export type TOpenLoginSessionInfo = {
+  loginId: string;
+  publicKey: string;
+  serviceURI: string;
+};

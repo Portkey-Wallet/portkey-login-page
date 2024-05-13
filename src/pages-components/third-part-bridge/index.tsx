@@ -1,6 +1,12 @@
 "use client";
 import React, { useCallback, useEffect } from "react";
 import qs from "query-string";
+import { getPortkeyServiceUrl } from "src/utils/common";
+import { NetworkType } from "@portkey/did-ui-react";
+import {
+  CrossTabPushMessageType,
+  pushMessageByApi,
+} from "src/utils/crossTabMessagePush";
 
 export default function ThirdPartBridge() {
   const handler = useCallback(async () => {
@@ -50,14 +56,17 @@ export default function ThirdPartBridge() {
 
     // redirect back from ach-sell page
     if (params.portkeyMethod === "ACH_SELL_BACK") {
-      // notify the parent window to query the sell result
-      window.opener.postMessage(
-        {
-          type: "CHECK_SELL_RESULT",
-          data: params,
+      await pushMessageByApi({
+        methodName: CrossTabPushMessageType.onCheckSellResult,
+        params: {
+          serviceURI:
+            getPortkeyServiceUrl({
+              networkType: params.networkType as NetworkType,
+            }) || "",
+          loginId: params.clientId,
+          data: JSON.stringify(params),
         },
-        "*"
-      );
+      });
       window.close();
     }
   }, []);

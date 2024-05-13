@@ -1,0 +1,25 @@
+.open-login-powered-wrapper {
+  width: 100%;
+  flex-shrink: 0;
+  margin-bottom: 8px;
+  .powered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #b6babf;
+    font-size: 12px;
+    line-height: 16px;
+    .portkey-icon {
+      margin-left: 8px;
+      margin-right: 4px;
+    }
+    /* svg path cannot be nested, otherwise the styles will be invalidated in Safari */
+    .portkey-icon svg path {
+      fill: #b6babf;
+    }
+    .brand-name {
+      line-height: 20px;
+      font-weight: 500;
+    }
+  }
+}
