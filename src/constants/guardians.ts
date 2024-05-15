@@ -39,6 +39,7 @@ export const DefaultGuardianLocationState: GuardianLocationState = {
     accessToken: "",
     userId: "",
   },
+  isFromTelegram: false,
 };
 
 export const DefaultGuardianApprovalLocationState: GuardianApprovalLocationState =
@@ -53,4 +54,5 @@ export const DefaultGuardianApprovalLocationState: GuardianApprovalLocationState
     publicKey: "",
     serviceURI: "",
     telegramUserId: "",
+    isFromTelegram: false,
   };

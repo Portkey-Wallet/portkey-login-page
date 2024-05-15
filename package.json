@@ -31,5 +31,20 @@
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
     "vconsole": "3.15.1"
+  },
+  "resolutions": {
+    "@portkey/contracts": "2.5.1",
+    "@portkey/did-ui-react": "2.5.1",
+    "@portkey/ramp": "2.5.1",
+    "@portkey/socket": "2.5.1",
+    "@portkey/utils": "2.5.1",
+    "@portkey/did": "2.5.1",
+    "@portkey/graphql": "2.5.1",
+    "@portkey/onboarding": "2.5.1",
+    "@portkey/request": "2.5.1",
+    "@portkey/services": "2.5.1",
+    "@portkey/types": "2.5.1",
+    "@portkey/validator": "2.5.1",
+    "@portkey/accounts": "2.5.1"
   }
 }

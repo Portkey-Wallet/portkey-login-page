@@ -65,7 +65,7 @@ export const pushEncodeMessage = async (
   needPrompt = false
 ) => {
   const sessionInfo = (JSON.parse(storage) || {}) as TOpenLoginSessionInfo;
-  const { serviceURI, publicKey, loginId } = sessionInfo;
+  const { serviceURI, publicKey, loginId, isFromTelegram } = sessionInfo;
   console.log(serviceURI, publicKey, loginId, params);
   let encrypted;
   try {
@@ -83,12 +83,11 @@ export const pushEncodeMessage = async (
       data: encrypted,
     },
   });
-  if (needPrompt) {
+  if (needPrompt && isFromTelegram) {
     modalMethod({
       wrapClassName: "common-prompt-modal",
       content: (
         <div className="common-prompt-modal-body">
-          {/* TODO: adjust text */}
           <div className="common-prompt-modal-title">Account Verified</div>
           <div className="common-prompt-modal-content">
             Your account has been successfully verified. Please go back to
