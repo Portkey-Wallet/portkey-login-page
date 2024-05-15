@@ -32,4 +32,5 @@ export type TOpenLoginSessionInfo = {
   loginId: string;
   publicKey: string;
   serviceURI: string;
+  isFromTelegram: boolean;
 };

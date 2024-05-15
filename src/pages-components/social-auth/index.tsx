@@ -33,9 +33,10 @@ export default function SocialAuth({
         loginId: authInfo.loginId,
         publicKey: authInfo.publicKey,
         serviceURI: authInfo.serviceURI,
+        isFromTelegram: authInfo.isFromTelegram,
       })
     );
-  }, [authInfo.loginId, authInfo.publicKey, authInfo.serviceURI]);
+  }, [authInfo.loginId, authInfo.publicKey, authInfo.serviceURI, authInfo.isFromTelegram]);
 
   const getGoogleAuth = useCallback(async () => {
     const { clientId } = authInfo;
