@@ -56,17 +56,28 @@ export default function ThirdPartBridge() {
 
     // redirect back from ach-sell page
     if (params.portkeyMethod === "ACH_SELL_BACK") {
-      await pushMessageByApi({
-        methodName: CrossTabPushMessageType.onCheckSellResult,
-        params: {
-          serviceURI:
-            getPortkeyServiceUrl({
-              networkType: params.networkType as NetworkType,
-            }) || "",
-          loginId: params.clientId,
-          data: JSON.stringify(params),
-        },
-      });
+      if (params.v) {
+        await pushMessageByApi({
+          methodName: CrossTabPushMessageType.onCheckSellResult,
+          params: {
+            serviceURI:
+              getPortkeyServiceUrl({
+                networkType: params.networkType as NetworkType,
+              }) || "",
+            loginId: params.clientId,
+            data: JSON.stringify(params),
+          },
+        });
+      } else {
+        // notify the parent window to query the sell result
+        window.opener.postMessage(
+          {
+            type: "CHECK_SELL_RESULT",
+            data: params,
+          },
+          "*"
+        );
+      }
       window.close();
     }
   }, []);
