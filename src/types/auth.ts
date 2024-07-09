@@ -14,6 +14,7 @@ export interface GoogleAuthProps {
   isOnlyGetToken?: boolean;
   typeResponse?: "idToken" | "accessToken";
   fetchBasicProfile?: boolean;
+  nonce?: string;
 }
 
 export interface BaseOpenLoginParam {

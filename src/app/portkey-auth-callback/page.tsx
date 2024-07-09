@@ -8,10 +8,19 @@ export default function AuthCallback() {
 
   const getToken = useCallback(() => {
     try {
-      const { token, provider, code, message } = parseRedirectParams();
+      const { token, provider, code, message, idToken } = parseRedirectParams();
+      console.log(
+        token,
+        provider,
+        code,
+        message,
+        idToken,
+        " token, provider, code, message, idToken "
+      );
       if (!window.Portkey)
         throw "Timeout, please download and install the Portkey extension";
       if (code) {
+        console.log("error ");
         window.Portkey?.request({
           method: "portkey_socialLogin",
           payload: {
@@ -37,17 +46,17 @@ export default function AuthCallback() {
   }, []);
 
   useEffect(() => {
-    if (!window.Portkey) {
-      const ids = setTimeout(() => {
-        clearTimeout(ids);
-        if (!window.Portkey)
-          return setError(
-            "Timeout, please download and install the Portkey extension"
-          );
-        getToken();
-      }, 500);
-      return;
-    }
+    // if (!window.Portkey) {
+    //   const ids = setTimeout(() => {
+    //     clearTimeout(ids);
+    //     if (!window.Portkey)
+    //       return setError(
+    //         "Timeout, please download and install the Portkey extension"
+    //       );
+    //     getToken();
+    //   }, 500);
+    //   return;
+    // }
     getToken();
   }, [getToken]);
   return (

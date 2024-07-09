@@ -53,14 +53,18 @@ export const parseRedirectParams = (parseParam?: {
     expiresTime,
     code,
     message,
+    state,
   } = queryString.parse(location.search);
+  let idToken = id_token;
+
   if (hash && type !== "Facebook") {
     const searchParams = queryString.parse(location.hash);
     token = searchParams.access_token;
     if (!token) throw "Invalid token access_token in query string";
     provider = "Google";
+    idToken = searchParams.id_token;
   } else if (search) {
-    if (code) {
+    if (code && type !== "Facebook") {
       errorMessage = message;
       return { code, message: errorMessage };
     }
@@ -95,12 +99,20 @@ export const parseRedirectParams = (parseParam?: {
         });
       }
     } else if (type === "Facebook") {
-      token = JSON.stringify({
-        token: authToken,
-        userId,
-        expiresTime,
-      });
-      provider = type;
+      const searchParams = queryString.parse(location.hash);
+      console.log(idToken, "idToken==");
+      if (searchParams.id_token || state === "zklogin") {
+        token = searchParams.code;
+        idToken = searchParams.id_token;
+      } else {
+        token = JSON.stringify({
+          token: authToken,
+          userId,
+          expiresTime,
+        });
+      }
+
+      provider = "Facebook";
     } else if (authToken) {
       token = JSON.stringify({
         token: authToken,
@@ -119,6 +131,7 @@ export const parseRedirectParams = (parseParam?: {
 
   return {
     token,
+    idToken,
     provider,
   };
 };

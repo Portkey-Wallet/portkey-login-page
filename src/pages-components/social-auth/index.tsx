@@ -10,7 +10,10 @@ import {
 import { OpenLoginParamConfig } from "src/types/auth";
 import { appleAuthIdToken } from "src/utils/AppleAuth";
 import { facebookAuthReplace } from "src/utils/Facebook/facebookAuthReplace";
-import { getGoogleAccessToken } from "src/utils/GoogleAuthReplace";
+import {
+  getGoogleAccessToken,
+  getGoogleAccessTokenWithZkLogin,
+} from "src/utils/GoogleAuthReplace";
 import TelegramAuthUpgraded from "../telegram-auth-upgraded";
 import { SOCIAL_AUTH_SESSION_KEY } from "src/constants/social";
 import clsx from "clsx";
@@ -34,16 +37,25 @@ export default function SocialAuth({
         publicKey: authInfo.publicKey,
         serviceURI: authInfo.serviceURI,
         isFromTelegram: authInfo.isFromTelegram,
+        socialType: authInfo.socialType,
       })
     );
-  }, [authInfo.loginId, authInfo.publicKey, authInfo.serviceURI, authInfo.isFromTelegram]);
+  }, [authInfo]);
 
   const getGoogleAuth = useCallback(async () => {
-    const { clientId } = authInfo;
+    const { clientId, socialType, nonce } = authInfo;
     const _clientId = clientId || GG_CLIENT_ID;
     const redirectURI = `${location.origin}/auth-callback`;
     console.log(location.origin);
     setLoading(true);
+
+    if (socialType === "zklogin") {
+      return getGoogleAccessTokenWithZkLogin({
+        clientId: _clientId,
+        redirectURI,
+        nonce,
+      });
+    }
 
     getGoogleAccessToken({
       clientId: _clientId,

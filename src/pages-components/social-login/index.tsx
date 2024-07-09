@@ -17,7 +17,10 @@ import { getGoogleAccessToken } from "src/utils/GoogleAuthReplace";
 import TelegramAuth from "../telegram-auth";
 import "./index.css";
 import { twitterAuth } from "src/utils/twitter/TwitterAuth";
-import { facebookAuthReplace } from "src/utils/Facebook/facebookAuthReplace";
+import {
+  facebookAuthReplace,
+  facebookAuthReplaceWithZkLogin,
+} from "src/utils/Facebook/facebookAuthReplace";
 import TelegramAuthSDK from "../telegram-auth-sdk";
 import { useSearchParams } from "next/navigation";
 
@@ -66,9 +69,11 @@ export default function SocialLogin({
   const checkSearchParams = useCallback(() => {
     if (!searchParams || !Object.keys(searchParams).length)
       return { clientId: undefined, redirectURI: undefined, state: undefined };
-    const { clientId, redirectURI, state, version } = searchParams;
+    const { clientId, redirectURI, state, version, socialType, nonce } =
+      searchParams;
     let _version: string | undefined;
     let _state: string | undefined;
+    let _nonce: string | undefined;
 
     if (clientId && typeof clientId !== "string")
       throw setError("Invalid clientId");
@@ -86,7 +91,20 @@ export default function SocialLogin({
       _state = state;
     }
 
-    return { clientId, redirectURI, state: _state, version: _version };
+    if (Array.isArray(nonce)) {
+      _nonce = nonce?.slice(-1)[0];
+    } else {
+      _nonce = nonce;
+    }
+
+    return {
+      clientId,
+      redirectURI,
+      state: _state,
+      version: _version,
+      socialType,
+      nonce: _nonce,
+    };
   }, [searchParams]);
 
   const getGoogleAuth = useCallback(async () => {
@@ -125,11 +143,23 @@ export default function SocialLogin({
       clientId = FACEBOOK_REDIRECT_URI,
       redirectURI = "https://aa-portkey.portkey.finance/api/app/facebookAuth/receive",
       state,
+      socialType,
+      nonce,
     } = checkSearchParams();
 
     if (!redirectURI) throw setError("Invalid redirectURI");
-
     window.removeEventListener("beforeunload", onCloseWindow);
+
+    if (socialType === "zklogin") {
+      facebookAuthReplaceWithZkLogin({
+        clientId,
+        redirectURI,
+        state,
+        nonce,
+      });
+      return;
+    }
+
     facebookAuthReplace({
       clientId,
       redirectURI,
