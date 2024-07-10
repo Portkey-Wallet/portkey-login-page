@@ -64,7 +64,7 @@ export const parseRedirectParams = (parseParam?: {
     provider = "Google";
     idToken = searchParams.id_token;
   } else if (search) {
-    if (code && type !== "Facebook") {
+    if (code) {
       errorMessage = message;
       return { code, message: errorMessage };
     }
@@ -112,7 +112,7 @@ export const parseRedirectParams = (parseParam?: {
         });
       }
 
-      provider = "Facebook";
+      provider = type;
     } else if (authToken) {
       token = JSON.stringify({
         token: authToken,
