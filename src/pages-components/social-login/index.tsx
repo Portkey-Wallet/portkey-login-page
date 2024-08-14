@@ -6,6 +6,7 @@ import {
   APPLE_CLIENT_ID,
   APPLE_REDIRECT_URI,
   APPLE_REDIRECT_URI_V2,
+  APPLE_REDIRECT_URI_V2_ZKLOGIN,
   FACEBOOK_REDIRECT_URI,
   GG_CLIENT_ID,
   PORTKEY_VERSION,
@@ -13,7 +14,7 @@ import {
 } from "src/constants";
 import { SearchParams } from "src/types";
 import { appleAuthIdToken } from "src/utils/AppleAuth";
-import { getGoogleAccessToken } from "src/utils/GoogleAuthReplace";
+import { getGoogleAccessToken, getGoogleAccessTokenWithZkLogin } from "src/utils/GoogleAuthReplace";
 import TelegramAuth from "../telegram-auth";
 import "./index.css";
 import { twitterAuth } from "src/utils/twitter/TwitterAuth";
@@ -108,10 +109,24 @@ export default function SocialLogin({
   }, [searchParams]);
 
   const getGoogleAuth = useCallback(async () => {
-    const { clientId, redirectURI } = checkSearchParams();
+    const {
+      clientId,
+      redirectURI,
+      socialType,
+      nonce,
+    } = checkSearchParams();
     const _clientId = clientId || GG_CLIENT_ID;
-    const _redirectURI = redirectURI || `${location.origin}/auth-callback`;
+    const _redirectURI = redirectURI || `${location.origin}/portkey-auth-callback`;
     window.removeEventListener("beforeunload", onCloseWindow);
+
+    if (socialType === "zklogin") {
+      getGoogleAccessTokenWithZkLogin({
+        clientId: _clientId,
+        redirectURI: _redirectURI,
+        nonce,
+      });
+      return;
+    }
 
     getGoogleAccessToken({
       clientId: _clientId,
@@ -120,19 +135,24 @@ export default function SocialLogin({
   }, [checkSearchParams, onCloseWindow]);
 
   const getAppleAuth = useCallback(async () => {
-    const { clientId, redirectURI, state, version } = checkSearchParams();
+    const { clientId, redirectURI, state, version, nonce, socialType } = checkSearchParams();
     const _clientId = clientId || APPLE_CLIENT_ID;
 
-    const defaultRedirectURI =
+    let defaultRedirectURI =
       version === PORTKEY_VERSION ? APPLE_REDIRECT_URI_V2 : APPLE_REDIRECT_URI;
 
-    const _redirectURI = redirectURI || defaultRedirectURI;
+    if (socialType === "zklogin") {
+      defaultRedirectURI = APPLE_REDIRECT_URI_V2_ZKLOGIN;
+    }
+
+    const _redirectURI = redirectURI || defaultRedirectURI
 
     window.removeEventListener("beforeunload", onCloseWindow);
     await appleAuthIdToken({
       clientId: _clientId,
       redirectURI: _redirectURI,
       state: (state as string | undefined) ?? "origin:web",
+      nonce,
     });
   }, [checkSearchParams, onCloseWindow]);
 

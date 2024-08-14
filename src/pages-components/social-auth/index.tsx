@@ -3,6 +3,7 @@ import Loading from "src/components/Loading";
 import {
   APPLE_CLIENT_ID,
   APPLE_OPEN_LOGIN_REDIRECT_URI,
+  APPLE_REDIRECT_URI_V2_ZKLOGIN,
   FACEBOOK_OPEN_LOGIN_REDIRECT_URI,
   FACEBOOK_REDIRECT_URI,
   GG_CLIENT_ID,
@@ -45,7 +46,7 @@ export default function SocialAuth({
   const getGoogleAuth = useCallback(async () => {
     const { clientId, socialType, nonce } = authInfo;
     const _clientId = clientId || GG_CLIENT_ID;
-    const redirectURI = `${location.origin}/auth-callback`;
+    const redirectURI = `${location.origin}/portkey-auth-callback`;
     console.log(location.origin);
     setLoading(true);
 
@@ -64,16 +65,22 @@ export default function SocialAuth({
   }, [authInfo]);
 
   const getAppleAuth = useCallback(async () => {
-    const { clientId, serviceURI, state } = authInfo;
+    const { clientId, serviceURI, state, nonce, socialType } = authInfo;
     const _clientId = clientId || APPLE_CLIENT_ID;
 
-    const _redirectURI = `${serviceURI}${APPLE_OPEN_LOGIN_REDIRECT_URI}`;
+    let _redirectURI = `${serviceURI}${APPLE_OPEN_LOGIN_REDIRECT_URI}`;
+
+    if (socialType === "zklogin") {
+      _redirectURI = `${serviceURI}${APPLE_REDIRECT_URI_V2_ZKLOGIN}`;;
+    }
+
     setLoading(true);
 
     await appleAuthIdToken({
       clientId: _clientId,
       redirectURI: _redirectURI,
       state: (state as string | undefined) ?? "origin:web",
+      nonce,
     });
   }, [authInfo]);
 
