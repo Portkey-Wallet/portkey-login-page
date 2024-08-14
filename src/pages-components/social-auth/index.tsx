@@ -3,7 +3,7 @@ import Loading from "src/components/Loading";
 import {
   APPLE_CLIENT_ID,
   APPLE_OPEN_LOGIN_REDIRECT_URI,
-  APPLE_REDIRECT_URI_V2_ZKLOGIN,
+  APPLE_OPEN_LOGIN_REDIRECT_URI_ZKLOGIN,
   FACEBOOK_OPEN_LOGIN_REDIRECT_URI,
   FACEBOOK_REDIRECT_URI,
   GG_CLIENT_ID,
@@ -71,7 +71,7 @@ export default function SocialAuth({
     let _redirectURI = `${serviceURI}${APPLE_OPEN_LOGIN_REDIRECT_URI}`;
 
     if (socialType === "zklogin") {
-      _redirectURI = `${serviceURI}${APPLE_REDIRECT_URI_V2_ZKLOGIN}`;;
+      _redirectURI = `${serviceURI}${APPLE_OPEN_LOGIN_REDIRECT_URI_ZKLOGIN}`;;
     }
 
     setLoading(true);
