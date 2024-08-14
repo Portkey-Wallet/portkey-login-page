@@ -71,7 +71,7 @@ export default function SocialAuth({
     let _redirectURI = `${serviceURI}${APPLE_OPEN_LOGIN_REDIRECT_URI}`;
 
     if (socialType === "zklogin") {
-      _redirectURI = `${serviceURI}${APPLE_OPEN_LOGIN_REDIRECT_URI_ZKLOGIN}`;;
+      _redirectURI = `${serviceURI}${APPLE_OPEN_LOGIN_REDIRECT_URI_ZKLOGIN}`;
     }
 
     setLoading(true);

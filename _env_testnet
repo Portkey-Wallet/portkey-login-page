@@ -12,4 +12,4 @@ NEXT_PUBLIC_APP_TWITTER_CLIENT_ID=N3BDSzBMalRSd1NaTzhETjZKNzY6MTpjaQ
 
 NEXT_PUBLIC_APP_APPLE_REDIRECT_URI_V2 = https://aa-portkey-test.portkey.finance/api/app/appleAuth/unifyReceive
 
-NEXT_PUBLIC_APP_APPLE_REDIRECT_URI_V2_ZKLOGIN = https://aa-portkey-test.portkey.finance/api/app/appleAuth/receive
+NEXT_PUBLIC_APP_APPLE_REDIRECT_URI_V2_ZKLOGIN = https://aa-portkey-test.portkey.finance/api/app/AppleAuth/receive

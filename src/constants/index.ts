@@ -16,7 +16,7 @@ export const GG_CLIENT_ID =
 
 export const APPLE_OPEN_LOGIN_REDIRECT_URI = "/api/app/appleAuth/unifyReceive";
 
-export const APPLE_OPEN_LOGIN_REDIRECT_URI_ZKLOGIN = "/api/app/appleAuth/receive";
+export const APPLE_OPEN_LOGIN_REDIRECT_URI_ZKLOGIN = "/api/app/AppleAuth/receive";
 
 export const TELEGRAM_PORTKEY_REDIRECT_URI =
   "/api/app/telegramAuth/receive/portkey";

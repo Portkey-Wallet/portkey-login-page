@@ -145,7 +145,7 @@ export default function SocialLogin({
       defaultRedirectURI = APPLE_REDIRECT_URI_V2_ZKLOGIN;
     }
 
-    const _redirectURI = redirectURI || defaultRedirectURI
+    const _redirectURI = redirectURI || defaultRedirectURI;
 
     window.removeEventListener("beforeunload", onCloseWindow);
     await appleAuthIdToken({
