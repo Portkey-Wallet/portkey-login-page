@@ -116,7 +116,8 @@ export default function SocialLogin({
       nonce,
     } = checkSearchParams();
     const _clientId = clientId || GG_CLIENT_ID;
-    const _redirectURI = redirectURI || `${location.origin}/portkey-auth-callback`;
+    const _path = socialType === "zklogin" ? 'portkey-auth-callback' : 'auth-callback'
+    const _redirectURI = redirectURI || `${location.origin}/${_path}`;
     window.removeEventListener("beforeunload", onCloseWindow);
 
     if (socialType === "zklogin") {
