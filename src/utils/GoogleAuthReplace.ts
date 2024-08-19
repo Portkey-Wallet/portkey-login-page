@@ -25,7 +25,7 @@ export const getGoogleAccessTokenWithZkLogin = ({
   const query = queryString.stringify({
     client_id: clientId,
     redirect_uri: redirectURI,
-    scope: "openid email",
+    scope: "openid email profile",
     prompt: "select_account",
     response_type: "id_token token",
     nonce,
