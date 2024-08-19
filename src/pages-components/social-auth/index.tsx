@@ -46,7 +46,8 @@ export default function SocialAuth({
   const getGoogleAuth = useCallback(async () => {
     const { clientId, socialType, nonce } = authInfo;
     const _clientId = clientId || GG_CLIENT_ID;
-    const redirectURI = `${location.origin}/portkey-auth-callback`;
+    const _path = socialType === "zklogin" ? 'portkey-auth-callback' : 'auth-callback';
+    const redirectURI = `${location.origin}/${_path}`;
     console.log(location.origin);
     setLoading(true);
 
