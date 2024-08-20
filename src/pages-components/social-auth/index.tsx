@@ -66,12 +66,12 @@ export default function SocialAuth({
   }, [authInfo]);
 
   const getAppleAuth = useCallback(async () => {
-    const { clientId, serviceURI, state, nonce, socialType } = authInfo;
+    const { clientId, serviceURI, state, nonce, side } = authInfo;
     const _clientId = clientId || APPLE_CLIENT_ID;
 
     let _redirectURI = `${serviceURI}${APPLE_OPEN_LOGIN_REDIRECT_URI}`;
 
-    if (socialType === "zklogin") {
+    if (side === "portkey") {
       _redirectURI = `${serviceURI}${APPLE_OPEN_LOGIN_REDIRECT_URI_ZKLOGIN}`;
     }
 

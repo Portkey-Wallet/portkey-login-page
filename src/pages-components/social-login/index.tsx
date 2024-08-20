@@ -138,13 +138,13 @@ export default function SocialLogin({
   }, [checkSearchParams, onCloseWindow]);
 
   const getAppleAuth = useCallback(async () => {
-    const { clientId, redirectURI, state, version, nonce, socialType } = checkSearchParams();
+    const { clientId, redirectURI, state, version, nonce, side } = checkSearchParams();
     const _clientId = clientId || APPLE_CLIENT_ID;
 
     let defaultRedirectURI =
       version === PORTKEY_VERSION ? APPLE_REDIRECT_URI_V2 : APPLE_REDIRECT_URI;
 
-    if (socialType === "zklogin") {
+    if (side === "portkey") {
       defaultRedirectURI = APPLE_REDIRECT_URI_V2_ZKLOGIN;
     }
 
