@@ -70,7 +70,7 @@ export default function SocialLogin({
   const checkSearchParams = useCallback(() => {
     if (!searchParams || !Object.keys(searchParams).length)
       return { clientId: undefined, redirectURI: undefined, state: undefined };
-    const { clientId, redirectURI, state, version, socialType, nonce } =
+    const { clientId, redirectURI, state, version, socialType, nonce, side } =
       searchParams;
     let _version: string | undefined;
     let _state: string | undefined;
@@ -105,6 +105,7 @@ export default function SocialLogin({
       version: _version,
       socialType,
       nonce: _nonce,
+      side,
     };
   }, [searchParams]);
 
@@ -114,9 +115,10 @@ export default function SocialLogin({
       redirectURI,
       socialType,
       nonce,
+      side,
     } = checkSearchParams();
     const _clientId = clientId || GG_CLIENT_ID;
-    const _path = socialType === "zklogin" ? 'portkey-auth-callback' : 'auth-callback'
+    const _path = side === "portkey" ? 'portkey-auth-callback' : 'auth-callback';
     const _redirectURI = redirectURI || `${location.origin}/${_path}`;
     window.removeEventListener("beforeunload", onCloseWindow);
 
