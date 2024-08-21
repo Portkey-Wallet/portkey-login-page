@@ -1,3 +1,5 @@
+import { IVerifyEntryParams } from 'src/utils/model';
+
 export interface GoogleAuthProps {
   scope?: string;
   prompt?: string;
@@ -12,7 +14,7 @@ export interface GoogleAuthProps {
   discoveryDocs?: string;
   children?: React.ReactNode;
   isOnlyGetToken?: boolean;
-  typeResponse?: "idToken" | "accessToken";
+  typeResponse?: 'idToken' | 'accessToken';
   fetchBasicProfile?: boolean;
   nonce?: string;
 }
@@ -25,6 +27,7 @@ export interface BaseOpenLoginParam {
   network: string;
   publicKey: string;
   serviceURI: string;
+  approveDetail?: IVerifyEntryParams;
 }
 
 export type OpenLoginParamConfig = BaseOpenLoginParam & Record<string, string>;
