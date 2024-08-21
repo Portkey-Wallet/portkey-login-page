@@ -8,15 +8,17 @@ import CommonImage from 'src/components/CommonImage';
 import { entryPageData } from 'src/constants/entry';
 import { useStyleProvider } from 'src/utils/mobile';
 import { OpenLoginParamConfig } from 'src/types/auth';
+import { OperationTypeEnum } from '@portkey/services';
 
 export default function JumpEntry({ onApprove, authInfo }: { onApprove?: () => void; authInfo: OpenLoginParamConfig }) {
-  const { logo, errorIcon } = entryPageData;
+  const { logo, errorIcon, warningIcon } = entryPageData;
   const styles = useStyleProvider<Record<string, string>>({
     pcStyle,
     mobileStyle,
   });
   const [consumedData, setConsumedData] = useState<{ [x: string]: string | number | boolean } | undefined>({});
   const [ip, setIp] = useState<string | undefined>('--');
+  const [showWarning, setShowWarning] = useState<boolean>(false);
 
   const checkUserIp = useCallback(async (serviceUrl: string) => {
     try {
@@ -50,6 +52,11 @@ export default function JumpEntry({ onApprove, authInfo }: { onApprove?: () => v
       raw['IP'] = ip;
       setConsumedData(raw);
       checkUserIp(serviceURI);
+      const isTokenTypeOp = operationType === OperationTypeEnum.managerApprove || operationType === OperationTypeEnum.modifyTransferLimit || operationType === OperationTypeEnum.transferApprove;
+      console.log('isTokenTypeOp && (!symbol || !amount)', isTokenTypeOp && (!symbol || !amount));
+      if(isTokenTypeOp && (!symbol || !amount)) {
+        setShowWarning(true);
+      }
     } catch (e) {
       console.error(e);
       setConsumedData(undefined);
@@ -64,6 +71,19 @@ export default function JumpEntry({ onApprove, authInfo }: { onApprove?: () => v
           <div className={styles.introductionText}>
             {'Verification details are as follows. Proceed only if all data matches:'}
           </div>
+          {showWarning && (
+            <div className={styles.warningContainer}>
+              <CommonImage
+                src={warningIcon.src}
+                style={{ width: errorIcon.width, height: errorIcon.height }}
+                alt={errorIcon.alt}
+                priority
+              />
+              <div className={styles.warningText}>
+                {'Unknown authorization, please proceed with caution'}
+              </div>
+            </div>
+          )}
           <div className={styles.dashboard}>
             {consumedData ? (
               Object.entries(consumedData).map(([key, value]) => {

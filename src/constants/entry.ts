@@ -11,4 +11,10 @@ export const entryPageData = {
     height: 16,
     alt: 'Error Icon',
   },
+  warningIcon: {
+    src: '/warning.svg',
+    width: 16,
+    height: 16,
+    alt: 'Error Icon',
+  },
 };
