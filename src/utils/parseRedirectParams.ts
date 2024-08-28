@@ -67,6 +67,12 @@ export const parseRedirectParams = (parseParam?: {
     if (type === "telegram") {
       token = authToken;
       provider = "Telegram";
+    } else if (type === "Ton") {
+      token = {
+        token: authToken,
+        address: id,
+        username: username,
+      };
     } else if (type === "Twitter") {
       provider = "Twitter";
       if (parseParam?.from === "openlogin") {

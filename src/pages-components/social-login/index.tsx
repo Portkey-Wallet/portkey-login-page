@@ -20,6 +20,7 @@ import { twitterAuth } from "src/utils/twitter/TwitterAuth";
 import { facebookAuthReplace } from "src/utils/Facebook/facebookAuthReplace";
 import TelegramAuthSDK from "../telegram-auth-sdk";
 import { useSearchParams } from "next/navigation";
+import TonAuth from "../ton-auth";
 
 export default function SocialLogin({
   params,
@@ -32,7 +33,7 @@ export default function SocialLogin({
   const [errorInfo, setError] = React.useState<string | null>(null);
 
   const onCloseWindow = useCallback(() => {
-    window.opener.postMessage(
+    window?.opener?.postMessage(
       {
         type: "PortkeySocialLoginOnFailure",
         error: "User close the prompt",
@@ -176,6 +177,8 @@ export default function SocialLogin({
         case "Telegram":
           // await getTelegramAuth();
           break;
+        case "Ton":
+          break;
         default:
           setError("Invalid authType");
           throw "Invalid authType";
@@ -199,7 +202,8 @@ export default function SocialLogin({
         params.authType === "Telegram"
           ? ""
           : "h-screen flex justify-center items-center"
-      )}>
+      )}
+    >
       {params.authType === "Telegram" && searchParams.from === "portkey" ? (
         <TelegramAuth
           searchParams={searchParams}
@@ -211,6 +215,16 @@ export default function SocialLogin({
 
       {params.authType === "Telegram" && searchParams.from !== "portkey" ? (
         <TelegramAuthSDK
+          searchParams={searchParams}
+          onCloseWindow={onCloseWindow}
+          onLoadingChange={setLoading}
+          onError={setError}
+        />
+      ) : null}
+
+      {params.authType === "Ton" && searchParams.from === "portkey" ? (
+        <TonAuth
+          from="portkey"
           searchParams={searchParams}
           onCloseWindow={onCloseWindow}
           onLoadingChange={setLoading}

@@ -16,11 +16,15 @@ import { SOCIAL_AUTH_SESSION_KEY } from "src/constants/social";
 import clsx from "clsx";
 import "./index.css";
 import { TwitterAuthV1 } from "src/utils/twitter/TwitterAuthV1";
+import TonAuth from "../ton-auth";
+import { SearchParams } from "src/types";
 
 export default function SocialAuth({
   authInfo,
+  searchParams,
 }: {
   authInfo: OpenLoginParamConfig;
+  searchParams: SearchParams;
 }) {
   const [errorInfo, setError] = useState<string>();
   const [loading, setLoading] = useState(false);
@@ -36,7 +40,12 @@ export default function SocialAuth({
         isFromTelegram: authInfo.isFromTelegram,
       })
     );
-  }, [authInfo.loginId, authInfo.publicKey, authInfo.serviceURI, authInfo.isFromTelegram]);
+  }, [
+    authInfo.loginId,
+    authInfo.publicKey,
+    authInfo.serviceURI,
+    authInfo.isFromTelegram,
+  ]);
 
   const getGoogleAuth = useCallback(async () => {
     const { clientId } = authInfo;
@@ -104,6 +113,8 @@ export default function SocialAuth({
         case "Telegram":
           // await getTelegramAuth();
           break;
+        case "Ton":
+          break;
         default:
           setError("Invalid authType");
           throw "Invalid authType";
@@ -132,12 +143,20 @@ export default function SocialAuth({
         authInfo.loginProvider === "Telegram" && !errorInfo
           ? ""
           : "h-screen flex justify-center items-center"
-      )}>
+      )}
+    >
       {authInfo.loginProvider === "Telegram" && !errorInfo ? (
         <TelegramAuthUpgraded
           authInfo={authInfo}
           onLoadingChange={setLoading}
           onError={setError}
+        />
+      ) : null}
+      {authInfo.loginProvider === "Ton" && !errorInfo ? (
+        <TonAuth
+          onLoadingChange={setLoading}
+          onError={setError}
+          searchParams={searchParams}
         />
       ) : null}
       <div>{errorInfo ? errorInfo : <div className=""></div>}</div>

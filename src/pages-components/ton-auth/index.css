@@ -1,0 +1,36 @@
+.ton-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  #ton-connect-button {
+    pointer-events: none;
+    margin-bottom: 200px;
+  }
+
+  #ton-connect-button svg {
+    display: none;
+  }
+}
+
+body {
+  pointer-events: none;
+}
+
+.s-enter-to > div {
+  pointer-events: auto;
+}
+
+.s-enter-to > div > div > button {
+  display: none;
+}
+
+@media (max-width: 400px) {
+  .ton-wrapper {
+    align-items: flex-start;
+  }
+  #ton-connect-button {
+    margin-top: 100px;
+  }
+}

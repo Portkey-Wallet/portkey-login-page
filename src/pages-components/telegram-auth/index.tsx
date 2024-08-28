@@ -51,8 +51,8 @@ export default function TelegramAuth({
         (from ?? "default") as keyof typeof TELEGRAM_REDIRECT_URI
       ];
 
-    return `${serviceURL}${redirect}`;
-  }, [onError, searchParams, serviceURL]);
+    return `${serviceURL}${redirect}`
+  }, [onError, searchParams, serviceURL]);;
 
   useEffect(() => {
     const handler = async (event: any) => {
