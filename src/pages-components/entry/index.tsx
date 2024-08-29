@@ -80,7 +80,7 @@ export default function JumpEntry({ onApprove, authInfo }: { onApprove?: () => v
                 priority
               />
               <div className={styles.warningText}>
-                {'Unknown authorization, please proceed with caution'}
+                {'Unrecognised authorisation. Please exercise caution and refrain from approving the transaction if you are uncertain.'}
               </div>
             </div>
           )}
