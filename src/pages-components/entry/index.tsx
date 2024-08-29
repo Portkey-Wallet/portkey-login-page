@@ -53,8 +53,9 @@ export default function JumpEntry({ onApprove, authInfo }: { onApprove?: () => v
       setConsumedData(raw);
       checkUserIp(serviceURI);
       const isTokenTypeOp = operationType === OperationTypeEnum.managerApprove || operationType === OperationTypeEnum.transferApprove;
+      const isUnKnown = translateOperationEnumToStr(operationType) === 'Unknown';
       console.log('isTokenTypeOp && (!symbol || !amount)', isTokenTypeOp && (!symbol || !amount));
-      if(isTokenTypeOp && (!symbol || !amount)) {
+      if((isTokenTypeOp && (!symbol || !amount)) || isUnKnown) {
         setShowWarning(true);
       }
     } catch (e) {
