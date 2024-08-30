@@ -78,7 +78,7 @@ export function Ton({
         } as TTonWalletInfo;
 
         // TODO: change  it to real data
-        const redirectURI = `${path}?type=ton&token=${JSON.stringify(wallet)}`;
+        const redirectURI = `${path}?type=tonWallet&token=${JSON.stringify(wallet)}`;
         router.push(redirectURI);
       }
     });
