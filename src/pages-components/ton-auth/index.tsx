@@ -9,6 +9,7 @@ import {
   useTonConnectUI,
 } from "@tonconnect/ui-react";
 import { useRouter } from "next/navigation";
+import { OpenLoginParamConfig } from "src/types/auth";
 
 const timestamp = Date.now();
 
@@ -19,9 +20,10 @@ export interface TTonWalletInfo {
   signature: string;
 }
 
-interface TelegramAuthProps {
+interface TonAuthProps {
   from?: string;
-  searchParams: SearchParams;
+  authInfo?: OpenLoginParamConfig;
+  searchParams?: SearchParams;
   onCloseWindow?: () => void;
   onLoadingChange: (v: boolean) => void;
   onError: (v: string) => void;
@@ -32,10 +34,10 @@ export function Ton({
   searchParams,
   onLoadingChange,
   onError,
-}: TelegramAuthProps) {
+}: TonAuthProps) {
   const router = useRouter();
   const changeLoading =
-    useRef<TelegramAuthProps["onLoadingChange"]>(onLoadingChange);
+    useRef<TonAuthProps["onLoadingChange"]>(onLoadingChange);
   // const { network, serviceURI } = searchParams;
   const [tonConnectUI] = useTonConnectUI();
 
@@ -92,10 +94,10 @@ export function Ton({
   );
 }
 
-export default function TonAuth(props: TelegramAuthProps) {
-  const { searchParams } = props;
+export default function TonAuth(props: TonAuthProps) {
+  const { searchParams, authInfo } = props;
 
-  const { manifestUrl = "" } = searchParams;
+  const manifestUrl = authInfo?.manifestUrl || searchParams?.searchParams || "";
 
   if (!manifestUrl || typeof manifestUrl !== "string")
     return <div>Invalid manifestUrl</div>;

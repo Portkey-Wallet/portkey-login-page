@@ -24,7 +24,7 @@ export default function SocialAuth({
   searchParams,
 }: {
   authInfo: OpenLoginParamConfig;
-  searchParams: SearchParams;
+  searchParams?: SearchParams;
 }) {
   const [errorInfo, setError] = useState<string>();
   const [loading, setLoading] = useState(false);
@@ -154,9 +154,10 @@ export default function SocialAuth({
       ) : null}
       {authInfo.loginProvider === "TonWallet" && !errorInfo ? (
         <TonAuth
+          authInfo={authInfo}
           onLoadingChange={setLoading}
           onError={setError}
-          searchParams={searchParams}
+          searchParams={searchParams || {}}
         />
       ) : null}
       <div>{errorInfo ? errorInfo : <div className=""></div>}</div>
