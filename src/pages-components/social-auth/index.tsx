@@ -152,7 +152,7 @@ export default function SocialAuth({
           onError={setError}
         />
       ) : null}
-      {authInfo.loginProvider === "Ton" && !errorInfo ? (
+      {authInfo.loginProvider === "TonWallet" && !errorInfo ? (
         <TonAuth
           onLoadingChange={setLoading}
           onError={setError}
