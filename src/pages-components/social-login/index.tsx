@@ -177,7 +177,7 @@ export default function SocialLogin({
         case "Telegram":
           // await getTelegramAuth();
           break;
-        case "Ton":
+        case "TonWallet":
           break;
         default:
           setError("Invalid authType");
@@ -222,7 +222,7 @@ export default function SocialLogin({
         />
       ) : null}
 
-      {params.authType === "Ton" && searchParams.from === "portkey" ? (
+      {params.authType === "TonWallet" && searchParams.from === "portkey" ? (
         <TonAuth
           from="portkey"
           searchParams={searchParams}

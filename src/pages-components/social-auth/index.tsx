@@ -113,7 +113,7 @@ export default function SocialAuth({
         case "Telegram":
           // await getTelegramAuth();
           break;
-        case "Ton":
+        case "TonWallet":
           break;
         default:
           setError("Invalid authType");

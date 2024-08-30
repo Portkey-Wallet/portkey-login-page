@@ -67,7 +67,7 @@ export const parseRedirectParams = (parseParam?: {
     if (type === "telegram") {
       token = authToken;
       provider = "Telegram";
-    } else if (type === "Ton") {
+    } else if (type === "TonWallet") {
       token = {
         token: authToken,
         address: id,

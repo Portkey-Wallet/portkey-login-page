@@ -1,25 +1,22 @@
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
-import {
-  MAINNET_SERVICE_URL,
-  TELEGRAM_REDIRECT_URI,
-  TESTNET_SERVICE_URL,
-} from "src/constants";
+import React, { useCallback, useEffect, useRef } from "react";
 import { SearchParams } from "src/types";
 import "./index.css";
 import {
   THEME,
   TonConnectButton,
-  TonConnectUI,
   TonConnectUIProvider,
+  TonProofItemReplySuccess,
   useTonConnectUI,
 } from "@tonconnect/ui-react";
 import { useRouter } from "next/navigation";
 
 const timestamp = Date.now();
 
-enum TGStauts {
-  unauthorized = "unauthorized",
-  auth_user = "auth_user",
+export interface TTonWalletInfo {
+  timestamp: string;
+  address: string;
+  publicKey: string;
+  signature: string;
 }
 
 interface TelegramAuthProps {
@@ -46,13 +43,6 @@ export function Ton({
     changeLoading.current = onLoadingChange;
   });
 
-  // const serviceURL = useMemo(() => {
-  //   if (serviceURI && typeof serviceURI) return serviceURI;
-  //   if (network && typeof network !== "string")
-  //     throw onError("Invalid network");
-  //   return network === "TESTNET" ? TESTNET_SERVICE_URL : MAINNET_SERVICE_URL;
-  // }, [onError, searchParams]);
-
   const init = useCallback(async () => {
     tonConnectUI.setConnectRequestParameters({
       state: "ready",
@@ -76,8 +66,17 @@ export function Ton({
         const path =
           from === "portkey" ? "/portkey-auth-callback" : "/auth-callback";
 
+        const wallet = {
+          timestamp: String(timestamp),
+          address: walletInfo?.account.address,
+          publicKey: walletInfo?.account.publicKey,
+          signature:
+            (walletInfo?.connectItems?.tonProof as TonProofItemReplySuccess)
+              ?.proof?.signature || "",
+        } as TTonWalletInfo;
+
         // TODO: change  it to real data
-        const redirectURI = `${path}?type=ton&token="{token:'authToken',address: 'id',username: 'username'}"`;
+        const redirectURI = `${path}?type=ton&token=${JSON.stringify(wallet)}`;
         router.push(redirectURI);
       }
     });
