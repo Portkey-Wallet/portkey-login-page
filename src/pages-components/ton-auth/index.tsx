@@ -78,7 +78,9 @@ export function Ton({
         } as TTonWalletInfo;
 
         // TODO: change  it to real data
-        const redirectURI = `${path}?type=tonWallet&token=${JSON.stringify(wallet)}`;
+        const redirectURI = `${path}?type=tonWallet&token=${JSON.stringify(
+          wallet
+        )}`;
         router.push(redirectURI);
       }
     });
@@ -97,7 +99,8 @@ export function Ton({
 export default function TonAuth(props: TonAuthProps) {
   const { searchParams, authInfo } = props;
 
-  const manifestUrl = authInfo?.manifestUrl || searchParams?.searchParams || "";
+
+  const manifestUrl = authInfo?.manifestUrl || searchParams?.manifestUrl || "";
 
   if (!manifestUrl || typeof manifestUrl !== "string")
     return <div>Invalid manifestUrl</div>;
