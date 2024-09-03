@@ -11,6 +11,7 @@ import {
 } from "@tonconnect/ui-react";
 import { useRouter } from "next/navigation";
 import { OpenLoginParamConfig } from "src/types/auth";
+import { sleep } from "@portkey/utils";
 
 const timestamp = Date.now();
 
@@ -42,10 +43,14 @@ export function Ton({
   // const { network, serviceURI } = searchParams;
   const [tonConnectUI] = useTonConnectUI();
   const userFriendlyAddress = useTonAddress();
+  const userFriendlyAddressRef = useRef(userFriendlyAddress);
 
   useEffect(() => {
     changeLoading.current = onLoadingChange;
   });
+  useEffect(() => {
+    userFriendlyAddressRef.current = userFriendlyAddress;
+  }, [userFriendlyAddress]);
 
   const init = useCallback(async () => {
     tonConnectUI.setConnectRequestParameters({
@@ -58,36 +63,38 @@ export function Ton({
     tonConnectUI.openModal();
   }, [tonConnectUI]);
 
+  const redirect = useCallback(
+    async (walletInfo: any) => {
+      await sleep(200);
+      const path =
+        from === "portkey" ? "/portkey-auth-callback" : "/auth-callback";
+
+      const wallet = {
+        timestamp: String(timestamp),
+        address: userFriendlyAddressRef.current,
+        rawAddress: walletInfo?.account.address,
+        publicKey: walletInfo?.account.publicKey,
+        signature:
+          (walletInfo?.connectItems?.tonProof as TonProofItemReplySuccess)
+            ?.proof?.signature || "",
+      } as TTonWalletInfo;
+
+      // TODO: change  it to real data
+      const redirectURI = `${path}?type=tonWallet&token=${JSON.stringify(
+        wallet
+      )}`;
+      router.push(redirectURI);
+    },
+    [from, router]
+  );
+
   useEffect(() => {
     init();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
-  useEffect(() => {
     const unsubscribe = tonConnectUI.onStatusChange((walletInfo) => {
       console.log("onStatusChange", walletInfo);
-      if (walletInfo?.connectItems) {
-        const path =
-          from === "portkey" ? "/portkey-auth-callback" : "/auth-callback";
-
-        const wallet = {
-          timestamp: String(timestamp),
-          address: userFriendlyAddress,
-          rawAddress: walletInfo?.account.address,
-          publicKey: walletInfo?.account.publicKey,
-          signature:
-            (walletInfo?.connectItems?.tonProof as TonProofItemReplySuccess)
-              ?.proof?.signature || "",
-        } as TTonWalletInfo;
-
-        // TODO: change  it to real data
-        const redirectURI = `${path}?type=tonWallet&token=${JSON.stringify(
-          wallet
-        )}`;
-        router.push(redirectURI);
-      }
+      if (walletInfo?.connectItems) redirect(walletInfo);
     });
-
     return () => unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
