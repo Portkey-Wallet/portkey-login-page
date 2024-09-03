@@ -6,6 +6,7 @@ import {
   TonConnectButton,
   TonConnectUIProvider,
   TonProofItemReplySuccess,
+  useTonAddress,
   useTonConnectUI,
 } from "@tonconnect/ui-react";
 import { useRouter } from "next/navigation";
@@ -40,6 +41,7 @@ export function Ton({
     useRef<TonAuthProps["onLoadingChange"]>(onLoadingChange);
   // const { network, serviceURI } = searchParams;
   const [tonConnectUI] = useTonConnectUI();
+  const userFriendlyAddress = useTonAddress();
 
   useEffect(() => {
     changeLoading.current = onLoadingChange;
@@ -70,7 +72,8 @@ export function Ton({
 
         const wallet = {
           timestamp: String(timestamp),
-          address: walletInfo?.account.address,
+          address: userFriendlyAddress,
+          rawAddress: walletInfo?.account.address,
           publicKey: walletInfo?.account.publicKey,
           signature:
             (walletInfo?.connectItems?.tonProof as TonProofItemReplySuccess)
@@ -98,7 +101,6 @@ export function Ton({
 
 export default function TonAuth(props: TonAuthProps) {
   const { searchParams, authInfo } = props;
-
 
   const manifestUrl = authInfo?.manifestUrl || searchParams?.manifestUrl || "";
 
