@@ -76,7 +76,10 @@ export function Ton({
         publicKey: walletInfo?.account.publicKey,
         signature:
           (walletInfo?.connectItems?.tonProof as TonProofItemReplySuccess)
-            ?.proof?.signature || "",
+            ?.proof?.signature || '',
+        proof: Object.assign(walletInfo?.connectItems?.tonProof, {
+          stateInit: walletInfo?.account?.walletStateInit,
+        }),
       } as TTonWalletInfo;
 
       // TODO: change  it to real data
