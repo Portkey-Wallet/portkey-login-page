@@ -1,0 +1,129 @@
+/* stylelint-disable selector-class-pattern */
+/* stylelint-disable custom-property-pattern */
+/* stylelint-disable font-family-no-missing-generic-family-keyword */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 99px;
+}
+
+.headerIcon {
+  width: 480px;
+  height: 208px;
+}
+
+.introductionText {
+  max-width: 480px;
+  color: var(--Light-Mode-Neutral-01-Primary-Text, #101114);
+  font-family: Roboto-Regular;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  margin-top: 40px;
+}
+
+.dashboard {
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+  width: 480px;
+  margin-top: 16px;
+  border-radius: 6px;
+  background: var(--Light-Mode-Neutral-07-Container-BG, #f5f6f7);
+}
+
+.infoLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.infoTitle {
+  color: var(--Light-Mode-Neutral-03-Tertiary-Text, #979aa1);
+  font-family: Roboto-Regular;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 133.333% */
+  width: 102px;
+  word-break: break-all;
+}
+
+.infoContent {
+  width: 306px;
+  color: var(--Light-Mode-Neutral-01-Primary-Text, #101114);
+  font-family: Roboto-Regular;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 133.333% */
+  margin-left: 32px;
+  word-break: break-all;
+}
+
+.jumpBtn {
+  margin-top: 48px;
+  width: 480px;
+  height: 48px;
+  background-color: #5b8ef4;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.jumpBtnText {
+  color: #fff;
+  text-align: center;
+  font-family: Roboto-Regular;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px; /* 137.5% */
+}
+
+.errorText {
+  color: var(--Light-Mode-Neutral-01-Primary-Text, #101114);
+  font-family: Roboto-Regular;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 133.333% */
+  margin-left: 8px;
+}
+
+.footer {
+  width: 480px;
+  position: absolute;
+  bottom: 0;
+}
+
+.footerMedia {
+  display: flex;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding-bottom: 4px !important;
+  border-top: 0 !important;
+}
+
+.footerMediaPortkeyText {
+  padding-top: 16px;
+  padding-bottom: 26px;
+}

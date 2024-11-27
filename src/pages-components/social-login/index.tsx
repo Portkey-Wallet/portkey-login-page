@@ -13,11 +13,14 @@ import {
 } from "src/constants";
 import { SearchParams } from "src/types";
 import { appleAuthIdToken } from "src/utils/AppleAuth";
-import { getGoogleAccessToken } from "src/utils/GoogleAuthReplace";
+import { getGoogleAccessToken, getGoogleAccessTokenWithZkLogin } from "src/utils/GoogleAuthReplace";
 import TelegramAuth from "../telegram-auth";
 import "./index.css";
 import { twitterAuth } from "src/utils/twitter/TwitterAuth";
-import { facebookAuthReplace } from "src/utils/Facebook/facebookAuthReplace";
+import {
+  facebookAuthReplace,
+  facebookAuthReplaceWithZkLogin,
+} from "src/utils/Facebook/facebookAuthReplace";
 import TelegramAuthSDK from "../telegram-auth-sdk";
 import { useSearchParams } from "next/navigation";
 
@@ -66,9 +69,11 @@ export default function SocialLogin({
   const checkSearchParams = useCallback(() => {
     if (!searchParams || !Object.keys(searchParams).length)
       return { clientId: undefined, redirectURI: undefined, state: undefined };
-    const { clientId, redirectURI, state, version } = searchParams;
+    const { clientId, redirectURI, state, version, socialType, nonce, side } =
+      searchParams;
     let _version: string | undefined;
     let _state: string | undefined;
+    let _nonce: string | undefined;
 
     if (clientId && typeof clientId !== "string")
       throw setError("Invalid clientId");
@@ -86,14 +91,44 @@ export default function SocialLogin({
       _state = state;
     }
 
-    return { clientId, redirectURI, state: _state, version: _version };
+    if (Array.isArray(nonce)) {
+      _nonce = nonce?.slice(-1)[0];
+    } else {
+      _nonce = nonce;
+    }
+
+    return {
+      clientId,
+      redirectURI,
+      state: _state,
+      version: _version,
+      socialType,
+      nonce: _nonce,
+      side,
+    };
   }, [searchParams]);
 
   const getGoogleAuth = useCallback(async () => {
-    const { clientId, redirectURI } = checkSearchParams();
+    const {
+      clientId,
+      redirectURI,
+      socialType,
+      nonce,
+      side,
+    } = checkSearchParams();
     const _clientId = clientId || GG_CLIENT_ID;
-    const _redirectURI = redirectURI || `${location.origin}/auth-callback`;
+    const _path = side === "portkey" ? 'portkey-auth-callback' : 'auth-callback';
+    const _redirectURI = redirectURI || `${location.origin}/${_path}`;
     window.removeEventListener("beforeunload", onCloseWindow);
+
+    if (socialType === "zklogin") {
+      getGoogleAccessTokenWithZkLogin({
+        clientId: _clientId,
+        redirectURI: _redirectURI,
+        nonce,
+      });
+      return;
+    }
 
     getGoogleAccessToken({
       clientId: _clientId,
@@ -102,11 +137,15 @@ export default function SocialLogin({
   }, [checkSearchParams, onCloseWindow]);
 
   const getAppleAuth = useCallback(async () => {
-    const { clientId, redirectURI, state, version } = checkSearchParams();
+    const { clientId, redirectURI, state, version, nonce, side } = checkSearchParams();
     const _clientId = clientId || APPLE_CLIENT_ID;
 
-    const defaultRedirectURI =
+    let defaultRedirectURI =
       version === PORTKEY_VERSION ? APPLE_REDIRECT_URI_V2 : APPLE_REDIRECT_URI;
+
+    if (side === "portkey") {
+      defaultRedirectURI = `https://aa-portkey.portkey.finance/api/app/AppleAuth/receive`;
+    }
 
     const _redirectURI = redirectURI || defaultRedirectURI;
 
@@ -115,6 +154,7 @@ export default function SocialLogin({
       clientId: _clientId,
       redirectURI: _redirectURI,
       state: (state as string | undefined) ?? "origin:web",
+      nonce,
     });
   }, [checkSearchParams, onCloseWindow]);
 
@@ -125,11 +165,23 @@ export default function SocialLogin({
       clientId = FACEBOOK_REDIRECT_URI,
       redirectURI = "https://aa-portkey.portkey.finance/api/app/facebookAuth/receive",
       state,
+      socialType,
+      nonce,
     } = checkSearchParams();
 
     if (!redirectURI) throw setError("Invalid redirectURI");
-
     window.removeEventListener("beforeunload", onCloseWindow);
+
+    if (socialType === "zklogin") {
+      facebookAuthReplaceWithZkLogin({
+        clientId,
+        redirectURI,
+        state,
+        nonce,
+      });
+      return;
+    }
+
     facebookAuthReplace({
       clientId,
       redirectURI,

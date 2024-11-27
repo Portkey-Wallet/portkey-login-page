@@ -8,10 +8,12 @@ export default function AuthCallback() {
 
   const getToken = useCallback(() => {
     try {
-      const { token, provider, code, message } = parseRedirectParams();
+      const { token, provider, code, message, idToken } = parseRedirectParams();
+
       if (!window.Portkey)
         throw "Timeout, please download and install the Portkey extension";
       if (code) {
+        console.log("error ");
         window.Portkey?.request({
           method: "portkey_socialLogin",
           payload: {
@@ -26,6 +28,7 @@ export default function AuthCallback() {
         payload: {
           response: {
             access_token: token,
+            id_token: idToken,
             provider,
           },
         },

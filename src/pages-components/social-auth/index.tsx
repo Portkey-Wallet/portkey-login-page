@@ -3,6 +3,7 @@ import Loading from "src/components/Loading";
 import {
   APPLE_CLIENT_ID,
   APPLE_OPEN_LOGIN_REDIRECT_URI,
+  APPLE_OPEN_LOGIN_REDIRECT_URI_ZKLOGIN,
   FACEBOOK_OPEN_LOGIN_REDIRECT_URI,
   FACEBOOK_REDIRECT_URI,
   GG_CLIENT_ID,
@@ -10,7 +11,10 @@ import {
 import { OpenLoginParamConfig } from "src/types/auth";
 import { appleAuthIdToken } from "src/utils/AppleAuth";
 import { facebookAuthReplace } from "src/utils/Facebook/facebookAuthReplace";
-import { getGoogleAccessToken } from "src/utils/GoogleAuthReplace";
+import {
+  getGoogleAccessToken,
+  getGoogleAccessTokenWithZkLogin,
+} from "src/utils/GoogleAuthReplace";
 import TelegramAuthUpgraded from "../telegram-auth-upgraded";
 import { SOCIAL_AUTH_SESSION_KEY } from "src/constants/social";
 import clsx from "clsx";
@@ -34,16 +38,26 @@ export default function SocialAuth({
         publicKey: authInfo.publicKey,
         serviceURI: authInfo.serviceURI,
         isFromTelegram: authInfo.isFromTelegram,
+        socialType: authInfo.socialType,
       })
     );
-  }, [authInfo.loginId, authInfo.publicKey, authInfo.serviceURI, authInfo.isFromTelegram]);
+  }, [authInfo]);
 
   const getGoogleAuth = useCallback(async () => {
-    const { clientId } = authInfo;
+    const { clientId, socialType, nonce, side } = authInfo;
     const _clientId = clientId || GG_CLIENT_ID;
-    const redirectURI = `${location.origin}/auth-callback`;
+    const _path = side === "portkey" ? 'portkey-auth-callback' : 'auth-callback';
+    const redirectURI = `${location.origin}/${_path}`;
     console.log(location.origin);
     setLoading(true);
+
+    if (socialType === "zklogin") {
+      return getGoogleAccessTokenWithZkLogin({
+        clientId: _clientId,
+        redirectURI,
+        nonce,
+      });
+    }
 
     getGoogleAccessToken({
       clientId: _clientId,
@@ -52,16 +66,22 @@ export default function SocialAuth({
   }, [authInfo]);
 
   const getAppleAuth = useCallback(async () => {
-    const { clientId, serviceURI, state } = authInfo;
+    const { clientId, serviceURI, state, nonce, side } = authInfo;
     const _clientId = clientId || APPLE_CLIENT_ID;
 
-    const _redirectURI = `${serviceURI}${APPLE_OPEN_LOGIN_REDIRECT_URI}`;
+    let _redirectURI = `${serviceURI}${APPLE_OPEN_LOGIN_REDIRECT_URI}`;
+
+    if (side === "portkey") {
+      _redirectURI = `${serviceURI}${APPLE_OPEN_LOGIN_REDIRECT_URI_ZKLOGIN}`;
+    }
+
     setLoading(true);
 
     await appleAuthIdToken({
       clientId: _clientId,
       redirectURI: _redirectURI,
       state: (state as string | undefined) ?? "origin:web",
+      nonce,
     });
   }, [authInfo]);
 
