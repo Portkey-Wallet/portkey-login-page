@@ -53,42 +53,51 @@ export function Ton({
   }, [userFriendlyAddress]);
 
   const init = useCallback(async () => {
-    tonConnectUI.setConnectRequestParameters({
-      state: "ready",
-      value: { tonProof: String(timestamp) },
-    });
+    try {
+      tonConnectUI.setConnectRequestParameters({
+        state: "ready",
+        value: { tonProof: String(timestamp) },
+      });
 
-    if (await tonConnectUI.connectionRestored) await tonConnectUI.disconnect();
+      if (await tonConnectUI.connectionRestored) await tonConnectUI.disconnect();
 
-    tonConnectUI.openModal();
-  }, [tonConnectUI]);
+      tonConnectUI.openModal();
+    } catch (error) {
+      console.error("Error during initialization:", error);
+      onError("Initialization error");
+    }
+  }, [tonConnectUI, onError]);
 
   const redirect = useCallback(
     async (walletInfo: any) => {
-      await sleep(200);
-      const path =
-        from === "portkey" ? "/portkey-auth-callback" : "/auth-callback";
+      try {
+        await sleep(200);
+        const path =
+          from === "portkey" ? "/portkey-auth-callback" : "/auth-callback";
 
-      const wallet = {
-        timestamp: String(timestamp),
-        address: userFriendlyAddressRef.current,
-        rawAddress: walletInfo?.account.address,
-        publicKey: walletInfo?.account.publicKey,
-        signature:
-          (walletInfo?.connectItems?.tonProof as TonProofItemReplySuccess)
-            ?.proof?.signature || '',
-        proof: Object.assign(walletInfo?.connectItems?.tonProof, {
-          stateInit: walletInfo?.account?.walletStateInit,
-        }),
-      } as TTonWalletInfo;
+        const wallet = {
+          timestamp: String(timestamp),
+          address: userFriendlyAddressRef.current,
+          rawAddress: walletInfo?.account.address,
+          publicKey: walletInfo?.account.publicKey,
+          signature:
+            (walletInfo?.connectItems?.tonProof as TonProofItemReplySuccess)
+              ?.proof?.signature || '',
+          proof: Object.assign(walletInfo?.connectItems?.tonProof, {
+            stateInit: walletInfo?.account?.walletStateInit,
+          }),
+        } as TTonWalletInfo;
 
-      // TODO: change  it to real data
-      const redirectURI = `${path}?type=tonWallet&token=${JSON.stringify(
-        wallet
-      )}`;
-      router.push(redirectURI);
+        const redirectURI = `${path}?type=tonWallet&token=${JSON.stringify(
+          wallet
+        )}`;
+        router.push(redirectURI);
+      } catch (error) {
+        console.error("Error during redirection:", error);
+        onError("Redirection error");
+      }
     },
-    [from, router]
+    [from, router, onError]
   );
 
   useEffect(() => {
