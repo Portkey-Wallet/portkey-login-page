@@ -95,7 +95,6 @@ export default function TelegramAuth({
       if (lang && typeof lang !== "string") throw onError("Invalid lang");
 
       changeLoading.current(true);
-
       const result = await fetch(
         `${serviceURL}/api/app/telegramAuth/getTelegramBot`
       ).then((res) => res.json());
