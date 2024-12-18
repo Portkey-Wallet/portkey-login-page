@@ -144,7 +144,6 @@
   border-top: 1px solid var(--sds-color-border-default-default);
   width: 100%;
   justify-content: center;
-  display: none;
 }
 
 .medium img {
