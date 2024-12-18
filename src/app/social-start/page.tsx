@@ -24,7 +24,7 @@ export default function SocialStart() {
   const onApprove = useCallback(() => {
     setShowAggree(false);
   }, []);
-
+  
   if (params?.actionType !== OPENLOGIN_ACTIONS.LOGIN) return <>`actionType` No Support</>;
   return (
     <div>
