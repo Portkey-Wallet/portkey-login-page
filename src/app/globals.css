@@ -6,6 +6,24 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+
+  --sds-color-background-default-secondary: #F4F4F4;
+  --sds-color-background-default-default: #FFFFFF;
+  --sds-color-background-warning-tertiary: #FEFCE8;
+  --sds-color-background-brand-default: #0996EE;
+
+  --sds-color-icon-neutral-default: #303030;
+  --sds-color-icon-neutral-tertiary: #767676;
+  --sds-color-icon-warning-on-warning-tertiary: #9C820E;
+
+  --sds-color-text-default-default: #1F1F21;
+  --sds-color-text-default-secondary: #626264;
+  --sds-color-text-brand-on-brand: #DFF0FF;
+  --sds-color-text-warning-on-warning-tertiary: #9C820E;
+
+  --sds-color-border-default-default: #D2D2D3;
+  --sds-color-border-warning-tertiary: #FEDF56;
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -51,4 +69,24 @@ body {
       text-align: center;
     }
   }
+}
+
+
+[data-theme="dark"] {
+  --sds-color-background-default-secondary: #1F1F21;
+  --sds-color-background-default-default: #151318;
+  --sds-color-background-warning-tertiary: #231F0D;
+  --sds-color-background-brand-default: #B8E1FF;
+
+  --sds-color-icon-neutral-default: #E3E3E3;
+  --sds-color-icon-neutral-tertiary: #B2B2B2;
+  --sds-color-icon-warning-on-warning-tertiary: #FDD10E;
+
+  --sds-color-text-default-default: #FFFFFF;
+  --sds-color-text-default-secondary: #FFFFFFB2;
+  --sds-color-text-brand-on-brand: #0A4370;
+  --sds-color-text-warning-on-warning-tertiary: #FDD10E;
+
+  --sds-color-border-default-default: #414142;
+  --sds-color-border-warning-tertiary: #6C5A0D;
 }

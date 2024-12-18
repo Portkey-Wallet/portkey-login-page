@@ -1,0 +1,14 @@
+.medium {
+  display: flex;
+  gap: 24px;
+  padding-top: 25px;
+  border-top: 1px solid var(--sds-color-border-default-default);
+  width: 100%;
+  justify-content: center;
+}
+
+.medium img {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
