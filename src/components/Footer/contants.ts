@@ -18,7 +18,7 @@ const mediumArr = [
   },{
     title: 'github',
     icon: '/img/footer/icon_github.svg',
-    href: 'https://github.com/Portkey-Wallet/portkey-web'
+    href: 'https://github.com/Portkey-Wallet'
   }
 ];
 
