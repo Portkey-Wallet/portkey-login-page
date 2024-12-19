@@ -4,15 +4,12 @@ import { Button, ConfigProvider } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { getCountry, translateOperationEnumToStr } from 'src/utils/model';
 
-import CommonImage from 'src/components/CommonImage';
-import { entryPageData } from 'src/constants/entry';
 import { useStyleProvider } from 'src/utils/mobile';
 import { OpenLoginParamConfig } from 'src/types/auth';
 import { CustomSvg } from '@portkey/did-ui-react';
 import Footer from 'src/components/Footer';
 
 export default function JumpEntry({ onApprove, authInfo }: { onApprove?: () => void; authInfo: OpenLoginParamConfig }) {
-  // const { errorIcon } = entryPageData;
   const styles = useStyleProvider<Record<string, string>>({
     pcStyle,
     mobileStyle,
@@ -77,7 +74,6 @@ export default function JumpEntry({ onApprove, authInfo }: { onApprove?: () => v
     <ConfigProvider>
       <div className={styles.container}>
         <div className={styles.wrapper}>
-          {/* <CommonImage src={logo.src} style={{ width: logo.width, height: logo.height }} alt={logo.alt} priority /> */}
           <CustomSvg type='PortkeyLogo' className={styles.logo}/>
           <div className={styles.contentWrapper}>
             <div className={styles.introductionText}>
