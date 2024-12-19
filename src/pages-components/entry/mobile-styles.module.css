@@ -68,6 +68,22 @@
   width: 100%;
 }
 
+.infoLineError {
+  display: flex;
+  flex-direction: row;
+  padding: 8px 16px;
+  width: 100%;
+}
+.infoLineErrorWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 22px;
+}
+.pathError {
+  fill: var(--sds-color-icon-danger-secondary);
+}
+
 .infoTitle {
   color: var(--sds-color-text-default-secondary);
   font-family: "SF Pro Text";
