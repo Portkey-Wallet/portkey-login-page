@@ -36,6 +36,13 @@
   box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
 .introductionText {
   color: var(--sds-color-text-default-default);
   /* Body Strong */
@@ -62,7 +69,7 @@
 .infoLine {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding: 8px 16px;
   width: 100%;
@@ -133,8 +140,8 @@
   font-style: normal;
   font-weight: 500;
   line-height: 21px; /* 150% */
+  margin-left: 8px;
 }
-
 .footer {
   width: 320px;
   position: absolute;
@@ -166,4 +173,26 @@
   width: 24px;
   height: 24px;
   cursor: pointer;
+}
+.warningWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  padding: 16px;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  align-self: stretch;
+  border: 1px solid var(--sds-color-border-warning-tertiary);
+  border-radius: 16px;
+  color: var(--sds-color-text-warning-on-warning-tertiary);
+}
+
+.warningTitle {
+  color: var(--sds-color-text-warning-on-warning-tertiary);
+  /* Body Small */
+  font-family: 'Schibsted Grotesk';
+  font-size: 14px;
+  font-style: normal;
+  line-height: 140%; /* 19.6px */
 }
