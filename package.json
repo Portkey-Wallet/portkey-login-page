@@ -9,9 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@portkey/did-ui-react": "2.5.1",
-    "@portkey/onboarding": "2.5.1",
-    "@portkey/utils": "2.5.1",
+    "@portkey/did-ui-react": "2.17.2-alpha.4",
+    "@portkey/onboarding": "2.17.2-alpha.4",
+    "@portkey/utils": "2.17.2-alpha.4",
     "aelf-sdk": "^3.2.45-beta.1",
     "autoprefixer": "10.4.14",
     "clsx": "^1.2.1",
@@ -33,18 +33,18 @@
     "vconsole": "3.15.1"
   },
   "resolutions": {
-    "@portkey/contracts": "2.5.1",
-    "@portkey/did-ui-react": "2.5.1",
-    "@portkey/ramp": "2.5.1",
-    "@portkey/socket": "2.5.1",
-    "@portkey/utils": "2.5.1",
-    "@portkey/did": "2.5.1",
-    "@portkey/graphql": "2.5.1",
-    "@portkey/onboarding": "2.5.1",
-    "@portkey/request": "2.5.1",
-    "@portkey/services": "2.5.1",
-    "@portkey/types": "2.5.1",
-    "@portkey/validator": "2.5.1",
-    "@portkey/accounts": "2.5.1"
+    "@portkey/contracts": "2.17.2-alpha.4",
+    "@portkey/did-ui-react": "2.17.2-alpha.4",
+    "@portkey/ramp": "2.17.2-alpha.4",
+    "@portkey/socket": "2.17.2-alpha.4",
+    "@portkey/utils": "2.17.2-alpha.4",
+    "@portkey/did": "2.17.2-alpha.4",
+    "@portkey/graphql": "2.17.2-alpha.4",
+    "@portkey/onboarding": "2.17.2-alpha.4",
+    "@portkey/request": "2.17.2-alpha.4",
+    "@portkey/services": "2.17.2-alpha.4",
+    "@portkey/types": "2.17.2-alpha.4",
+    "@portkey/validator": "2.17.2-alpha.4",
+    "@portkey/accounts": "2.17.2-alpha.4"
   }
 }
