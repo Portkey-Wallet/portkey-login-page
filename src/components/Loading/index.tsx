@@ -1,7 +1,8 @@
+"use client"
 import { useMemo } from "react";
-import BaseLoading from "../BaseLoading";
 import { OpacityType } from "src/types";
 import "./index.css";
+import { PureLoadingIndicator } from "@portkey/did-ui-react";
 
 export interface LoadingProps {
   loading?: boolean | OpacityType;
@@ -32,10 +33,7 @@ export default function Loading({
         (className || "")
       }
       style={style}>
-      <div className="loading-indicator bg-white w-[250px] p-5 rounded-lg">
-        <BaseLoading className="w-11 h-11 m-auto" />
-        <div className="loading-text">{loadingText}</div>
-      </div>
+      <PureLoadingIndicator width={44} height={44}/>
     </div>
   ) : null;
 }

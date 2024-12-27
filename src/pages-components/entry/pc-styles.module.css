@@ -7,80 +7,138 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  height: 100vh;
+  background: var(--sds-color-background-default-secondary);
 }
-
+.logo {
+  width: 137.846px;
+  height: 32px;
+  svg {
+    width: 137.846px;
+    height: 32px;
+    path {
+      fill: var(--sds-color-icon-neutral-default);
+    }
+  }
+}
 .wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 99px;
+  margin-top: 40px;
+  padding: 32px;
+  width: 'auto';
+  background: var(--sds-color-background-default-default);
+  gap: 32px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
-
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
 .headerIcon {
   width: 480px;
   height: 208px;
 }
 
 .introductionText {
-  max-width: 480px;
-  color: var(--Light-Mode-Neutral-01-Primary-Text, #101114);
-  font-family: Roboto-Regular;
-  font-size: 14px;
+  /* max-width: 480px; */
+  /* font-family: Roboto-Regular; */
+  /* font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px;
-  margin-top: 40px;
+  line-height: 24px; */
+  /* margin-top: 40px; */
+  color: var(--sds-color-text-default-default);
+  /* Body Strong */
+  font-family: 'Schibsted Grotesk';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%; /* 22.4px */
 }
 
 .dashboard {
   display: flex;
-  padding: 20px;
+  padding: 4px 0px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  /* gap: 10px; */
   align-self: stretch;
-  width: 480px;
-  margin-top: 16px;
+  /* width: 480px; */
+  /* margin-top: 16px; */
   border-radius: 6px;
-  background: var(--Light-Mode-Neutral-07-Container-BG, #f5f6f7);
+  background: var(--sds-color-background-default-secondary);
 }
 
 .infoLine {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 8px 16px;
+  width: 100%;
 }
-
+.infoLineError {
+  display: flex;
+  flex-direction: row;
+  padding: 8px 16px;
+  width: 100%;
+}
+.infoLineErrorWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 22px;
+}
+.pathError {
+  fill: var(--sds-color-icon-danger-secondary);
+}
 .infoTitle {
-  color: var(--Light-Mode-Neutral-03-Tertiary-Text, #979aa1);
-  font-family: Roboto-Regular;
-  font-size: 12px;
+  /* color: var(--Light-Mode-Neutral-03-Tertiary-Text, #979aa1); */
+  /* font-family: Roboto-Regular; */
+  /* font-size: 12px; */
+  /* font-style: normal; */
+  /* font-weight: 400; */
+  /* line-height: 16px;  */
+  /* width: 102px; */
+  /* word-break: break-all; */
+  color: var(--sds-color-text-default-secondary);
+  font-family: "SF Pro Text";
+  font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 16px; /* 133.333% */
-  width: 102px;
-  word-break: break-all;
+  line-height: 21px; /* 150% */
 }
 
 .infoContent {
-  width: 306px;
-  color: var(--Light-Mode-Neutral-01-Primary-Text, #101114);
+  /* width: 306px; */
+  /* color: var(--Light-Mode-Neutral-01-Primary-Text, #101114);
   font-family: Roboto-Regular;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: 16px; /* 133.333% */
-  margin-left: 32px;
-  word-break: break-all;
+  /* margin-left: 32px; */
+  /* word-break: break-all; */
+  color: var(--sds-color-text-default-default);
+  text-align: right;
+  font-family: "SF Pro Text";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 21px; /* 150% */
 }
 
 .jumpBtn {
-  margin-top: 48px;
+  /* margin-top: 48px; */
   width: 480px;
   height: 48px;
-  background-color: #5b8ef4;
+  background: var(--sds-color-background-brand-default);
   border-radius: 24px;
   display: flex;
   flex-direction: row;
@@ -89,22 +147,32 @@
 }
 
 .jumpBtnText {
-  color: #fff;
+  /* color: #fff;
   text-align: center;
   font-family: Roboto-Regular;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: 22px; /* 137.5% */
+  line-height: 22px;  */
+
+  color: var(--sds-color-text-brand-on-brand);
+  text-align: center;
+  /* Single Line/Body Strong */
+  font-family: 'Schibsted Grotesk';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%; /* 16px */
 }
 
 .errorText {
-  color: var(--Light-Mode-Neutral-01-Primary-Text, #101114);
-  font-family: Roboto-Regular;
-  font-size: 12px;
+  color: var(--sds-color-text-default-default);
+  text-align: right;
+  font-family: "SF Pro Text";
+  font-size: 14px;
   font-style: normal;
-  font-weight: 400;
-  line-height: 16px; /* 133.333% */
+  font-weight: 500;
+  line-height: 21px; /* 150% */
   margin-left: 8px;
 }
 
@@ -126,4 +194,41 @@
 .footerMediaPortkeyText {
   padding-top: 16px;
   padding-bottom: 26px;
+}
+.medium {
+  display: flex;
+  gap: 24px;
+  padding-top: 25px;
+  border-top: 1px solid var(--sds-color-border-default-default);
+  width: 100%;
+  justify-content: center;
+}
+
+.medium img {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.warningWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  padding: 16px;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  align-self: stretch;
+  border: 1px solid var(--sds-color-border-warning-tertiary);
+  border-radius: 16px;
+  color: var(--sds-color-text-warning-on-warning-tertiary);
+}
+
+.warningTitle {
+  color: var(--sds-color-text-warning-on-warning-tertiary);
+  /* Body Small */
+  font-family: 'Schibsted Grotesk';
+  font-size: 14px;
+  font-style: normal;
+  line-height: 140%; /* 19.6px */
 }
