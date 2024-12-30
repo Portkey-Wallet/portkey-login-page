@@ -43,6 +43,10 @@ body {
   background-color: #fff;
 }
 
+.bg-black {
+  background-color: #151318;
+}
+
 /* The purpose of using multiple class names is to increase style weight */
 .common-prompt-modal.portkey-ant-modal-wrap.portkey-ui-wrapper {
   .portkey-ant-modal-body {
