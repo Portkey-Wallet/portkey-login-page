@@ -1,8 +1,8 @@
 "use client"
 import { useMemo } from "react";
 import { OpacityType } from "src/types";
-import "./index.css";
 import { PureLoadingIndicator } from "@portkey/did-ui-react";
+import "./index.css";
 
 export interface LoadingProps {
   loading?: boolean | OpacityType;
