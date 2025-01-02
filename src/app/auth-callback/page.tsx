@@ -95,7 +95,7 @@ export default function AuthCallback() {
   }, [getToken]);
   return (
     <div>
-      {false ? (
+      {error ? (
         <div>{error}</div>
       ) : (
         <div>
