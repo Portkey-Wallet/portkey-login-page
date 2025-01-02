@@ -1,6 +1,7 @@
 import Toast from "src/components/Toast";
 import "./globals.css";
 import { Inter } from "next/font/google";
+// import '../assets/index.less';
 
 const inter = Inter({ subsets: ["latin"] });
 
