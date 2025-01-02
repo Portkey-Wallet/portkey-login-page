@@ -1,3 +1,13 @@
 .loading-wrapper {
-  background-color: rgb(00 00 00 / 20%);
+   background: var(--sds-color-background-default-default);
+}
+.loading-text {
+  color: var(--sds-color-text-default-default);
+  text-align: center;
+  /* Body Strong */
+  font-family: 'Schibsted Grotesk';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%; /* 22.4px */
 }

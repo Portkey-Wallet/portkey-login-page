@@ -7,6 +7,7 @@ import {
 } from "src/constants";
 import { SearchParams } from "src/types";
 import { stringify } from "query-string";
+import clsx from "clsx";
 import "./index.css";
 
 enum TGStauts {
@@ -32,6 +33,7 @@ export default function TelegramAuth({
   useEffect(() => {
     changeLoading.current = onLoadingChange;
   });
+  const {theme = 'light'} = searchParams;
 
   const serviceURL = useMemo(() => {
     const { network, serviceURI } = searchParams;
@@ -116,7 +118,7 @@ export default function TelegramAuth({
   }, [getTelegramAuth]);
 
   return (
-    <div className="telegram-wrapper">
+    <div className={clsx("telegram-wrapper", theme === 'dark' && 'dark-theme')}>
       <link
         rel="stylesheet"
         href="https://telegram.org/css/widget-frame.css?66"

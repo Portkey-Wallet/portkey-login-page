@@ -186,6 +186,7 @@
   border: 1px solid var(--sds-color-border-warning-tertiary);
   border-radius: 16px;
   color: var(--sds-color-text-warning-on-warning-tertiary);
+  background: var(--sds-color-background-warning-tertiary);
 }
 
 .warningTitle {
