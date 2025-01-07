@@ -58,6 +58,11 @@ export const translateOperationEnumToStr = (enumPtr: OperationTypeEnum) => {
   }
 };
 
+export const isInWarningWhiteList = (enumPtr: OperationTypeEnum) =>
+  enumPtr !== OperationTypeEnum.managerApprove &&
+  enumPtr !== OperationTypeEnum.transferApprove &&
+  enumPtr !== OperationTypeEnum.modifyTransferLimit;
+
 export const getCountry = async (serviceUrl: string) => {
   const data = await fetch(`${serviceUrl}/api/app/ipInfo/ipInfo`);
   return (await data.json()).country;
