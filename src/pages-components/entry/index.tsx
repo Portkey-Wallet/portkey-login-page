@@ -61,7 +61,12 @@ export default function JumpEntry({ onApprove, authInfo }: { onApprove?: () => v
       raw['IP'] = ip;
       setConsumedData(raw);
       checkUserIp(serviceURI);
-      setWarning((!symbol || !amount) && !isInWarningWhiteList(operationType));
+      const isWarningWhiteList = isInWarningWhiteList(operationType);
+      if (isWarningWhiteList) {
+        setWarning(false);
+      } else {
+        setWarning((!symbol || !amount));
+      }
     } catch (e) {
       console.error(e);
       setConsumedData(undefined);
