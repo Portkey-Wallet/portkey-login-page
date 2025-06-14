@@ -6,7 +6,7 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Portkey openlogin",
+  title: "Portkey openlogin testnet",
   icons: {
     icon: "/_favicon.ico",
   },

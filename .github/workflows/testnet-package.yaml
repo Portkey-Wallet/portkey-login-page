@@ -1,7 +1,9 @@
 name: Build and Push Image
 on:
   push:
-    branches: ['dev']
+    branches:
+      - dev
+      - testnet
 jobs:
   build-and-push-image:
     runs-on: portkey-runner
