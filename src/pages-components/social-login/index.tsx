@@ -144,7 +144,7 @@ export default function SocialLogin({
       version === PORTKEY_VERSION ? APPLE_REDIRECT_URI_V2 : APPLE_REDIRECT_URI;
 
     if (side === "portkey") {
-      defaultRedirectURI = `https://aa-portkey.portkey.finance/api/app/AppleAuth/receive`;
+      defaultRedirectURI = `https://aa-portkey-test.portkey.finance/api/app/AppleAuth/receive`;
     }
 
     const _redirectURI = redirectURI || defaultRedirectURI;
