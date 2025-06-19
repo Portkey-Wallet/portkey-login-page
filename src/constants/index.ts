@@ -1,5 +1,6 @@
 // export const APPLE_CLIENT_ID = "com.portkey.did.extension.service";
-export const APPLE_CLIENT_ID = 'com.portkey.finance.trans.extension.service';
+// export const APPLE_CLIENT_ID = 'com.portkey.finance.trans.extension.service';
+export const APPLE_CLIENT_ID = 'com.portkey.finance.service';
 // export const APPLE_CLIENT_ID = 'com.portkey.finance.extension.service';
 
 export const APPLE_REDIRECT_URI =
