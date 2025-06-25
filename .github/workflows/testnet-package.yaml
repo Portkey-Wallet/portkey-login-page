@@ -1,7 +1,8 @@
 name: Build and Push Image
 on:
   push:
-    branches: ['dev']
+#    branches: ['dev']
+    branches: ['testnet']
 jobs:
   build-and-push-image:
     runs-on: portkey-runner
@@ -43,8 +44,8 @@ jobs:
           platforms: linux/amd64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+#          cache-from: type=gha
+#          cache-to: type=gha,mode=max
           build-args: |
             NEXT_PUBLIC_APP_APPLE_REDIRECT_URI: ${{ secrets.NEXT_PUBLIC_APP_APPLE_REDIRECT_URI }}
             NEXT_PUBLIC_APP_MAINNET_SERVICE: ${{ secrets.NEXT_PUBLIC_APP_MAINNET_SERVICE }}
