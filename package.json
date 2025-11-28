@@ -1,0 +1,50 @@
+{
+  "name": "login-portkey",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@portkey/did-ui-react": "2.17.2-alpha.4",
+    "@portkey/onboarding": "2.17.2-alpha.4",
+    "@portkey/utils": "2.17.2-alpha.4",
+    "aelf-sdk": "^3.2.45-beta.1",
+    "autoprefixer": "10.4.14",
+    "clsx": "^1.2.1",
+    "eslint": "8.41.0",
+    "eslint-config-next": "13.4.3",
+    "lottie-web": "^5.11.0",
+    "next": "13.4.3",
+    "postcss": "8.4.23",
+    "query-string": "^7.1.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "3.3.2",
+    "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "20.2.3",
+    "@types/react": "18.2.6",
+    "@types/react-dom": "18.2.4",
+    "vconsole": "3.15.1"
+  },
+  "resolutions": {
+    "@portkey/contracts": "2.17.2-alpha.4",
+    "@portkey/did-ui-react": "2.17.2-alpha.4",
+    "@portkey/ramp": "2.17.2-alpha.4",
+    "@portkey/socket": "2.17.2-alpha.4",
+    "@portkey/utils": "2.17.2-alpha.4",
+    "@portkey/did": "2.17.2-alpha.4",
+    "@portkey/graphql": "2.17.2-alpha.4",
+    "@portkey/onboarding": "2.17.2-alpha.4",
+    "@portkey/request": "2.17.2-alpha.4",
+    "@portkey/services": "2.17.2-alpha.4",
+    "@portkey/types": "2.17.2-alpha.4",
+    "@portkey/validator": "2.17.2-alpha.4",
+    "@portkey/accounts": "2.17.2-alpha.4"
+  }
+}

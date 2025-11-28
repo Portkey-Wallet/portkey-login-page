@@ -1,0 +1,33 @@
+.openlogin-toast {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: #e7383a;
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  font-feature-settings: "tnum";
+  position: fixed;
+  top: 8px;
+  left: 0;
+  width: 100%;
+  z-index: 1010;
+  pointer-events: none;
+  text-align: center;
+  display: none;
+}
+
+.openlogin-toast-content {
+  display: inline-block;
+  padding: 10px 16px;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  pointer-events: all;
+}
+
+.openlogin-toast-show {
+  display: block;
+}
